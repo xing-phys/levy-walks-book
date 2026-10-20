@@ -1,0 +1,168 @@
+# Search, robotics, and open problems {#sec-search}
+
+A process that spreads rapidly does not necessarily find a target rapidly. The mean-squared displacement describes the cloud of positions at a prescribed time; search asks whether a trajectory has intersected a target *at any earlier time*. Long flights explore new regions efficiently, but they can also spend time crossing empty space. Repeated local motion can waste effort, but it can be useful when a target is close to a recently visited resource.
+
+Sections VII and VIII of @zaburdaev2015 bring these issues together. We first make the search problem precise, then reconstruct the classic argument for inverse-square search lengths, examine intermittent search and robotics, and conclude with the review's open theoretical questions. Optimality statements below always refer to a specified model and cost.
+
+## First passage is a path observable
+
+Let $A$ be a target region and $\mathbf X(t)$ a searcher's continuous trajectory. Its first-passage time is
+
+$$
+T_A=\inf\{t\ge0:\mathbf X(t)\in A\},\qquad
+S(t)=\Pr(T_A>t).
+$$ {#eq-search-first-passage}
+
+The first-passage density is $-dS/dt$ when it exists, and
+
+$$
+\mathbb E[T_A]=\int_0^\infty S(t)\,dt
+$$ {#eq-search-survival-mean}
+
+provided the integral converges. A median can remain finite when the mean diverges, so a single performance number can conceal important failures. If a fraction of trajectories never detects the target, success probability must also be reported.
+
+For a speed bounded by $v$, the initial distance $d$ from the target gives $T_A\ge d/v$. This causal lower bound is absent from an instantaneous-jump model. There is another difference: a flight path can cross a target and must then be stopped, even if its sampled endpoint lies far beyond. A simulation that checks only renewal endpoints implements a different detection rule.
+
+Boundaries also need an operational definition. Reflecting a continuous trajectory, resampling a flight at a wall, and rejecting a proposed step are three different processes. An absorbing target interrupts the unfinished flight. In an age-structured description the absorbing condition therefore acts on particles with their current orientation and age, not only on the renewal density. These details explain why a free-space propagator does not by itself solve a first-passage problem.
+
+A useful baseline is diffusion on $0<x<L$, absorbed at $0$ and reflected at $L$. The mean time $m(x)$ obeys the backward equation $Dm''=-1$, with $m(0)=0$ and $m'(L)=0$. Integration gives
+
+$$
+m(x)=\frac{Lx-x^2/2}{D}.
+$$ {#eq-search-brownian-baseline}
+
+A uniform initial point has mean $L^2/(3D)$. This does not supply a universal benchmark for a Lévy walk: matching $D$ is impossible for an asymptotically superdiffusive process. One should instead match operational constraints such as speed, sensing radius, turning cost, and observation horizon.
+
+## The classic sparse-target model
+
+### Specify the experiment before optimizing an exponent
+
+In the influential model of Viswanathan and collaborators, targets have spatial density $\rho$, the walker senses within distance $r$, and it searches continuously while traveling at speed $v$ [@viswanathan1999]. In two dimensions a straight path of length $s$ sweeps an area approximately $2rs$, ignoring end caps and overlap. For Poisson target positions, its no-encounter probability is approximately $e^{-2r\rho s}$. This identifies the geometric mean free path
+
+$$
+\lambda=(2r\rho)^{-1}.
+$$ {#eq-search-encounter-scale}
+
+It is not the typical nearest-neighbor distance between all targets, which scales as $\rho^{-1/2}$. It is the characteristic distance traveled by a thin search corridor before encounter. Remembering this difference prevents a dimensional error.
+
+When no target is seen, choose a new direction and an intended flight length with density
+
+$$
+p(\ell)=(\mu-1)r^{\mu-1}\ell^{-\mu},\qquad \ell\ge r,\quad\mu>1.
+$$ {#eq-search-intended-length}
+
+Here $\mu=1+\gamma$, because the book defines $\psi(\tau)\sim\tau^{-1-\gamma}$. “Inverse square” means $\mu=2$, hence $\gamma=1$; it does not mean $\gamma=2$. A target encountered en route ends a flight before its intended length. The actual observed step distribution consequently differs from the input distribution.
+
+An efficiency per distance can be defined as $\mathcal E=1/(N\langle\ell\rangle)$, where $N$ is the average number of flights between successful encounters and $\langle\ell\rangle$ is the mean executed distance per flight. At constant speed, efficiency per time differs by a factor $v$. Turning delays, handling time, or a length-dependent energy cost break that equivalence.
+
+### Where the logarithm at inverse square comes from
+
+For a transparent approximation, replace the random encounter distance by a sharp cutoff $\lambda$ and write an executed flight as $\min(\ell,\lambda)$. Its mean is
+
+$$
+\begin{aligned}
+\langle\ell\rangle
+&=\int_r^\lambda \ell p(\ell)d\ell+\lambda\Pr(\ell>\lambda)\\
+&=r\frac{(\lambda/r)^{2-\mu}-(\mu-1)}{2-\mu},\qquad \mu\ne2,
+\end{aligned}
+$$ {#eq-search-mean-truncated}
+
+and the continuous limit at $\mu=2$ is $r[1+\log(\lambda/r)]$. At this marginal exponent, every logarithmic decade contributes comparably to the mean intended travel up to the encounter cutoff. The divergence of the untruncated mean does not make the executed mean infinite because detection interrupts the movement.
+
+The classic scaling argument estimates the number of flights differently for **destructive** search, in which an encountered target is removed, and **non-destructive** search, in which targets can be revisited. Writing $R=\lambda/r\gg1$, its estimates are
+
+$$
+N_{\mathrm{d}}\sim R^{\mu-1},\qquad
+N_{\mathrm{n}}\sim R^{(\mu-1)/2}.
+$$ {#eq-search-classic-flight-counts}
+
+These are model-dependent scaling estimates, not general identities for arbitrary target fields. In particular the second case relies on the geometry and preparation of the search near previously encountered resources.
+
+For $1<\mu<2$, the mean executed length scales as $rR^{2-\mu}/(2-\mu)$. Multiplying by $N_{\mathrm{d}}$ gives a cost proportional to $rR/(2-\mu)$: within this approximation, long nearly ballistic exploration wins for destructive search. For the non-destructive estimate, the same calculation gives $rR^{(3-\mu)/2}/(2-\mu)$ away from the marginal point. Shortening relocations as $\mu$ approaches two helps, but beyond two the rising number of small flights makes local revisiting expensive.
+
+A more careful look near the marginal point makes the balance explicit. Put $\mu=2+\delta$ and $L_R=\log R$. Apart from the common factor $rR^{1/2}$, the approximate cost is
+
+$$
+F(\delta)=\frac{2\sinh(\delta L_R/2)}{\delta}
++e^{\delta L_R/2}.
+$$ {#eq-search-near-marginal}
+
+The first term is even and has its minimum at $\delta=0$. In the sparse limit it dominates, producing an optimum approaching $\mu=2$. Finite-density corrections depend on the approximation for encounters and flight counts. The review presents one such correction; it should not be read as a universal precision formula. What survives this heuristic calculation is the conditional balance between local revisiting and exploration.
+
+### What the optimality claim does and does not establish
+
+If targets are plentiful, detection interrupts almost every intended flight and the chosen tail has little effect. If targets are removed, clustered, moving, slow to replenish, or known from memory, the tradeoff changes. So does the answer when the walker is blind during fast travel. A single target in a bounded domain can favor an optimized persistent walk with exponentially distributed runs [@tejedor2012]. A directional cue can make directed motion more useful than blind superdiffusion.
+
+The classic inverse-square claim has also received later theoretical criticism. Levernier and colleagues found that in dimensions at least two, generic dilute-target encounter-rate scaling does not single out an inverse-square exponent; details of the search and restarting protocol can control any optimum [@levernier2020]. A subsequent comment and reply disagreed about the interpretation and relevant limiting conditions [@buldyrev2021; @levernier2021]. These papers go beyond the 2015 review. They reinforce the practice used here: report detection rules, replenishment, restart distance, dimension, cost, and parameter limits before making an optimality claim.
+
+A separate result can establish robustness under a different objective, such as near-optimal performance for targets of unknown sizes. It need not contradict a result about maximizing encounter rate for fixed microscopic parameters. Comparing the mathematical questions is more informative than comparing the word “optimal” in their titles.
+
+::: {.callout-tip collapse="true"}
+## Exercise: estimate search scales without fitting a trajectory
+
+A two-dimensional searcher has sensing radius $r=1\,\mathrm m$ and Poisson target density $\rho=10^{-4}\,\mathrm m^{-2}$. Estimate $\lambda$ and the sharp-cutoff mean executed length for an inverse-square intended-length law.
+
+**Worked solution.** The encounter scale is $\lambda=(2r\rho)^{-1}=5000\,\mathrm m$, while the nearest-neighbor spacing is only of order $100\,\mathrm m$. The mean executed step is $r[1+\log(5000)]\simeq9.52\,\mathrm m$. Many short flights coexist with rare long ones. This estimate neglects corridor overlap, target-conditioned starts, and boundaries; a field smaller than $5000\,\mathrm m$ would require a different cutoff.
+:::
+
+## Intermittent search: motion and detection are separate activities
+
+Intermittent search alternates a slow, reactive phase with a faster relocation phase. For example, an organism may inspect a small region effectively while moving slowly, then travel rapidly while detecting little. A walk with rests is a special case; a diffusive local-search phase is not a rest because it explores and can find targets.
+
+An elementary renewal estimate makes the optimization understandable. Suppose each complete search–relocation cycle has mean duration $\tau_s+\tau_r$ and succeeds with probability $p$. If cycles are independent and identically prepared, the number of cycles to success is geometric, giving
+
+$$
+\mathbb E[T]\simeq\frac{\tau_s+\tau_r}{p}.
+$$ {#eq-search-cycle-cost}
+
+Too short a relocation leaves the walker searching an already explored region, reducing $p$. Too long a relocation adds travel cost without proportionate new detection. A broad relocation distribution can compromise between these losses when the relevant spatial scale is uncertain. Lomholt and collaborators analyzed Lévy relocations in such an intermittent model and found advantages over comparison strategies under their specified conditions [@lomholt2008]. The result is about the composite process, rather than an always-reactive pure Lévy walk.
+
+In a kinetic description, let $P_s(\mathbf r,t)$ denote searching particles and $P_r(\mathbf r,\mathbf u,a,t)$ relocating particles of orientation $\mathbf u$ and relocation age $a$. Local diffusion acts on $P_s$; ballistic transport $v\mathbf u\cdot\nabla$ and the age derivative act on $P_r$. Switching couples their boundary conditions at age zero. Absorption acts in the searching state if relocation is blind. This structure preserves the physics of which state can detect a target.
+
+Heavy-tailed durations complicate the cycle estimate. If a blind relocation has infinite mean duration, $\mathbb E[T]$ can diverge even though most realizations succeed quickly. One must then use a finite horizon, a truncation, or a different objective. The review also discusses composite models with diffusive tumbles and heavy-tailed runs, where the competition between the two duration laws changes transport scaling. In biological observations, resource scarcity can induce a switch between slow local movement and broader relocations; fitting all phases with one pure law can obscure that response.
+
+## Robotics: turn a model into an explicit algorithm
+
+Robots provide a useful complement to biological observations because the controller is known. One can implement a chosen duration law, sensing rule, and response to obstacles, then measure success. The experiment tests the algorithm under those conditions; it does not establish that an animal implements the same controller.
+
+A finite-speed search controller can sample $\tau=\tau_0(U^{-1/\gamma}-1)$ from a Pareto-type survival law, where $U$ is uniform on $(0,1)$, choose a heading, and move until time $\tau$, detection, or a boundary event. Real platforms need maximum durations, turn times, and obstacle handling. Those choices are part of the implemented model and should be recorded in a reproducible benchmark.
+
+The review describes **Lévy-taxis**, which combines broad exploration with response to chemical cues in a simulated aquatic plume [@pasternak2009]. Searching for a plume and following it to its source are distinct tasks. A broad undirected relocation can help locate a filament; local concentration and flow information can then guide tracking. Reported improvements are numerical comparisons within a chosen turbulent-field and sensor model.
+
+A related mobile-robot controller combines stochastic exploration with sonotaxis, movement guided by sound [@nurzaman2009]. Far from a speaker, the gradient may be too weak to guide the robot. Broad exploration can bring it into the region where the sensor becomes informative, after which directed response completes the task. Replacing some straight excursions with loops has also been proposed for tracking moving targets, because loops revisit a region rather than abandoning it permanently.
+
+For several searchers, independence gives the exact survival relation $S_N(t)=S_1(t)^N$ when their initial conditions and trajectories are independent and identically distributed. Consequently
+
+$$
+\mathbb E[T_{\min}]=\int_0^\infty S_1(t)^N\,dt.
+$$ {#eq-search-parallel-survival}
+
+The mean is proportional to $1/N$ only for an exponential single-searcher survival, or an appropriate approximation to it. A causal minimum time, heavy tails, or common environmental constraints can give very different scaling. Communication changes the problem further: information from a successful robot makes other robots' trajectories dependent.
+
+The review's swarm examples include repulsive interactions that disperse robots, division of a tank between two underwater vehicles, artificial pheromone communication, and adaptive attraction based on recently discovered targets. Collective adaptive underwater exploration has been tested in simulation and on robotic platforms [@sutantyo2013]. Repulsion may reduce repeated coverage at low density but can interrupt intended long runs when the swarm crowds. Partitioning can beat unrestricted exploration in a small known domain. Communication helps only when its informational benefit outweighs travel, interference, and coordination costs.
+
+An especially revealing result is that adaptive correlated walks can generate broad, apparently Lévy-like steps without directly sampling a power-law law. The robot changes persistence after detecting resources, and the environment supplies a distribution of behavioral episodes. This is a constructive demonstration of the distinction between a trajectory pattern and its generating mechanism.
+
+::: {.callout-tip collapse="true"}
+## Exercise: can more searchers repair a divergent mean?
+
+Suppose independent searchers have $S_1(t)=(1+t/t_0)^{-a}$ with $0<a<1$. Find the mean time until the first success among $N$ searchers.
+
+**Worked solution.** Independence gives $S_N=(1+t/t_0)^{-aN}$. Its integral converges only if $aN>1$ and then equals $t_0/(aN-1)$. A single searcher has infinite mean, but enough independent searchers give a finite mean. The result is not the single-searcher mean divided by $N$, which would be undefined.
+:::
+
+## Outlook: what remains to be explained
+
+The review's final section is a research agenda dated to 2015. The questions below preserve its content while avoiding the implication that its assessment is an exhaustive account of later work.
+
+**Microscopic emergence.** Hamiltonian sticking, nonlinear hydrodynamics, momentum excursions of cold atoms, and frequency redistribution of photons give different mechanisms for broad transport. A central task is to derive a renewal or generalized-walk description from each mechanism and state which correlations survive coarse graining. Plasma transport is a demanding example: coherent structures, nonlinear interactions, and nonequilibrium preparation can require nonlinear displacement–time coupling. A fitted tail does not select one of these mechanisms.
+
+**Higher dimensions and geometry.** Choosing a flight uniformly in angle and choosing a lattice axis with equal probability are different models. Their central exponents can coincide while their propagator shapes and rare-event directions differ. For an isotropic planar density $P(\mathbf r,t)=P(r,t)$, the radial density is $p_r(r,t)=2\pi rP(r,t)$. Replacing $|x|$ by $r$ in a one-dimensional density loses this Jacobian and generally fails normalization. Axial motion can retain a direction-dependent spectral measure even when each coordinate has broad stable scaling. Infinite-horizon billiards add long collision-free corridors and marginal logarithmic behavior. Foam networks provide another geometry: internal reflection constrains light to a liquid network, so lattice structure and junction rules affect transport. These are physical distinctions to derive, not notation changes.
+
+**Correlated flights.** Static disorder in Lévy glass, correlations between blinking intervals, and adaptive turning violate iid renewal assumptions. One can introduce internal states, conditional duration laws, correlated velocity sequences, or a dynamical environment. Each extension needs new observables that measure its extra parameters. Matching one marginal tail cannot validate all those hidden choices.
+
+**First passage and inference.** Absorption, confinement, target motion, aging, and unfinished flights turn first passage into a problem with its own boundary and initial conditions. Better theory and careful numerical treatment are both needed. In biological work, separating intrinsic behavioral variability from habitat structure and between-individual variation remains equally important. Explicit posterior predictions or held-out trajectories can test whether an inferred model generalizes beyond the data used to fit it.
+
+**Applications with consequences.** The review points toward mobile communication, contamination-source localization, rescue robotics, and proposed uses of broad mobility statistics in criminology. Performance in a simulator or an association in historical human-location data is not validation for operational decisions. A statistical movement model contains neither intent nor a causal explanation of an individual's behavior. For engineering applications, transparent controller rules, resource costs, detection assumptions, uncertainty, and comparison with simple baselines make claims assessable.
+
+These open directions share a practical method: identify what moves, define its clock, measure the joint statistics of displacement and duration, and test consequences beyond the fitted tail. That method makes a Lévy walk a quantitative hypothesis that can be improved or rejected.

@@ -1,0 +1,156 @@
+# Living trajectories: mechanisms, measurements, and evidence {#sec-biology}
+
+Living motion is an unusually demanding application of stochastic transport. A bacterium has a motor and a signaling network; a T cell deforms and moves through tissue; a bird changes behavior when prey, wind, or remembered locations change. A fitted walk can summarize these trajectories without explaining their biological origin. This distinction is essential when interpreting Section VI of @zaburdaev2015.
+
+Three questions should be kept separate. **Description:** do measured statistics resemble a Lévy walk over a stated range? **Mechanism:** what physiological or environmental process creates those statistics? **Function:** does that behavior improve a specified task? Evidence for the first does not automatically establish the other two. This chapter develops these distinctions while following the review from single cells to human travel and animal foraging.
+
+## What does an observed “step” mean?
+
+An ideal walk arrives with its renewal times already defined. A recorded trajectory consists of positions $\mathbf r_n$ at sampling interval $\Delta t$, usually with localization error. A step must be inferred using pauses, angular thresholds, path straightness, motor state, or another operational criterion. Changing that criterion can change the tail. A curved persistent trajectory may be one long run under a straightness tolerance and many short runs under an angular threshold.
+
+The increment $\mathbf r(t+\Delta t)-\mathbf r(t)$ is not generally a complete flight. At small $\Delta t$ it mainly measures velocity; at larger $\Delta t$ it can contain many renewals. Thus a broad histogram of increments at one fixed lag is not a measurement of the flight-time density. With constant speed and resolved renewal times, one instead tests the coupling $\ell=v\tau$ by plotting flight length against duration. A broad distribution of speeds, or a speed that systematically increases with run duration, calls for a modified model.
+
+The observation scales differ enormously. Microscopy may resolve many cell trajectories with subsecond sampling, whereas an animal logger can have sparse sampling, finite battery life, and missing positions. Body size gives a useful dimensionless comparison: a 100-micrometer displacement is large for a bacterium but only several body lengths for a T cell. A short persistent segment cannot establish an asymptotic law merely because it contains many camera frames.
+
+Several effects can imitate a heavy tail. Pooling individuals with different ordinary exponential run times creates a mixture of exponentials. Switching between local feeding and long relocations creates a composite distribution. Habitat boundaries truncate long steps; missed detections merge short steps; a field-of-view boundary preferentially loses fast individuals. None of these effects is a reason to reject a model automatically. They are alternative explanations that must enter model comparison.
+
+For illustration, let each individual's run survival be $e^{-\lambda t}$, but let its rate be drawn from a gamma distribution with shape $a$ and rate parameter $b$:
+
+$$
+f(\lambda)=\frac{b^a}{\Gamma(a)}\lambda^{a-1}e^{-b\lambda}.
+$$ {#eq-bio-rate-mixture}
+
+Pooling the individuals gives
+
+$$
+\Psi_{\mathrm{pool}}(t)=\int_0^\infty e^{-\lambda t}f(\lambda)d\lambda
+=\left(\frac{b}{b+t}\right)^a.
+$$ {#eq-bio-mixture-survival}
+
+The pooled density is algebraic even though every individual has memoryless runs. Here the broad distribution reflects persistent differences between organisms, not renewal-to-renewal sampling within one organism. Repeated long tracks of identified individuals distinguish these possibilities.
+
+A convincing analysis therefore reports segmentation rules, individual variation, accessible scales, likelihood-based comparisons with plausible alternatives, and predictions beyond the fitted histogram. Useful additional observables include displacement distributions at several lags, directional correlations, time averages, rest durations, and the length–duration relation. The review's disagreements about animal movement are best read as disputes about these concrete issues.
+
+## Soil amoebae: superdiffusion need not imply scale-free runs
+
+Amoebae crawl by changing shape and forming protrusions called pseudopodia. Their motion is continuous and often persistent, so the definition of a discrete turn is less direct than it is for a flagellar motor. Levandowsky, White, and Schuster recorded seventeen soil-amoeba isolates over periods of 15–60 minutes, with positions traced every one or two minutes [@levandowsky1997]. The observed MSDs grew faster than linearly, motivating a Lévy-walk interpretation. The limited duration left open the possibility of crossover to ordinary diffusion.
+
+A simple alternative demonstrates why that limitation matters. Suppose a velocity has stationary correlation $C(t)=\langle\mathbf v(t)\cdot\mathbf v(0)\rangle=v_{\mathrm{rms}}^2e^{-t/\tau_p}$. Integrating velocity twice yields
+
+$$
+\langle|\mathbf r(t)-\mathbf r(0)|^2\rangle
+=2v_{\mathrm{rms}}^2\left[\tau_p t-\tau_p^2(1-e^{-t/\tau_p})\right].
+$$ {#eq-bio-persistent-msd}
+
+For $t\ll\tau_p$, expansion of the exponential gives $v_{\mathrm{rms}}^2t^2$. For $t\gg\tau_p$, the result is linear. In between, a log–log slope takes every value between two and one. An apparent slope such as 1.6 over a short interval therefore does not, by itself, reveal a power-law memory kernel.
+
+More detailed amoeba models include fluctuating speed, deformation-driven turning, generalized Langevin memory, and zigzag motion. The appropriate question is which additional features of a trajectory separate them. Shape dynamics, velocity correlations over a wider interval, and sensitivity to the segmentation threshold can be more informative than another estimate of an MSD exponent.
+
+## Bacteria: the renewal picture becomes biologically concrete
+
+### Runs, tumbles, reversals, and flicks
+
+A swimming *Escherichia coli* cell commonly alternates relatively straight runs and short tumbles. Counterclockwise rotation of its flagellar motors supports a propulsive bundle; reversals disrupt the bundle and reorient the cell. Typical laboratory scales in the review are a cell length near $2\,\mu\mathrm m$, speed near $20\,\mu\mathrm m\,\mathrm s^{-1}$, and run duration near one second. A run thus covers many body lengths. Tumbles are shorter, but ignoring their duration is a modeling approximation.
+
+Exponential runs lead naturally to ordinary diffusion after directional memory is lost. Measurements of tethered-cell motor dynamics reveal additional slow variability in the signaling system [@korobkova2004]. They motivate models with broad motor-state durations, but a tethered motor record is not identical to a free-swimming run record. Multiple flagella, bundle mechanics, and rotational diffusion intervene. The review treats a direct transfer to freely swimming cells as a hypothesis requiring evidence.
+
+Other bacteria use different turning rules. Run-and-reverse motion approximately changes direction by $\pi$. *Vibrio alginolyticus* can alternate reversals with a flick that largely randomizes direction. *Pseudomonas putida* can combine reversals with unequal forward and backward swimming speeds. These are distinct processes, although all can be described using renewal durations and orientation changes [@taktikos2013].
+
+### Deriving diffusion from turning statistics
+
+Consider planar motion $\mathbf v(t)=v(\cos\phi(t),\sin\phi(t))$. Let turns occur as a Poisson process of rate $\lambda$, with independent angular changes whose mean cosine is $q=\langle\cos\Delta\phi\rangle$ and whose mean sine vanishes. Let orientation also undergo independent rotational diffusion with coefficient $D_r$. Conditional on $N$ turns, directional memory contributes $q^N$; averaging $N$ gives
+
+$$
+\langle q^{N(t)}\rangle
+=\sum_{n\ge0}q^n e^{-\lambda t}\frac{(\lambda t)^n}{n!}
+=e^{-\lambda(1-q)t}.
+$$ {#eq-bio-poisson-turns}
+
+Planar rotational diffusion contributes $e^{-D_rt}$. Therefore
+
+$$
+C(t)=v^2e^{-t/\tau_e},\qquad
+\tau_e^{-1}=\lambda(1-q)+D_r,
+\qquad D_{\mathrm{eff}}=\frac{v^2\tau_e}{2}.
+$$ {#eq-bio-effective-diffusion}
+
+The factor two in $D_{\mathrm{eff}}$ comes from the planar convention $\langle r^2\rangle\sim4D_{\mathrm{eff}}t$. In three dimensions rotational diffusion gives a different angular decay factor. Specifying the dimension avoids a common factor-of-two error.
+
+At fixed rate, positive $q$ prolongs memory; exact reversals have $q=-1$ and lose net directional memory faster. Alternating a reversal and a flick cannot be replaced by a single average angle without checking. The two-event cycle retains an internal state and can produce negative velocity correlations. Unequal forward and backward speeds add another internal state; rotational diffusion then controls how a local speed asymmetry becomes long-time dispersal. A good walk model retains the biologically measured alternation.
+
+If rotational diffusion is negligible and run durations satisfy $\psi(\tau)\sim\tau^{-1-\gamma}$ with $1<\gamma<2$, long unbroken runs produce the familiar $t^{3-\gamma}$ MSD under suitable turning assumptions. But finite rotational diffusion bends even an exceptionally long motor run. It can cut off the directional persistence responsible for asymptotic superdiffusion. Motor residence statistics alone therefore do not determine the spatial exponent.
+
+::: {.callout-tip collapse="true"}
+## Exercise: predict a bacterial diffusion coefficient
+
+Take planar motion with $v=20\,\mu\mathrm m\,\mathrm s^{-1}$, $\lambda=1\,\mathrm s^{-1}$, $q=1/3$, and $D_r=0.1\,\mathrm s^{-1}$. Find $\tau_e$ and $D_{\mathrm{eff}}$.
+
+**Worked solution.** The decorrelation rate is $2/3+0.1\simeq0.767\,\mathrm s^{-1}$, so $\tau_e\simeq1.30\,\mathrm s$. Then $D_{\mathrm{eff}}=400(1.30)/2\simeq261\,\mu\mathrm m^2\,\mathrm s^{-1}$. Replacing each turn by complete randomization would set $q=0$ and reduce this estimate to about $182\,\mu\mathrm m^2\,\mathrm s^{-1}$. The turning law has measurable consequences even with identical run durations.
+:::
+
+## Chemotaxis: sensing a history changes a renewal process
+
+A cell can bias its movement by changing run durations in response to a chemical signal. Small bacteria often compare concentration along their recent path. Experiments resolve a response with a positive recent lobe and a compensating older lobe, supporting temporal comparison and adaptation [@segall1986]. Larger crawling cells can also compare receptor occupancy across their body and steer protrusions spatially; the same motor-rate model should not be imposed on them.
+
+For a weak signal, a bacterial tumble hazard can be written
+
+$$
+\lambda(t)=\lambda_0\left[1-\int_0^\infty R(s)c(\mathbf r(t-s))\,ds\right],
+$$ {#eq-bio-response-hazard}
+
+where $R(s)$ includes the signal-to-motor gain. Perfect linear adaptation to a constant concentration means $\int_0^\infty R(s)ds=0$. A constant concentration then drops out, but a history of increasing concentration need not. This is a precise way for a cell to respond to change without knowing its absolute position.
+
+To see the sign of the effect, consider a straight run with velocity $\sigma v$ in a weak one-dimensional gradient $g=dc/dx$, where $\sigma=\pm1$. Over a response-memory interval short enough that the run does not turn, $c(t-s)\simeq c(t)-\sigma vgs$. Thus the convolution becomes $\sigma vgA$, with $A=-\int_0^\infty sR(s)ds$. For a recent positive and older negative response lobe, $A>0$. The up-gradient hazard is lower, so the cell keeps favorable runs longer.
+
+An illustrative two-direction closure takes $\lambda_\sigma=\lambda_0(1-\sigma\epsilon)$, where $\epsilon=vgA$ is small, and redraws direction independently after a tumble. Its transition rates between distinct signs are $\lambda_+/2$ and $\lambda_-/2$. Stationary flux balance gives
+
+$$
+P_+=\frac{\lambda_-}{\lambda_++\lambda_-},\qquad
+v_{\mathrm{drift}}=v(P_+-P_-)=v\epsilon=v^2gA.
+$$ {#eq-bio-toy-chemotaxis-drift}
+
+This is a teaching approximation, not a general drift formula: the real response remembers earlier runs, and rotational diffusion and turning persistence modify the weighting of $R$. Quantitative theories integrate the response against the unperturbed trajectory statistics. The calculation nevertheless shows the causal link from biochemical memory to a change in residence times and then to transport.
+
+For a power-law run distribution the unperturbed hazard is already age dependent. For example, $\Psi(a)=[\tau_0/(\tau_0+a)]^\gamma$ gives $h(a)=\gamma/(\tau_0+a)$. A chemically modulated model must retain both run age $a$ and signal history. A scalar local rate depending only on current concentration discards these two memories. An age-structured kinetic equation, augmented by signaling variables or a history functional, is the appropriate starting point. This is why extending Poisson chemotaxis calculations to genuine Lévy runs is a substantive theoretical problem.
+
+## T cells: combining several trajectory observables
+
+CD8$^+$ T cells locate and kill abnormal or infected cells by contact. Harris and collaborators tracked their motion in brain tissue from mice with chronic *Toxoplasma gondii* infection and compared control conditions with altered chemokine signaling [@harris2012]. They analyzed displacement distributions and correlations alongside the MSD, obtaining support for a generalized Lévy walk with pauses over the experimental observation range. The chemokine CXCL10 increased migration speed without requiring a change in the modeled walk statistics.
+
+This is a stronger test than selecting a walk from an MSD slope alone. Pauses, distribution shapes at multiple lag times, and trajectory correlations constrain different aspects of a model. Even here the conclusion is conditional on finite tracks, tissue setting, segmentation, and the candidate alternatives. It does not imply that every T cell in every organ executes the same process.
+
+The review reports an MSD exponent near 1.4 and a characteristic displacement scaling near $t^{0.63}$. These numbers need not satisfy twice-the-width-exponent equals MSD exponent: broad tails and rests can make the second moment scale differently from the central width. Nor should one infer a single standard-walk $\gamma$ from one of these numbers and ignore the generalized process used in the fit.
+
+Search simulations supplied a possible functional interpretation: broad relocations could help cells encounter sparse targets. That claim depends on target density, detection geometry, target motion, tissue obstacles, and the chosen efficiency measure. It is a model-based comparison rather than direct evidence of evolutionary optimality. In particular, comparing to a single Brownian benchmark does not exhaust possible adaptive or persistent strategies. The next chapter makes these distinctions quantitative.
+
+## Human motion: foraging, destinations, and transport modes
+
+Human trajectories contain decisions and constraints on many scales. A journey between two cities, a walk around a campus, and searching for food are different experiments. Dollar-banknote displacement and mobile-phone studies helped establish broad spatial mobility statistics, but sparse observations do not resolve the travel clock. A jump process can be an adequate model at that resolution while saying little about pedestrian run durations.
+
+The review describes a small blindfolded-target experiment in which the more successful searchers showed run statistics suggestive of a power law. The accessible range was narrow, so the result is an interesting association rather than decisive model discrimination. More ecologically grounded GPS measurements of Hadza hunter-gatherers found that roughly half of analyzed foraging bouts were best described by Lévy-like step-length models among the tested candidates [@raichlen2014]. The relevant claims concern those bouts and segmentation procedures, not a universal law for all human walking.
+
+Rhee and colleagues analyzed 226 daily GPS traces from 101 volunteers in several outdoor settings and used the observed heavy-tailed flights and pauses to construct a mobility model for communication networks [@rhee2011]. Their reported superdiffusion crossed over on the scale of tens of minutes to about an hour, consistent with restricted activity regions and returns to destinations. A finite daily territory makes unbounded asymptotic superdiffusion implausible even if intermediate behavior is broad.
+
+A physically useful human-mobility model therefore has at least a mode variable: walking, vehicle travel, and waiting have different speeds and time costs. It may also include a home location, destinations, repeated visits, and schedules. Pooling these modes can create an apparent length–speed relation because longer trips disproportionately use faster transport. A constant-speed walk then loses a central feature of the data. For network design, predicting contact durations and intercontact times can matter more than assigning a pure asymptotic label.
+
+## Bees, seabirds, monkeys, and other animals
+
+Animal examples span radically different environments and measurement methods. Harmonic radar and video track insects; pressure loggers mainly measure the vertical component of marine motion; satellite tags and GPS follow birds; visual observations and range finding track many terrestrial mammals. A heavy tail in one projected coordinate need not identify the full spatial process.
+
+For bumblebees, detailed laboratory tracks permit continuous stochastic models with directional persistence, speed fluctuations, and environmental responses. Lenz, Chechkin, and Klages constructed and tested such a model against flight data [@lenz2013]. This illustrates an alternative to defining turns first: infer a velocity-orientation process and ask whether broad coarse-grained runs emerge from it. Ants, honeybees, moths, beetles, stoneflies, and fruit flies provide related examples in the review, with different degrees of support for Lévy descriptions.
+
+The albatross controversy is a lesson in measurement. An influential early report associated flight-duration statistics with Lévy search. Reanalysis using improved data and statistical methods found that crucial long intervals in the original evidence did not represent the assumed flights and did not support the original conclusion [@edwards2007]. Subsequent studies of other tracks and environments again reported Lévy-like patterns and examined actual prey capture [@humphries2012]. These results should be assessed as specific data sets and conditions, rather than votes establishing that all seabirds are either Lévy or non-Lévy.
+
+Marine studies extend to sharks, tuna, turtles, penguins, seals, dolphins, jellyfish, and benthic animals. Currents, diving physiology, searching, and prey encounters can all shape a pressure or location record. Other bird examples include shearwaters, frigatebirds, and vultures. Among mammals, the review lists spider monkeys, baboons, deer, jackals, reindeer, langurs, and bearded sakis. This breadth shows the portability of the statistical language; it is not evidence for a single shared motor mechanism.
+
+Spider-monkey foraging trajectories have broad moves and pauses compatible with Lévy-like descriptions [@ramos2004]. A separate mechanistic possibility is that purposeful travel among patchily distributed trees creates the broad steps. A knowledgeable animal in a heterogeneous landscape can generate scale-free movement without independently drawing scale-free run lengths. The same logical possibility applies to humans visiting destinations or bees selecting flowers. Environmental maps, observed decisions, and experimental changes in resource distribution can distinguish an intrinsic renewal mechanism from this emergent explanation.
+
+::: {.callout-tip collapse="true"}
+## Exercise: what would falsify the simplest model?
+
+A study finds a run-length density proportional to $\ell^{-2.2}$ over two decades. It also finds that mean speed during a run grows as $\ell^{1/3}$. Is a constant-speed Lévy walk a satisfactory description?
+
+**Worked solution.** No: constant speed predicts a narrow relation $\ell=v\tau$. The observed relation implies $\tau\propto\ell^{2/3}$ or $\ell\propto\tau^{3/2}$, subject to fluctuations. A nonlinear coupled walk may be appropriate. The tail exponent alone cannot rescue the fixed-speed assumption. One should test conditional length–duration distributions and account for mixtures of behaviors before choosing the replacement model.
+:::
+
+The productive scientific outcome is a model that predicts several observables over a declared range and survives alternatives. “Lévy-like” is useful as a description at that stage; a mechanistic or adaptive interpretation needs its own evidence.

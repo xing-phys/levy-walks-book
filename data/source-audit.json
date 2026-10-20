@@ -1,0 +1,750 @@
+{
+  "checked_on": "2026-10-20",
+  "method": "DOI resolution via Crossref REST API, arXiv citation metadata, and inspection of primary PDFs",
+  "records": [
+    {
+      "key": "solomon1993",
+      "doi": "10.1103/PhysRevLett.71.3975",
+      "url": null,
+      "verified": true,
+      "registered_title": [
+        "Observation of anomalous diffusion and Lévy flights in a two-dimensional rotating flow"
+      ],
+      "source_file": "assets/refs-applications.bib"
+    },
+    {
+      "key": "cipriani2005",
+      "doi": "10.1103/PhysRevLett.94.244301",
+      "url": null,
+      "verified": true,
+      "registered_title": [
+        "From Anomalous Energy Diffusion to Levy Walks and Heat Conductivity in One-Dimensional Systems"
+      ],
+      "source_file": "assets/refs-applications.bib"
+    },
+    {
+      "key": "spohn2014",
+      "doi": "10.1007/s10955-014-0933-y",
+      "url": null,
+      "verified": true,
+      "registered_title": [
+        "Nonlinear Fluctuating Hydrodynamics for Anharmonic Chains"
+      ],
+      "source_file": "assets/refs-applications.bib"
+    },
+    {
+      "key": "barthelemy2008",
+      "doi": "10.1038/nature06948",
+      "url": null,
+      "verified": true,
+      "registered_title": [
+        "A Lévy flight for light"
+      ],
+      "source_file": "assets/refs-applications.bib"
+    },
+    {
+      "key": "mercadier2009",
+      "doi": "10.1038/nphys1286",
+      "url": null,
+      "verified": true,
+      "registered_title": [
+        "Lévy flights of photons in hot atomic vapours"
+      ],
+      "source_file": "assets/refs-applications.bib"
+    },
+    {
+      "key": "margolin2005",
+      "doi": "10.1103/PhysRevLett.94.080601",
+      "url": null,
+      "verified": true,
+      "registered_title": [
+        "Nonergodicity of Blinking Nanocrystals and Other Lévy-Walk Processes"
+      ],
+      "source_file": "assets/refs-applications.bib"
+    },
+    {
+      "key": "sagi2012",
+      "doi": "10.1103/PhysRevLett.108.093002",
+      "url": null,
+      "verified": true,
+      "registered_title": [
+        "Observation of Anomalous Diffusion and Fractional Self-Similarity in One Dimension"
+      ],
+      "source_file": "assets/refs-applications.bib"
+    },
+    {
+      "key": "levandowsky1997",
+      "doi": null,
+      "url": "https://rcin.org.pl/Content/13306/PDF/WA488_17711_P1825-T36-nr4_AP.pdf",
+      "verified": true,
+      "registered_title": null,
+      "source_file": "assets/refs-applications.bib"
+    },
+    {
+      "key": "korobkova2004",
+      "doi": "10.1038/nature02404",
+      "url": null,
+      "verified": true,
+      "registered_title": [
+        "From molecular noise to behavioural variability in a single bacterium"
+      ],
+      "source_file": "assets/refs-applications.bib"
+    },
+    {
+      "key": "taktikos2013",
+      "doi": "10.1371/journal.pone.0081936",
+      "url": null,
+      "verified": true,
+      "registered_title": [
+        "How the Motility Pattern of Bacteria Affects Their Dispersal and Chemotaxis"
+      ],
+      "source_file": "assets/refs-applications.bib"
+    },
+    {
+      "key": "segall1986",
+      "doi": "10.1073/pnas.83.23.8987",
+      "url": null,
+      "verified": true,
+      "registered_title": [
+        "Temporal comparisons in bacterial chemotaxis."
+      ],
+      "source_file": "assets/refs-applications.bib"
+    },
+    {
+      "key": "harris2012",
+      "doi": "10.1038/nature11098",
+      "url": null,
+      "verified": true,
+      "registered_title": [
+        "Generalized Lévy walks and the role of chemokines in migration of effector CD8+ T cells"
+      ],
+      "source_file": "assets/refs-applications.bib"
+    },
+    {
+      "key": "raichlen2014",
+      "doi": "10.1073/pnas.1318616111",
+      "url": null,
+      "verified": true,
+      "registered_title": [
+        "Evidence of Lévy walk foraging patterns in human hunter–gatherers"
+      ],
+      "source_file": "assets/refs-applications.bib"
+    },
+    {
+      "key": "rhee2011",
+      "doi": "10.1109/TNET.2011.2120618",
+      "url": null,
+      "verified": true,
+      "registered_title": [
+        "On the Levy-Walk Nature of Human Mobility"
+      ],
+      "source_file": "assets/refs-applications.bib"
+    },
+    {
+      "key": "lenz2013",
+      "doi": "10.1371/journal.pone.0059036",
+      "url": null,
+      "verified": true,
+      "registered_title": [
+        "Constructing a Stochastic Model of Bumblebee Flights from Experimental Data"
+      ],
+      "source_file": "assets/refs-applications.bib"
+    },
+    {
+      "key": "edwards2007",
+      "doi": "10.1038/nature06199",
+      "url": null,
+      "verified": true,
+      "registered_title": [
+        "Revisiting Lévy flight search patterns of wandering albatrosses, bumblebees and deer"
+      ],
+      "source_file": "assets/refs-applications.bib"
+    },
+    {
+      "key": "humphries2012",
+      "doi": "10.1073/pnas.1121201109",
+      "url": null,
+      "verified": true,
+      "registered_title": [
+        "Foraging success of biological Lévy flights recorded in situ"
+      ],
+      "source_file": "assets/refs-applications.bib"
+    },
+    {
+      "key": "ramos2004",
+      "doi": "10.1007/s00265-003-0700-6",
+      "url": null,
+      "verified": true,
+      "registered_title": [
+        "L�vy walk patterns in the foraging movements of spider monkeys (Ateles geoffroyi)"
+      ],
+      "source_file": "assets/refs-applications.bib"
+    },
+    {
+      "key": "viswanathan1999",
+      "doi": "10.1038/44831",
+      "url": null,
+      "verified": true,
+      "registered_title": [
+        "Optimizing the success of random searches"
+      ],
+      "source_file": "assets/refs-applications.bib"
+    },
+    {
+      "key": "tejedor2012",
+      "doi": "10.1103/PhysRevLett.108.088103",
+      "url": null,
+      "verified": true,
+      "registered_title": [
+        "Optimizing Persistent Random Searches"
+      ],
+      "source_file": "assets/refs-applications.bib"
+    },
+    {
+      "key": "levernier2020",
+      "doi": "10.1103/PhysRevLett.124.080601",
+      "url": null,
+      "verified": true,
+      "registered_title": [
+        "Inverse Square Lévy Walks are not Optimal Search Strategies for \n<mml:math xmlns:mml=\"http://www.w3.org/1998/Math/MathML\" display=\"inline\"><mml:mi>d</mml:mi><mml:mo>≥</mml:mo><mml:mn>2</mml:mn></mml:math>"
+      ],
+      "source_file": "assets/refs-applications.bib"
+    },
+    {
+      "key": "buldyrev2021",
+      "doi": "10.1103/PhysRevLett.126.048901",
+      "url": null,
+      "verified": true,
+      "registered_title": [
+        "Comment on “Inverse Square Lévy Walks are not Optimal Search Strategies for \n<mml:math xmlns:mml=\"http://www.w3.org/1998/Math/MathML\" display=\"inline\"><mml:mi>d</mml:mi><mml:mo>≥</mml:mo><mml:mn>2</mml:mn></mml:math>\n”"
+      ],
+      "source_file": "assets/refs-applications.bib"
+    },
+    {
+      "key": "levernier2021",
+      "doi": "10.1103/PhysRevLett.126.048902",
+      "url": null,
+      "verified": true,
+      "registered_title": [
+        "Reply to “Comment on ‘Inverse Square Lévy Walks are not Optimal Search Strategies for\n                    <mml:math xmlns:mml=\"http://www.w3.org/1998/Math/MathML\" display=\"inline\">\n                      <mml:mi>d</mml:mi>\n                      <mml:mo>≥</mml:mo>\n                      <mml:mn>2</mml:mn>\n                    </mml:math>\n                    ”’"
+      ],
+      "source_file": "assets/refs-applications.bib"
+    },
+    {
+      "key": "lomholt2008",
+      "doi": "10.1073/pnas.0803117105",
+      "url": null,
+      "verified": true,
+      "registered_title": [
+        "Lévy strategies in intermittent search processes are advantageous"
+      ],
+      "source_file": "assets/refs-applications.bib"
+    },
+    {
+      "key": "pasternak2009",
+      "doi": "10.1088/1751-8113/42/43/434010",
+      "url": null,
+      "verified": true,
+      "registered_title": [
+        "Lévy-taxis: a novel search strategy for finding odor plumes in turbulent flow-dominated environments"
+      ],
+      "source_file": "assets/refs-applications.bib"
+    },
+    {
+      "key": "nurzaman2009",
+      "doi": "10.1109/ROBIO.2009.4913103",
+      "url": null,
+      "verified": true,
+      "registered_title": [
+        "Yuragi-based adaptive searching behavior in mobile robot: From bacterial chemotaxis to Levy walk"
+      ],
+      "source_file": "assets/refs-applications.bib"
+    },
+    {
+      "key": "sutantyo2013",
+      "doi": "10.1109/ICMA.2013.6617961",
+      "url": "https://marknormanread.github.io/pubs/Sutantyo-IEEE_Mechatronic_Automation_13_-_Levy_Flight.pdf",
+      "verified": true,
+      "registered_title": [
+        "Collective-adaptive L&amp;#x00E9;vy flight for underwater multi-robot exploration"
+      ],
+      "source_file": "assets/refs-applications.bib"
+    },
+    {
+      "key": "zaburdaev2015",
+      "doi": "10.1103/RevModPhys.87.483",
+      "url": "https://arxiv.org/abs/1410.5100",
+      "verified": true,
+      "registered_title": [
+        "Lévy walks"
+      ],
+      "source_file": "assets/refs-core.bib"
+    },
+    {
+      "key": "montroll1965",
+      "doi": "10.1063/1.1704269",
+      "url": null,
+      "verified": true,
+      "registered_title": [
+        "Random Walks on Lattices. II"
+      ],
+      "source_file": "assets/refs-core.bib"
+    },
+    {
+      "key": "zaburdaev2008random",
+      "doi": "10.1103/PhysRevE.78.011119",
+      "url": "https://doi.org/10.1103/PhysRevE.78.011119",
+      "verified": true,
+      "registered_title": [
+        "Random walks with random velocities"
+      ],
+      "source_file": "assets/refs-theory.bib"
+    },
+    {
+      "key": "denisov2012fluctuations",
+      "doi": "10.1103/PhysRevE.85.031148",
+      "url": "https://doi.org/10.1103/PhysRevE.85.031148",
+      "verified": true,
+      "registered_title": [
+        "Lévy walks with velocity fluctuations"
+      ],
+      "source_file": "assets/refs-theory.bib"
+    },
+    {
+      "key": "froemberg2015ballistic",
+      "doi": "10.1103/PhysRevE.91.022131",
+      "url": "https://doi.org/10.1103/PhysRevE.91.022131",
+      "verified": true,
+      "registered_title": [
+        "Asymptotic densities of ballistic Lévy walks"
+      ],
+      "source_file": "assets/refs-theory.bib"
+    },
+    {
+      "key": "beckerkern2004coupled",
+      "doi": "10.1214/aop/1079021462",
+      "url": "https://doi.org/10.1214/aop/1079021462",
+      "verified": true,
+      "registered_title": [
+        "Limit theorems for coupled continuous time random walks"
+      ],
+      "source_file": "assets/refs-theory.bib"
+    },
+    {
+      "key": "meerschaert2012correction",
+      "doi": "10.1214/10-AOP635",
+      "url": "https://doi.org/10.1214/10-AOP635",
+      "verified": true,
+      "registered_title": [
+        "Limit theorems for coupled continuous time random walks"
+      ],
+      "source_file": "assets/refs-theory.bib"
+    },
+    {
+      "key": "zaburdaev2013correlation",
+      "doi": "10.1103/PhysRevLett.110.170604",
+      "url": "https://doi.org/10.1103/PhysRevLett.110.170604",
+      "verified": true,
+      "registered_title": [
+        "Space-Time Velocity Correlation Function for Random Walks"
+      ],
+      "source_file": "assets/refs-theory.bib"
+    },
+    {
+      "key": "lamperti1958occupation",
+      "doi": "10.1090/S0002-9947-1958-0094863-X",
+      "url": "https://doi.org/10.1090/S0002-9947-1958-0094863-X",
+      "verified": true,
+      "registered_title": [
+        "An occupation time theorem for a class of stochastic processes"
+      ],
+      "source_file": "assets/refs-theory.bib"
+    },
+    {
+      "key": "rebenshtok2014non",
+      "doi": "10.1103/PhysRevLett.112.110601",
+      "url": "https://doi.org/10.1103/PhysRevLett.112.110601",
+      "verified": true,
+      "registered_title": [
+        "Non-Normalizable Densities in Strong Anomalous Diffusion: Beyond the Central Limit Theorem"
+      ],
+      "source_file": "assets/refs-theory.bib"
+    },
+    {
+      "key": "rebenshtok2014infinite",
+      "doi": "10.1103/PhysRevE.90.062135",
+      "url": "https://doi.org/10.1103/PhysRevE.90.062135",
+      "verified": true,
+      "registered_title": [
+        "Infinite densities for Lévy walks"
+      ],
+      "source_file": "assets/refs-theory.bib"
+    },
+    {
+      "key": "froemberg2013einstein",
+      "doi": "10.1103/PhysRevE.87.030104",
+      "url": "https://doi.org/10.1103/PhysRevE.87.030104",
+      "verified": true,
+      "registered_title": [
+        "Time-averaged Einstein relation and fluctuating diffusivities for the Lévy walk"
+      ],
+      "source_file": "assets/refs-theory.bib"
+    },
+    {
+      "key": "friedrich2006inertial",
+      "doi": "10.1103/PhysRevLett.96.230601",
+      "url": "https://doi.org/10.1103/PhysRevLett.96.230601",
+      "verified": true,
+      "registered_title": [
+        "Anomalous Diffusion of Inertial, Weakly Damped Particles"
+      ],
+      "source_file": "assets/refs-theory.bib"
+    },
+    {
+      "key": "eule2012langevin",
+      "doi": "10.1103/PhysRevE.86.041134",
+      "url": "https://doi.org/10.1103/PhysRevE.86.041134",
+      "verified": true,
+      "registered_title": [
+        "Langevin description of superdiffusive Lévy processes"
+      ],
+      "source_file": "assets/refs-theory.bib"
+    },
+    {
+      "key": "kessler2012cold",
+      "doi": "10.1103/PhysRevLett.108.230602",
+      "url": "https://doi.org/10.1103/PhysRevLett.108.230602",
+      "verified": true,
+      "registered_title": [
+        "Theory of Fractional Lévy Kinetics for Cold Atoms Diffusing in Optical Lattices"
+      ],
+      "source_file": "assets/refs-theory.bib"
+    },
+    {
+      "key": "barkai2014excursion",
+      "doi": "10.1103/PhysRevX.4.021036",
+      "url": "https://doi.org/10.1103/PhysRevX.4.021036",
+      "verified": true,
+      "registered_title": [
+        "From the Area under the Bessel Excursion to Anomalous Diffusion of Cold Atoms"
+      ],
+      "source_file": "assets/refs-theory.bib"
+    }
+  ],
+  "accessible_manuscripts": [
+    {
+      "key": "cipriani2005",
+      "url": "https://arxiv.org/abs/cond-mat/0507438",
+      "status": 200,
+      "destination": "https://arxiv.org/abs/cond-mat/0507438",
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 42460,
+      "title": [
+        "From anomalous energy diffusion to Levy walks and heat conductivity in one-dimensional systems"
+      ],
+      "authors": [
+        "Cipriani, P.",
+        "Denisov, S.",
+        "Politi, A."
+      ],
+      "date": [
+        "2005/07/19"
+      ],
+      "doi": [
+        "10.1103/PhysRevLett.94.244301"
+      ]
+    },
+    {
+      "key": "spohn2014",
+      "url": "https://arxiv.org/abs/1305.6412",
+      "status": 200,
+      "destination": "https://arxiv.org/abs/1305.6412",
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 43419,
+      "title": [
+        "Nonlinear fluctuating hydrodynamics for anharmonic chains"
+      ],
+      "authors": [
+        "Spohn, Herbert"
+      ],
+      "date": [
+        "2013/05/28"
+      ],
+      "doi": [
+        "10.1007/s10955-014-0933-y"
+      ]
+    },
+    {
+      "key": "mercadier2009",
+      "url": "https://arxiv.org/abs/0904.2454",
+      "status": 200,
+      "destination": "https://arxiv.org/abs/0904.2454",
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 42473,
+      "title": [
+        "L\\'evy flights of photons in hot atomic vapours"
+      ],
+      "authors": [
+        "Mercadier, Nicolas",
+        "Guerin, William",
+        "Chevrollier, Martine",
+        "Kaiser, Robin"
+      ],
+      "date": [
+        "2009/04/16"
+      ],
+      "doi": [
+        "10.1038/nphys1286"
+      ]
+    },
+    {
+      "key": "margolin2005",
+      "url": "https://arxiv.org/abs/cond-mat/0406381",
+      "status": 200,
+      "destination": "https://arxiv.org/abs/cond-mat/0406381",
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 41784,
+      "title": [
+        "Non-ergodic Intensity Correlation Functions for Blinking Nano Crystals"
+      ],
+      "authors": [
+        "Margolin, Gennady",
+        "Barkai, Eli"
+      ],
+      "date": [
+        "2004/06/17"
+      ],
+      "doi": [
+        "10.1103/PhysRevLett.94.080601"
+      ]
+    },
+    {
+      "key": "sagi2012",
+      "url": "https://arxiv.org/abs/1109.1503",
+      "status": 200,
+      "destination": "https://arxiv.org/abs/1109.1503",
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 42230,
+      "title": [
+        "Observation of anomalous diffusion and fractional self-similarity in one dimension"
+      ],
+      "authors": [
+        "Sagi, Yoav",
+        "Brook, Miri",
+        "Almog, Ido",
+        "Davidson, Nir"
+      ],
+      "date": [
+        "2011/09/07"
+      ],
+      "doi": [
+        "10.1103/PhysRevLett.108.093002"
+      ]
+    },
+    {
+      "key": "levandowsky1997",
+      "url": "https://rcin.org.pl/Content/13306/PDF/WA488_17711_P1825-T36-nr4_AP.pdf",
+      "status": 200,
+      "destination": "https://rcin.org.pl/Content/13306/PDF/WA488_17711_P1825-T36-nr4_AP.pdf",
+      "content_type": "application/pdf",
+      "bytes": 16500764,
+      "saved": "/tmp/levandowsky1997-source-check.pdf"
+    },
+    {
+      "key": "lenz2013",
+      "url": "https://arxiv.org/abs/1302.2500",
+      "status": 200,
+      "destination": "https://arxiv.org/abs/1302.2500",
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 43143,
+      "title": [
+        "Constructing a Stochastic Model of Bumblebee Flights from Experimental Data"
+      ],
+      "authors": [
+        "Lenz, Friedrich",
+        "Chechkin, Aleksei V.",
+        "Klages, Rainer"
+      ],
+      "date": [
+        "2013/02/11"
+      ],
+      "doi": [
+        "10.1371/journal.pone.0059036"
+      ]
+    },
+    {
+      "key": "ramos2004",
+      "url": "https://arxiv.org/abs/physics/0301019",
+      "status": 200,
+      "destination": "https://arxiv.org/abs/physics/0301019",
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 42297,
+      "title": [
+        "Levy walk patterns in the foraging movements of spider monkeys (Ateles geoffroyi)"
+      ],
+      "authors": [
+        "Ramos-Fernandez, Gabriel",
+        "Mateos, Jose Luis",
+        "Miramontes, Octavio",
+        "Cocho, Germinal",
+        "Larralde, Hernan",
+        "Ayala-Orozco, Barbara"
+      ],
+      "date": [
+        "2003/01/10"
+      ],
+      "doi": null
+    },
+    {
+      "key": "tejedor2012",
+      "url": "https://arxiv.org/abs/1111.1881",
+      "status": 200,
+      "destination": "https://arxiv.org/abs/1111.1881",
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 42807,
+      "title": [
+        "Optimizing persistent random searches"
+      ],
+      "authors": [
+        "Tejedor, V.",
+        "Voituriez, R.",
+        "Bénichou, O."
+      ],
+      "date": [
+        "2011/11/08"
+      ],
+      "doi": [
+        "10.1103/PhysRevLett.108.088103"
+      ]
+    },
+    {
+      "key": "levernier2020",
+      "url": "https://arxiv.org/abs/2002.00278",
+      "status": 200,
+      "destination": "https://arxiv.org/abs/2002.00278",
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 45193,
+      "title": [
+        "Inverse square L\\'evy walks are not optimal search strategies for $d\\ge 2$"
+      ],
+      "authors": [
+        "Levernier, Nicolas",
+        "Benichou, Olivier",
+        "Textor, Johannes",
+        "Voituriez, Raphael"
+      ],
+      "date": [
+        "2020/02/01"
+      ],
+      "doi": [
+        "10.1103/PhysRevLett.124.080601"
+      ]
+    },
+    {
+      "key": "buldyrev2021",
+      "url": "https://arxiv.org/abs/2103.10865",
+      "status": 200,
+      "destination": "https://arxiv.org/abs/2103.10865",
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 46097,
+      "title": [
+        "Comment on \"Inverse Square L\\'evy Walks are not Optimal Search Strategies for d $\\geq$ 2\" [Phys. Rev. Lett. 124, 080601 (2020)]"
+      ],
+      "authors": [
+        "Buldyrev, S. V.",
+        "Raposo, E. P.",
+        "Bartumeus, F.",
+        "Havlin, S.",
+        "Rusch, F. R.",
+        "da Luz, M. G. E.",
+        "Viswanathan, G. M."
+      ],
+      "date": [
+        "2021/03/19"
+      ],
+      "doi": [
+        "10.1103/PhysRevLett.126.048901"
+      ]
+    },
+    {
+      "key": "levernier2021",
+      "url": "https://arxiv.org/abs/2103.12584",
+      "status": 200,
+      "destination": "https://arxiv.org/abs/2103.12584",
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 42128,
+      "title": [
+        "Reply to Comment on \"Inverse Square L\\'evy Walks are not Optimal Search Strategies for d \\geq 2 \""
+      ],
+      "authors": [
+        "Levernier, Nicolas",
+        "Textor, Johannes",
+        "Bénichou, Olivier",
+        "Voituriez, Raphaël"
+      ],
+      "date": [
+        "2021/03/23"
+      ],
+      "doi": [
+        "10.1103/PhysRevLett.126.048902"
+      ]
+    },
+    {
+      "key": "lomholt2008",
+      "url": "https://arxiv.org/abs/0709.2352",
+      "status": 200,
+      "destination": "https://arxiv.org/abs/0709.2352",
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 40288,
+      "title": [
+        "The advantage of L\\'evy strategies in intermittent search processes"
+      ],
+      "authors": [
+        "Lomholt, Michael A.",
+        "Koren, Tal",
+        "Metzler, Ralf",
+        "Klafter, Joseph"
+      ],
+      "date": [
+        "2007/09/14"
+      ],
+      "doi": null
+    },
+    {
+      "key": "sutantyo2013",
+      "url": "https://marknormanread.github.io/pubs/Sutantyo-IEEE_Mechatronic_Automation_13_-_Levy_Flight.pdf",
+      "status": 200,
+      "destination": "https://marknormanread.github.io/pubs/Sutantyo-IEEE_Mechatronic_Automation_13_-_Levy_Flight.pdf",
+      "content_type": "application/pdf",
+      "bytes": 1754325,
+      "saved": "/tmp/sutantyo2013-source-check.pdf"
+    },
+    {
+      "key": "zaburdaev2015",
+      "url": "https://arxiv.org/abs/1410.5100",
+      "status": 200,
+      "destination": "https://arxiv.org/abs/1410.5100",
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 42811,
+      "title": [
+        "L\\'evy walks"
+      ],
+      "authors": [
+        "Zaburdaev, V.",
+        "Denisov, S.",
+        "Klafter, J."
+      ],
+      "date": [
+        "2014/10/19"
+      ],
+      "doi": [
+        "10.1103/RevModPhys.87.483"
+      ]
+    }
+  ],
+  "notes": [
+    "Primary-paper author metadata retained for Ramos and Lomholt where Crossref registry fields are corrupted.",
+    "Raichlen uses print publication year 2014; online publication was 2013.",
+    "Sutantyo title corrected against its primary PDF."
+  ]
+}

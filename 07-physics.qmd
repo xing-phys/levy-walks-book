@@ -1,0 +1,211 @@
+# Physical realizations: from deterministic chaos to cold atoms {#sec-physics}
+
+A stochastic model need not mean that the microscopic equations are random. A deterministic Hamiltonian trajectory can produce long, irregular episodes of nearly uniform motion; a photon can traverse a transparent region before scattering; an atom can make a large momentum excursion before cooling recaptures it. In each example, coarse graining produces a joint distribution of displacement and duration. The usefulness of a Lévy walk rests on that joint distribution, rather than on the appearance of a broad displacement histogram alone.
+
+This chapter follows the five physical settings of Section V of @zaburdaev2015. Throughout, the standard reference model has independent flight durations with density $\psi(\tau)\sim\tau^{-1-\gamma}$ and a newly drawn velocity $+v$ or $-v$ after each renewal. Some physical realizations require rests, velocity fluctuations, correlations, or a different displacement–duration coupling. Those changes are physical information to retain.
+
+## Intermittency and Hamiltonian stickiness
+
+### How deterministic dynamics creates a flight distribution
+
+Consider a discrete map near a marginally unstable point. Write the distance from that point as $u_n>0$, and suppose
+
+$$
+u_{n+1}-u_n\simeq a u_n^z,\qquad a>0,\quad z>1.
+$$ {#eq-phys-intermittent-map}
+
+The map describes a slow escape when $u_n$ is small. Replacing the iteration by $du/dn=a u^z$ gives the residence time from $u_0$ to a fixed exit $u_c$:
+
+$$
+\tau(u_0)\simeq\frac{u_0^{1-z}-u_c^{1-z}}{a(z-1)}
+\sim u_0^{1-z}.
+$$ {#eq-phys-escape-time}
+
+If reinjection into the neighborhood has a smooth, nonzero density at $u_0=0$, then $\Pr(\tau>T)\propto T^{-1/(z-1)}$. Differentiation yields $\gamma=1/(z-1)$. An extended map can advance by approximately one spatial cell per iteration while its reduced coordinate remains near the marginal point. Long residence then becomes a long spatial flight, rather than a long rest. This elementary mechanism explains why the same intermittent mathematics can generate either fast or slow transport, depending on what the particle does during the intermittent episode.
+
+The reduced-map construction reviewed by Zaburdaev and colleagues has two such neighborhoods, associated with opposite directions of cell advance. Its deterministic trajectory becomes a finite-speed flight process after coarse graining. The approximation does not assert exact independence between consecutive flights. Independence is an additional hypothesis to check against flight-to-flight correlations and the propagator.
+
+### Mixed phase space and transporting islands
+
+An integrable Hamiltonian system has trajectories confined to regular invariant surfaces. Perturbing it can generate a *mixed phase space*: regular islands coexist with a chaotic region. A chaotic trajectory cannot cross an intact invariant torus, but remnants of destroyed tori, called *cantori*, allow a small flux through gaps. These partial barriers create a hierarchy of regions with very different escape times.
+
+An island can be *transporting*: its periodic orbit advances by a nonzero displacement per driving period. A chaotic orbit lingering near such an island follows approximately the same mean velocity. Sticking near a nontransporting island instead produces a rest. Thus the geometrical question is whether the sticky region carries current. An algebraic hierarchy of residence times near transporting islands supplies the long flights of an effective Lévy walk.
+
+The kicked rotor provides a standard example. In one common dimensionless convention its map is
+
+$$
+p_{n+1}=p_n+K\sin\theta_n,\qquad
+\theta_{n+1}=\theta_n+p_{n+1}\pmod{2\pi}.
+$$ {#eq-phys-standard-map}
+
+The momentum coordinate can be unwrapped; accelerator islands then support approximately ballistic growth of $p_n$. Parameters and units differ between versions of this map, so the numerical value of $K$ should never be transferred between conventions without checking. Numerical studies discussed in the review show propagator scaling compatible with Lévy walks over substantial time windows. Such evidence supports an effective transport description. It does not establish a universal sticking exponent for all Hamiltonian systems.
+
+There is also a useful asymptotic constraint. Kac's recurrence theorem gives a finite mean return time to a positive-measure set when the dynamics preserves a finite invariant measure. Applied carefully to a compact reduced phase space and its recurrent chaotic component, this constrains an asymptotic residence-time model with a pure power-law tail to have a finite mean. In the usual superdiffusive setting this points to $1<\gamma<2$. The qualification matters: an unbounded phase space, a different sampling measure, or a transient observation window need not satisfy this argument.
+
+### Chaotic advection and directed transport
+
+For an incompressible planar flow with stream function $H(x,y,t)$, a passive tracer obeys Hamiltonian-like equations $\dot x=\partial_yH$ and $\dot y=-\partial_xH$. Time dependence can create mixed phase-space structures even though the fluid flow itself remains laminar. A tracer alternates between circulation near vortices and long passages along the flow.
+
+Solomon, Weeks, and Swinney tracked particles in a rotating annular flow and observed anomalously rapid dispersion together with broad episode durations [@solomon1993]. This is an experimental route from resolved trajectories to transport statistics. The vortex trapping means that a walk with rests is a more faithful coarse graining than a sequence of uninterrupted flights. Rotation also favors one azimuthal direction, so a symmetric velocity law is inappropriate. One may introduce probabilities $p_+\ne p_-$, unequal velocities, or distinct duration distributions.
+
+A related effect occurs in Hamiltonian ratchets. A periodic drive with zero temporal mean can nevertheless break the symmetries that pair left- and right-transporting structures. Unequal occupation of those structures produces a directed current. Zero mean force alone does not guarantee zero current: symmetry of the full dynamics and of the initial ensemble is what matters. An asymmetric Lévy-walk model describes the fluctuating transport around that current, provided it preserves the measured residence times and directional statistics.
+
+::: {.callout-tip collapse="true"}
+## Exercise: infer a tail from a marginal point
+
+Suppose $du/dn=a u^{5/3}$ and reinjection is uniform near $u=0$. Find the flight-time exponent and the expected MSD exponent if this is a constant-speed walk with finite mean flight time.
+
+**Worked solution.** The residence time scales as $u_0^{-2/3}$. Therefore $\Pr(\tau>T)\propto T^{-3/2}$ and $\psi(\tau)\propto\tau^{-5/2}$. In this book's convention $\gamma=3/2$. The standard Lévy-walk prediction is $\langle x^2(t)\rangle\propto t^{3-\gamma}=t^{3/2}$. This conclusion requires that the slow reduced-map episode corresponds to spatial motion at nonzero speed.
+:::
+
+## Many-particle systems: energy travels even when particles do not
+
+In a chain, individual particles may oscillate around ordered positions while energy and information spread across many sites. The relevant random-walk coordinate is then the location of a perturbation, rather than the trajectory of a tagged atom. Confusing these observables would erase the physical content of the analogy.
+
+For a localized weak energy perturbation, define a normalized ensemble-averaged profile
+
+$$
+\rho_i(t)=\frac{\delta E_i(t)}{E_{\mathrm{pert}}},\qquad
+\sum_i\rho_i(t)=1.
+$$ {#eq-phys-energy-profile}
+
+A second route uses the equilibrium connected energy correlation $C_{ee}(i,t)=\langle\delta e_i(t)\delta e_0(0)\rangle$ and normalizes its spatial sum. Linear response relates these descriptions under suitable perturbations and equilibrium preparation. A correlation function need not be nonnegative everywhere, however. Calling it a probability density is justified only when its properties support that interpretation.
+
+For the hard-point gas with alternating masses, numerical perturbation profiles display a central spreading region and outward traveling features consistent with a Lévy-walk description [@cipriani2005]. The representative central index is $\gamma=5/3$: the core width grows like $t^{3/5}$ while the MSD grows like $t^{4/3}$. The different exponents are expected because the outer part of the profile contributes strongly to the second moment. Broadening of the ballistic features motivates a walk with fluctuating velocities, rather than delta-function fronts at exactly $x=\pm vt$.
+
+### Deriving a conditional connection to heat conductivity
+
+Let $M_2(t)=\sum_i i^2\rho_i(t)$ and suppose it behaves as $A t^\mu$. A continuity equation connects the second time derivative of an energy-correlation second moment to an equilibrium current correlation. If $C_{JJ}(t)$ denotes the total-current covariance divided by the number of sites and $c_V$ is heat capacity per site, the conventional normalization gives
+
+$$
+\frac{d^2M_2}{dt^2}
+=\frac{2C_{JJ}(t)}{k_{\mathrm{B}}T^2c_V}.
+$$ {#eq-phys-energy-current}
+
+One way to understand this identity is to apply energy continuity twice to $\langle\delta e_i(t)\delta e_0(0)\rangle$. Discrete spatial differences can then be moved onto $i^2$ by summation by parts. Its second difference is constant, leaving a spatial sum of current correlations. Equilibrium stationarity moves one time derivative onto the other operator. Boundary terms must vanish, as in an infinite chain or a sufficiently large periodic system before recurrence.
+
+For $1<\mu<2$, the relation implies $C_{JJ}(t)\propto t^{\mu-2}$. The Green–Kubo integral for conductivity diverges. If a finite open chain of length $L$ effectively cuts off this correlation at the sound traversal time $t_L\sim L/c$, then
+
+$$
+\kappa(L)\propto\int^{L/c} C_{JJ}(t)\,dt
+\propto L^{\mu-1}.
+$$ {#eq-phys-conductivity-scaling}
+
+A standard Lévy walk has $\mu=3-\gamma$, so this argument gives $\kappa(L)\propto L^{2-\gamma}$. In particular $\gamma=5/3$ yields $L^{1/3}$. This is a conditional exponent relation. It requires the appropriate energy observable, linear response, and a ballistic finite-size cutoff. Replacing the cutoff by the core spreading time without justification produces a different answer. Nor does the relation make every momentum-conserving chain belong to the same universality class.
+
+### Hydrodynamic modes explain more than a fitted propagator
+
+An anharmonic chain has locally conserved stretch, momentum, and energy. Linearizing their Euler equations produces one stationary heat mode and two sound modes moving with velocities $\pm c$. Nonlinear fluctuating hydrodynamics retains quadratic terms in those currents and adds dissipation and noise. For a generic class of chains, it predicts sound peaks with Kardar–Parisi–Zhang scaling and a heat peak with a Lévy-stable index $5/3$ [@spohn2014]. Special symmetries, pressures, or vanishing coupling coefficients can change these predictions.
+
+This mode decomposition also explains why “the energy peak is a Lévy walk” is too coarse a statement. The measured energy correlation combines hydrodynamic modes; the heat-mode central shape can approach a stable law while its finite-time tails remain constrained by sound propagation. A bounded effective propagation region is compatible with a stable central scaling limit. For lattice models with unbounded degrees of freedom, rigorous propagation bounds require hypotheses on interactions and energy; a literal universal hard speed limit should not be assumed.
+
+The review also discusses finite-chain temperature profiles, current fluctuations, and truncated Lévy descriptions of thermal transport across metal–semiconductor interfaces. Those are distinct measurement settings. Agreement with a steady spatial profile may identify nonlocal transport while leaving its microscopic time parametrization unresolved.
+
+## Light: geometrical free paths and spectral mixtures
+
+### What a steady transmission experiment can establish
+
+A photon moves at a finite propagation speed between scattering events. If free-path lengths have a broad density $p(\ell)\sim\ell^{-1-\gamma}$, its resolved trajectory is naturally a walk. Yet a steady transmission measurement counts which boundary a path eventually reaches, after integrating over arrival times. Two models with the same spatial path sequence but different clocks can give the same result for that observable. Static agreement therefore cannot, by itself, distinguish a Lévy flight from a Lévy walk.
+
+For some slab models, transmission follows $T(L)\propto L^{-\gamma/2}$ at large thickness $L$, with injection conditions and boundary treatment fixed. This is a first-exit result, rather than the probability that a single free path exceeds $L$. Confusing those two quantities would instead suggest a tail $L^{-\gamma}$. Finite thickness, the first step from the source, internal reflections, and absorption all modify measured transmission.
+
+Cloud transmission supplied an early motivation: a distribution of transparent and scattering regions can create broad optical paths. The inferred index depends on a model of cloud morphology and radiative transfer, so it is not a direct measurement of independent photon flight times. The same distinction is useful in laboratory materials.
+
+### Lévy glass and quenched disorder
+
+Lévy glass embeds transparent spheres of many sizes in a scattering matrix. A photon experiences little scattering while crossing a sphere, producing occasional long free paths. Barthelemy, Bertolotti, and Wiersma engineered such materials and measured transport inconsistent with a simple single-scale diffusion picture [@barthelemy2008]. The construction makes broad paths an externally designed property.
+
+The sphere-size distribution is not automatically the path-length distribution: a ray samples large spheres more often, and the chord length depends on impact parameter. Geometry and sampling weights must be included before translating one exponent into another. There is a further distinction between *annealed* disorder, in which each next step samples a fresh environment, and *quenched* disorder, in which the spatial arrangement stays fixed. Returning through the same sphere can correlate successive steps. Such correlations are especially strong in one-dimensional analogues where a walker repeatedly crosses the same long gap. Time-resolved optical measurements and trajectory-resolved simulations provide stronger tests than a fit to integrated transmission alone.
+
+### Atomic vapors: a broad path from narrow conditional laws
+
+At a fixed optical frequency $\omega$, Beer–Lambert attenuation gives an exponential next-scattering distance,
+
+$$
+p(\ell\mid\omega)=k(\omega)e^{-k(\omega)\ell},
+$$ {#eq-phys-conditional-optical}
+
+where $k(\omega)$ is the absorption coefficient. Reemission samples frequencies from a density $f(\omega)$. The unconditional path density is the mixture
+
+$$
+p(\ell)=\int f(\omega)k(\omega)e^{-k(\omega)\ell}\,d\omega.
+$$ {#eq-phys-optical-mixture}
+
+Far-detuned photons have small $k$ and travel much farther. No individual conditional exponential has a heavy tail; the mixture can acquire one because it contains arbitrarily small attenuation rates. For matched Lorentzian emission and absorption wings, $f(\omega)\propto\omega^{-2}$ and $k(\omega)\propto\omega^{-2}$. Changing variables from $\omega$ to $k$ gives $f(\omega)|d\omega/dk|\propto k^{-1/2}$. Therefore the large-distance mixture is proportional to $\int_0^\infty k^{1/2}e^{-k\ell}dk\propto\ell^{-3/2}$. This derives a path index $\gamma=1/2$ from spectral physics.
+
+For ideal Doppler profiles, the analogous calculation produces $\ell^{-2}$ with a logarithmic correction. Frequency redistribution, correlations between successive frequencies, and elastic scattering complicate this simplified picture. Mercadier and colleagues directly investigated photon step statistics in hot rubidium vapor [@mercadier2009]. Laboratory propagation times can be much shorter than atomic absorption–reemission delays, making a jump model with waits appropriate at the measurement resolution. In a very dilute astrophysical gas the travel time can instead dominate. The physical clock decides which effective model is useful.
+
+## Blinking quantum dots: a walk in accumulated intensity
+
+An illuminated semiconductor nanocrystal can switch between bright and dark intervals. Normalize the intensity to $I(t)\in\{0,1\}$. Suppose independent on and off durations have the same asymptotic tail exponent $0<\gamma<1$ and equal tail amplitudes. Neither state then has a finite mean residence time. A long measurement need not yield a sharply defined time fraction in the bright state.
+
+Define accumulated intensity and its fraction,
+
+$$
+A_T=\int_0^T I(t)\,dt,\qquad U_T=A_T/T.
+$$ {#eq-phys-occupation}
+
+Now introduce $V(t)=v[2I(t)-1]$. Integrating gives $X(T)=v(2A_T-T)$, hence $U_T=[1+X(T)/(vT)]/2$. This is an exact change of variables between a two-state occupation problem and an alternating-velocity walk. The strict alternation differs from the iid sign redraw used in our standard walk, but the occupation-time limit follows the same stable-renewal mathematics [@margolin2005].
+
+For symmetric tails, the limiting density on $0<u<1$ is
+
+$$
+f_\gamma(u)=\frac{\sin(\pi\gamma)}{\pi}
+\frac{u^{\gamma-1}(1-u)^{\gamma-1}}
+{u^{2\gamma}+(1-u)^{2\gamma}+2u^\gamma(1-u)^\gamma\cos(\pi\gamma)}.
+$$ {#eq-phys-lamperti-intensity}
+
+A construction makes this formula less mysterious. Sum many on intervals and many off intervals separately. After rescaling by the number of renewals to the power $1/\gamma$, those sums converge to independent positive stable variables $S_+$ and $S_-$. Their ratio $S_+/(S_++S_-)$ has the density above. The incomplete final interval cannot be discarded in a finite-time derivation, but the corresponding renewal occupation theorem gives this same limiting law.
+
+At $\gamma=1/2$ it becomes the arcsine density $[\pi\sqrt{u(1-u)}]^{-1}$. Its mean is $1/2$ and its variance is $1/8$: the variance remains nonzero as $T$ grows. Thus equal ensemble occupation does not force each long trace to spend half its time bright. This is weak ergodicity breaking in a directly observable quantity. An aged measurement window, unequal tail amplitudes, a cutoff, multiple intensity states, or correlated dwell times changes the prediction. Thresholding a noisy fluorescence trace also changes inferred intervals. The stochastic description establishes consequences of measured residence statistics; it does not uniquely identify the microscopic charge-trapping or energy-level mechanism of blinking.
+
+::: {.callout-tip collapse="true"}
+## Exercise: how variable is a long fluorescence trace?
+
+For the symmetric $\gamma=1/2$ model, compute the probability that more than 90% of a long measurement is bright.
+
+**Worked solution.** Substitute $u=\sin^2\theta$. The cumulative distribution is $F(u)=2\arcsin\sqrt u/\pi$. Therefore $\Pr(U>0.9)=1-2\arcsin\sqrt{0.9}/\pi\simeq0.205$. About one fifth of long traces are overwhelmingly bright, and the same fraction overwhelmingly dark, despite an ensemble mean of one half.
+:::
+
+## Cold atoms: when longer excursions are also faster
+
+Sisyphus cooling combines optical potentials with transitions between internal atomic states. At modest momentum, the optical force damps motion. At sufficiently large momentum its magnitude decreases, so rare atoms can make large excursions before being slowed. Spatial distributions of cold atoms in dissipative optical lattices display anomalous scaling and broad shapes; the experiments also show why a stable spatial fit alone is insufficient [@sagi2012].
+
+Historically, broad trapping times also appeared in subrecoil cooling, where atoms accumulate near low-momentum states. Sisyphus-cooled spatial transport is a different setting: early single-ion optical-lattice measurements and later atomic-cloud experiments motivated a model of long moving excursions. Keeping these experiments distinct avoids equating every appearance of Lévy statistics in cooling with the same spatial walk.
+
+A useful semiclassical dimensionless model is
+
+$$
+dp=-\frac{p}{1+p^2}\,dt+\sqrt{2D}\,dW_t,
+\qquad dx=p\,dt.
+$$ {#eq-phys-cold-langevin}
+
+Here $D$ is an effective noise parameter. Within the semiclassical parametrization it scales as $D=cE_R/U_0$, where $E_R$ is recoil energy, $U_0$ is lattice depth, and $c$ depends on atomic structure and conventions. The corresponding phase-space density satisfies the Kramers equation
+
+$$
+\partial_tW+p\partial_xW
+=D\partial_p^2W-\partial_p[F(p)W],\qquad F(p)=-p/(1+p^2).
+$$ {#eq-phys-cold-kramers}
+
+At small $p$, this is approximately linear friction; at large $p$, $F(p)\sim-1/p$ becomes weak. Setting the stationary momentum probability current to zero gives
+
+$$
+W_{\mathrm{st}}(p)\propto
+\exp\left[\frac1D\int^p\frac{-q}{1+q^2}\,dq\right]
+=(1+p^2)^{-1/(2D)}.
+$$ {#eq-phys-cold-stationary}
+
+The distribution is normalizable only for $D<1$. Its variance requires the stronger condition $D<1/3$. This heavy-tailed stationary form is often called a Tsallis distribution in this context. Neither criterion alone tells us whether *spatial* diffusion is normal, because position integrates a time-correlated momentum process. In the regime where a stationary momentum covariance exists, its long-time decay has exponent $\lambda_p=1/(2D)-3/2$. Its time integral becomes divergent at $D=1/5$, before the stationary momentum variance itself ceases to exist. For $D\ge1/3$, interpreting the dynamics by an ordinary stationary velocity covariance is no longer adequate; aging and the chosen initial momentum distribution matter.
+
+To expose the coupling, separate the momentum trajectory into excursions between crossings of zero, using a small regularization near zero when defining individual excursions. An excursion of duration $\tau$ produces displacement $\chi=\int_0^\tau p(s)ds$. At large momentum the drift scales as $-1/p$. Under the rescaling $s\mapsto bs$, momentum scales as $p\mapsto b^{1/2}p$, as for a Bessel-like diffusion. Its area consequently scales as $b^{3/2}$. Thus the conditional displacement law takes the form
+
+$$
+p(\chi\mid\tau)\simeq\tau^{-3/2}
+B\left(\frac{\chi}{\tau^{3/2}}\right).
+$$ {#eq-phys-cold-area}
+
+This replaces the fixed-speed relation $|\chi|=v\tau$. Long excursions tend to have larger average speeds. The excursion-time density has asymptotic exponent $\psi(\tau)\sim\tau^{-1-a}$ with $a=(1+D)/(2D)$, and the resulting spatial stable index is $\gamma=2a/3=(1+D)/(3D)$ [@kessler2012cold; @barkai2014excursion]. The mechanism therefore uses a nonlinear, probabilistic space–time coupling.
+
+Within this semiclassical model, normal spatial diffusion occurs for $D<1/5$; a Lévy central scaling regime occurs for $1/5<D<1$; and for sufficiently weak confinement, $D>1$, the characteristic scale is $x\sim t^{3/2}$. The transition values are marginal cases with additional subtleties. In the last regime, momentum behaves increasingly like a freely diffusing variable and its time integral has variance proportional to $t^3$, the integrated-Brownian or Richardson-type scaling. It does not violate a fixed-speed light cone because this effective model does not impose bounded atomic velocity.
+
+The broad spatial core in the intermediate regime is accompanied by a crossover near $x\sim t^{3/2}$. It is a scaling cutoff, not a hard boundary: the noise permits rare larger excursions. Its rapidly decaying continuation makes finite-time moments finite under suitable initial conditions. The final excursion, which has not yet returned to zero at the observation time, is also statistically different from a completed excursion and must be included. These features illustrate the main lesson of the chapter: the renewal skeleton is useful only when its coupling, initialization, and unfinished segment are faithful to the physical process.

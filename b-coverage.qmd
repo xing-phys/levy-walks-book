@@ -11,33 +11,33 @@ This map is an audit of **topic coverage**, not a claim to reproduce the review'
 | II.A. Lévy walk model | Fresh initialization, propagator, support, ballistic atoms | @sec-renewal |
 | II.A.1. Telegraph equation | Velocity-resolved balance, telegraph PDE, exact MSD, redraw versus reversal | @sec-renewal |
 | II.A.2. Superdiffusion | Stable central law and ballistic cutoff | @sec-scaling |
-| II.A.3. Ballistic diffusion | Divergent mean duration, joint transform scaling, arcsine and general ballistic law | @sec-scaling; Chapter 5 |
-| II.A.4. MSD and other moments | Exact MSD transform, prefactors, threshold logarithms, nonlinear moment spectrum | @sec-scaling; Chapter 5 |
+| II.A.3. Ballistic diffusion | Divergent mean duration, joint transform scaling, arcsine and general ballistic law | @sec-scaling; @sec-correlations |
+| II.A.4. MSD and other moments | Exact MSD transform, prefactors, threshold logarithms, nonlinear moment spectrum | @sec-scaling; @sec-correlations |
 | II.B. Lévy walks with rests | Two occupation populations, renewal cycles, competing tails, phase fractions | @sec-renewal |
-| III.A. Random walks with random velocities | General velocity kernels, velocity tails, Cauchy exact solution, scaling regimes | Chapter 4 |
-| III.B. Velocity fluctuations | Redraw fluctuations versus continuous intraflight noise, ballistic-front broadening | Chapter 4 |
-| III.C. Other coupled models | Duration–distance coupling, jump timing, generalized walks and support | Chapter 4 |
-| IV.A. Space–time velocity autocorrelation | Two-time and space-resolved correlations, initialization, negative local correlations | Chapter 5 |
-| IV.B. Exact solutions for ballistic walks | Transform inversion, Lamperti density, special cases, observables | Chapter 5 |
-| IV.C. Infinite densities | Ballistic-scale limit, nonnormalizability, bulk matching, high moments | Chapter 5 |
-| IV.D. Memory and ergodicity breaking | Aging, residual time, equilibrium preparation, trajectory time averages, fluctuations | Chapter 5 |
-| IV.E. Langevin and fractional Kramers | Subordination, stochastic velocity dynamics, material derivatives, distinct kinetic models | Chapter 6; @sec-toolbox |
-| V.A. Single-particle Hamiltonian systems | Sticking, mixed phase space, maps, chaotic advection, ratchets | Chapter 7 |
-| V.B. Many-particle Hamiltonian systems | Energy transport, hard-point gases, perturbations, conductivity, hydrodynamic modes | Chapter 7 |
-| V.C. Light and photons | Lévy glass, quenched versus annealed disorder, vapor scattering, optical constraints | Chapter 7 |
-| V.D. Blinking quantum dots | On/off renewal occupations, nonstationarity, integrated intensity | Chapter 7 |
-| V.E. Cold atoms | Sisyphus cooling, momentum excursions, duration–area coupling, transport regimes | Chapter 7 |
-| VI.A. Motility across scales | What moves, tracking protocols, observation bias, competing mechanisms | Chapter 8 |
-| VI.B. Soil amoeba | Motility states, persistence and experimental interpretation | Chapter 8 |
-| VI.C. Bacterial run and tumble | Persistent swimming, heavy runs, turning angles, correlated motor behavior | Chapter 8 |
-| VI.D. Chemotaxis | Response to gradients, biased run statistics, drift mechanisms | Chapter 8 |
-| VI.E. T-cells | Generalized walks, pauses, observed search behavior | Chapter 8 |
-| VI.F. Humans | Displacement versus travel time, visitation and individual variability | Chapter 8 |
-| VI.G. Bees, seabirds, monkeys, and others | Behavioral heterogeneity, biological examples and contested evidence | Chapter 8 |
-| VII.A. Optimal search | Target geometry, revisitation, destructive versus nondestructive search, conditional optima | Chapter 9 |
-| VII.B. Intermittent search | Detection and relocation phases, optimization and constraints | Chapter 9 |
-| VII.C. Intelligent robotics | Implementing and comparing search rules under physical sensing constraints | Chapter 9 |
-| VIII. Outlook | Higher dimensions, collective behavior, mechanisms, inference, transport and search questions | Chapter 9 |
+| III.A. Random walks with random velocities | General velocity kernels, velocity tails, Cauchy exact solution, scaling regimes | @sec-extensions |
+| III.B. Velocity fluctuations | Redraw fluctuations versus continuous intraflight noise, ballistic-front broadening | @sec-extensions |
+| III.C. Other coupled models | Duration–distance coupling, jump timing, generalized walks and support | @sec-extensions |
+| IV.A. Space–time velocity autocorrelation | Two-time and space-resolved correlations, initialization, negative local correlations | @sec-correlations |
+| IV.B. Exact solutions for ballistic walks | Transform inversion, Lamperti density, special cases, observables | @sec-correlations |
+| IV.C. Infinite densities | Ballistic-scale limit, nonnormalizability, bulk matching, high moments | @sec-correlations |
+| IV.D. Memory and ergodicity breaking | Aging, residual time, equilibrium preparation, trajectory time averages, fluctuations | @sec-correlations |
+| IV.E. Langevin and fractional Kramers | Subordination, stochastic velocity dynamics, material derivatives, distinct kinetic models | @sec-kinetic; @sec-toolbox |
+| V.A. Single-particle Hamiltonian systems | Sticking, mixed phase space, maps, chaotic advection, ratchets | @sec-physics |
+| V.B. Many-particle Hamiltonian systems | Energy transport, hard-point gases, perturbations, conductivity, hydrodynamic modes | @sec-physics |
+| V.C. Light and photons | Lévy glass, quenched versus annealed disorder, vapor scattering, optical constraints | @sec-physics |
+| V.D. Blinking quantum dots | On/off renewal occupations, nonstationarity, integrated intensity | @sec-physics |
+| V.E. Cold atoms | Sisyphus cooling, momentum excursions, duration–area coupling, transport regimes | @sec-physics |
+| VI.A. Motility across scales | What moves, tracking protocols, observation bias, competing mechanisms | @sec-biology |
+| VI.B. Soil amoeba | Motility states, persistence and experimental interpretation | @sec-biology |
+| VI.C. Bacterial run and tumble | Persistent swimming, heavy runs, turning angles, correlated motor behavior | @sec-biology |
+| VI.D. Chemotaxis | Response to gradients, biased run statistics, drift mechanisms | @sec-biology |
+| VI.E. T-cells | Generalized walks, pauses, observed search behavior | @sec-biology |
+| VI.F. Humans | Displacement versus travel time, visitation and individual variability | @sec-biology |
+| VI.G. Bees, seabirds, monkeys, and others | Behavioral heterogeneity, biological examples and contested evidence | @sec-biology |
+| VII.A. Optimal search | Target geometry, revisitation, destructive versus nondestructive search, conditional optima | @sec-search |
+| VII.B. Intermittent search | Detection and relocation phases, optimization and constraints | @sec-search |
+| VII.C. Intelligent robotics | Implementing and comparing search rules under physical sensing constraints | @sec-search |
+| VIII. Outlook | Higher dimensions, collective behavior, mechanisms, inference, transport and search questions | @sec-search |
 
 ## What has been added
 

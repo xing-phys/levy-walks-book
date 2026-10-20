@@ -1,0 +1,245 @@
+# A reproducible numerical laboratory {#sec-computation}
+
+An exact renewal equation and a simulation answer different questions. The equation identifies the probability law and its asymptotic regimes. A simulation shows what an experiment of finite duration and finite sample size will actually resolve. This chapter constructs both a reliable simulator and a way to read its output critically. All numerical illustrations in this book are original; their data, parameters, seeds, and plotting scripts are included in the repository.
+
+The reference process is the symmetric, one-dimensional Lévy walk of @zaburdaev2015. A particle begins at the origin with a **fresh flight** at time zero. Its velocity during each flight is independently drawn from $\{-v,+v\}$ with equal probabilities. A new draw may repeat the preceding velocity. The duration density and survival probability are
+
+$$
+\psi(\tau)=\frac{\gamma}{\tau_0}
+\left(1+\frac{\tau}{\tau_0}\right)^{-1-\gamma},
+\qquad
+\Psi(\tau)=\left(1+\frac{\tau}{\tau_0}\right)^{-\gamma}.
+$$
+
+Throughout the supplied experiments, $v=\tau_0=1$. Positions and times can therefore be read as $x/(v\tau_0)$ and $t/\tau_0$. The exponent $\gamma$ describes the tail of **durations**. It is not the exponent of the mean squared displacement.
+
+## Sample events, then observe the path
+
+A fixed time step is unnecessary because the motion between renewals is exactly known. Suppose the present flight began at time $T_n$, at position $X_n$, with velocity $V_n$ and duration $\tau_{n+1}$. At an observation time $t$ satisfying $T_n\leq t<T_n+\tau_{n+1}$,
+
+$$
+X(t)=X_n+V_n(t-T_n).
+$$
+
+If the next observation lies beyond the end of this flight, advance to that endpoint, redraw a velocity and duration, and repeat until the observation lies inside the current flight. This is an **event-driven** simulation: the computational cost follows the number of renewals rather than the inverse of an artificial time step.
+
+![A schematic path distinguishes renewal events from actual velocity turns. An observation inside the last flight records only its elapsed part.](figs/renewal-schematic){#fig-renewal-schematic fig-alt="A piecewise linear path with an unchanged direction at one renewal and an observation inside an unfinished flight."}
+
+The distinction between a renewal and a turn matters. Replacing the independent velocity redraw by a compulsory sign flip defines a different microscopic model. In particular, exponential renewal times of rate $\lambda$ produce actual sign flips at rate $\lambda/2$ for the model used here. This factor changes velocity correlations, the telegraph equation, and numerical benchmarks.
+
+### Inverse-transform sampling
+
+For a uniform random number $U\in(0,1)$, solve $U=\Psi(\tau)$. This gives
+
+$$
+\tau=\tau_0\bigl(U^{-1/\gamma}-1\bigr).
+$$
+
+The implementation uses the equivalent expression
+
+```julia
+tau0 * expm1(-log1p(-rand(rng)) / gamma)
+```
+
+Here $1-U$ has the same uniform distribution as $U$. The functions `log1p` and `expm1` evaluate $\log(1+z)$ and $e^z-1$ accurately when $z$ is small. This prevents loss of precision for short flights. Exceptionally large sampled durations require no additional machinery: if a flight outlasts the experiment, the code simply observes its linear segment. It never attempts to complete the entire flight before recording the final position.
+
+### The unfinished flight is part of the physics
+
+At the final observation time $T$, the current flight usually has not ended. Its full duration was drawn when that flight began, but only its age $T-T_n$ contributes to $X(T)$. The remainder belongs to the unobserved future.
+
+Three tempting alternatives introduce bias. Discarding this final flight puts the particle back at its last renewal position. Completing it before recording $X(T)$ can place the recorded particle outside $[-vT,vT]$. Redrawing until a flight fits inside the remaining observation time suppresses long flights. All three errors preferentially remove or distort precisely the events responsible for anomalous transport.
+
+The simulator retains a flight across successive observation times. It does not restart the process at each time and does not draw a separate residual duration for each observation. For nonexponential durations, the elapsed age changes the distribution of the remaining lifetime. Keeping the original draw implements that conditioning automatically.
+
+![Six original simulated paths remain within the finite-speed cone. Long flights generate large, persistent excursions without instantaneous jumps.](figs/trajectories){#fig-trajectories-lab fig-alt="Six trajectories of fresh Lévy walks with gamma 1.2, confined between x equals plus or minus vt."}
+
+## Reproduce the supplied figures
+
+The simulation requires Julia standard libraries only: `Random`, `Statistics`, `TOML`, and the testing library `Test`. Python is used solely for static publication figures. From the repository root, run
+
+```bash
+julia scripts/check_numerics.jl
+julia scripts/simulate.jl
+python -m venv .venv
+.venv/bin/pip install -r scripts/requirements-figures.txt
+.venv/bin/python scripts/plot_figures.py
+```
+
+Use an existing Python environment if it already supplies NumPy and Matplotlib. These commands regenerate all CSV tables and five figure pairs. Every figure has both a vector PDF and a PNG with the same basename. Quarto uses the appropriate image format for the PDF and HTML editions.
+
+The file `data/metadata.toml` records the Julia version, initialization, velocity rule, seeds, sample sizes, flight law, observation times, and binning choices. A pseudorandom seed makes a particular run repeatable with the recorded implementation and environment. It does not make the statistical result exact, and identical random streams should not be assumed across arbitrary future Julia versions.
+
+The data are deliberately small, readable tables. `trajectories.csv` contains positions and hidden event counts for six walks. `msd.csv` contains ensemble moments and their standard errors. `propagators.csv` stores interior histogram counts, whereas `front_masses.csv` stores endpoint atoms separately. `lamperti.csv` compares empirical bin probabilities with exact bin probabilities of the limiting law. Storing counts as well as normalized values makes the probability accounting auditable.
+
+The supplied sample sizes are 30,000 walks per exponent for the MSD, 160,000 per exponent for the propagators at $t=100$, and 140,000 walks for the ballistic comparison at $t=10^4$. A large path count reduces sampling uncertainty; it does not remove finite-time corrections.
+
+## A propagator is not always an ordinary density
+
+The finite-time distribution is a mixed probability measure. Some paths lie strictly inside the cone, while others sit exactly at $x=\pm vt$. In the present two-velocity model, a path reaches a front whenever its velocity has never actually turned. It may nevertheless have renewed many times while repeatedly selecting the same sign.
+
+Let $N(t)$ be the number of renewals by time $t$, and let $q(t)$ be the total probability of the two endpoint atoms. Conditional on $N(t)=n$, all $n$ redraws preserve the initial sign with probability $2^{-n}$. Consequently,
+
+$$
+q(t)=\mathbb E\!\left[2^{-N(t)}\right],
+\qquad
+\Pr\{X(t)=+vt\}=\Pr\{X(t)=-vt\}=\frac{q(t)}{2}.
+$$
+
+Paths with **no renewal** contribute $\Psi(t)/2$ to each endpoint, but do not exhaust its probability. Conditioning on the first renewal gives a useful exact scalar equation,
+
+$$
+q(t)=\Psi(t)+\frac12\int_0^t\psi(\tau)q(t-\tau)\,d\tau.
+$$
+
+This clarifies the first-flight contribution used to discuss ballistic fronts in the review. For this simulator, the exact total front mass is obtained by counting zero **turns**. The first-flight contribution is obtained by counting zero **renewals**. For a forced-alternation model those two conditions would coincide.
+
+![The upper panels show interior densities in the scaled coordinate z=x/(vt). The lower panels show endpoint probabilities in their own units. Hatched bars isolate the no-renewal subset of each complete front atom.](figs/propagators){#fig-propagators-lab fig-alt="Three interior propagator histograms for gamma 0.5, 1.5, and 2.5, with separate endpoint probability bars."}
+
+For an interior bin $[z_j,z_{j+1})$ of width $\Delta z_j$, the reported density estimate is
+
+$$
+\widehat f_j=\frac{n_j}{M\Delta z_j},
+$$
+
+where $M$ is the total number of simulated walks, including walks at the endpoints. Thus the interior histogram integrates to $1-\widehat q(t)$, rather than to one. Renormalizing it to one would silently replace the original ensemble by the ensemble conditioned on being away from the fronts.
+
+The complete normalization check is
+
+$$
+\sum_j\widehat f_j\Delta z_j+
+\widehat p_-+\widehat p_+=1.
+$$
+
+Do not draw an atom as an ordinary density value. Its plotted height would depend on the arbitrary bin width. Probability bars or a separately annotated mass preserve the distinction between a density and a point probability. The supplied code identifies fronts through the event history, avoiding an arbitrary floating-point threshold such as $|z-1|<10^{-6}$.
+
+## Estimate moments and their uncertainty
+
+For $M$ independent trajectories observed at the same time,
+
+$$
+\widehat m_2(t)=\frac1M\sum_{i=1}^M X_i(t)^2
+$$
+
+estimates the ensemble MSD. The displacement mean vanishes by symmetry, so this is the desired second moment without subtracting the finite-sample mean. An estimated standard error is
+
+$$
+\operatorname{SE}[\widehat m_2]=
+\sqrt{\frac{\widehat m_4-\widehat m_2^{\,2}}{M-1}},
+\qquad
+\widehat m_4=\frac1M\sum_iX_i^4.
+$$
+
+Every moment exists at a fixed finite time because $|X(t)|\leq vt$. Nevertheless, fourth moments and standard errors may be controlled by rare, nearly ballistic paths. A calculation can have many observations of its central cloud and still have too few observations of the events that dominate its MSD.
+
+The shaded bands in @fig-msd-lab show twice the estimated standard error across independent paths. They are approximate pointwise sampling bands. They do not include finite-time bias and are not simultaneous confidence bands for the entire curve. Since a single path is sampled at every observation time, errors at different times are correlated.
+
+For the stated Lomax law, the fresh-start leading MSD asymptotics away from the marginal exponents are
+
+$$
+\langle X(t)^2\rangle\sim
+\begin{cases}
+(1-\gamma)v^2t^2,&0<\gamma<1,\\[3pt]
+\displaystyle\frac{2v^2(\gamma-1)\tau_0^{\gamma-1}}
+{(3-\gamma)(2-\gamma)}t^{3-\gamma},&1<\gamma<2,\\[7pt]
+\displaystyle\frac{2v^2\tau_0}{\gamma-2}t,&\gamma>2.
+\end{cases}
+$$
+
+These are comparison curves, not fits to the data. In the last regime, the coefficient follows directly from
+$v^2\langle\tau^2\rangle/\langle\tau\rangle$, using
+$\langle\tau\rangle=\tau_0/(\gamma-1)$ and
+$\langle\tau^2\rangle=2\tau_0^2/[(\gamma-1)(\gamma-2)]$.
+The cases $\gamma=1$ and $\gamma=2$ require logarithmic corrections and should not be inferred by substituting into a divergent prefactor.
+
+![Ensemble MSD curves and theoretical asymptotic guides. Local logarithmic slopes show the gradual crossover from short-time ballistic motion; visible fluctuations and offsets are finite-sample and finite-time effects.](figs/msd-regimes){#fig-msd-lab fig-alt="Log-log mean squared displacement for three gamma values and local slopes approaching 2, 1.5, and 1."}
+
+At short times all three processes appear ballistic: most particles have not experienced a turn. A log-log straight line over one decade therefore does not establish the long-time transport class. A useful diagnostic is a logarithmic secant slope,
+
+$$
+\beta_{\mathrm{eff}}=
+\frac{\log \widehat m_2(t_2)-\log\widehat m_2(t_1)}
+{\log t_2-\log t_1}.
+$$
+
+The figure uses nearby times separated by three sampling intervals. This smooths some Monte Carlo noise, but adjacent slope estimates remain correlated. Increasing $M$ addresses the noise; extending $t$ addresses the crossover. These are different numerical tasks.
+
+## Test the ballistic scaling law without mishandling its singularities
+
+For $\gamma=1/2$, the limiting scaled position $Z=X(t)/(vt)$ has the arcsine density
+
+$$
+f(z)=\frac{1}{\pi\sqrt{1-z^2}},\qquad -1<z<1.
+$$
+
+Its divergence at $z=\pm1$ is integrable. The limiting law has no endpoint atoms, although every finite-time simulation retains front probability. Thus an increasingly sharp endpoint histogram is not by itself evidence for a nonvanishing limiting atom.
+
+Comparing a histogram with $f$ evaluated at bin centers is inaccurate near the boundaries. Instead integrate the theory over the same bin:
+
+$$
+p_j^{\mathrm{arc}}=
+\int_{z_j}^{z_{j+1}}f(z)\,dz
+=\frac{\arcsin z_{j+1}-\arcsin z_j}{\pi}.
+$$
+
+Dividing this probability by the bin width gives the theoretical bin-average density plotted in @fig-lamperti-lab. The empirical histogram in this particular comparison includes all paths, including finite-time atoms in the outer bins; this convention is stated explicitly and differs from the separated interior histogram above. Both empirical and theoretical bin probabilities sum to one. Their residual difference combines finite-time effects and sampling error.
+
+![At gamma=1/2, the scaled-position histogram approaches the arcsine distribution. Theoretical points are exact bin averages, and the cumulative comparison avoids a misleading evaluation of the divergent endpoint density.](figs/lamperti){#fig-lamperti-lab fig-alt="A U-shaped scaled position histogram compared with exact arcsine bin averages, plus empirical and theoretical cumulative distributions."}
+
+The cumulative distribution
+$F(z)=1/2+\arcsin(z)/\pi$ is another useful comparison because it is finite everywhere. A quantitative convergence study should vary $t$, $M$, and bin width separately. Reducing the bin width alone increases the noise in each bin and does not move the process closer to its asymptotic law.
+
+## Benchmarks that can reveal a wrong simulator
+
+The test script checks several independent facts. A deterministic flight of infinite duration must give $X(t)=\pm vt$ at every observation and zero renewals. This directly tests the clipping of the current flight. Simulated paths for several exponents must remain inside the ballistic cone; renewal and turn counts must be nondecreasing, with turns never exceeding renewals. Reusing a seed must reproduce the sampled path and its event counts.
+
+The inverse sampler is checked against the analytic survival law at several durations. For $M$ independent flight samples, the count exceeding a threshold is binomial, with probability $\Psi(t)$ and standard deviation $\sqrt{M\Psi(t)[1-\Psi(t)]}$. The test tolerance is six such standard deviations, making accidental test failure unlikely without disguising a systematic error.
+
+Finally, exponential flight times provide an independent exact MSD benchmark. With renewal rate $\lambda$ and iid symmetric velocity redraws, a velocity retains correlation across a time interval only if no renewal occurs there. Therefore
+
+$$
+\langle V(t)V(s)\rangle=v^2e^{-\lambda|t-s|},
+$$
+
+and integrating the covariance over the observation square gives
+
+$$
+\begin{aligned}
+\langle X(t)^2\rangle
+&=2v^2\int_0^t(t-u)e^{-\lambda u}\,du\\
+&=2v^2\left[\frac{t}{\lambda}
+-\frac{1-e^{-\lambda t}}{\lambda^2}\right].
+\end{aligned}
+$$
+
+Its small-time limit is $v^2t^2$ and its large-time limit is $2v^2t/\lambda$. The test compares Monte Carlo estimates at several times with this expression using their measured standard errors. A simulator that forces a sign flip at each renewal would produce the wrong relaxation rate and fail this benchmark even if its trajectories looked plausible.
+
+## From synthetic walks to measured data
+
+A duration law should be inferred from durations, not from a straight line fitted to a position histogram. Under the present model, completed durations are iid; sampled positions are neither iid across time nor distributed according to $\psi$. If only turning points are visible, repeated same-direction renewals are hidden. The observed run-duration distribution is then a geometric sum of microscopic flight durations, rather than the original Lomax density.
+
+The first and last observed runs in a finite trajectory may also be censored. A fresh simulation knows its first renewal, but an experiment may begin during a long pre-existing run. Such length-biased and aged initialization changes observed statistics. Reusing the fresh-start code is a model assumption, not a neutral preprocessing step.
+
+Even for complete iid Lomax durations, log-log regression on histogram heights is a poor default: zero-count bins disappear, bins have unequal errors, and changing the bin edges changes the fit. If $\tau_0$ is known and complete durations $\tau_1,\ldots,\tau_n$ are observed, the log likelihood gives a simple estimator,
+
+$$
+\widehat\gamma=
+\frac{n}{\sum_{i=1}^n\log(1+\tau_i/\tau_0)}.
+$$
+
+This formula estimates the parameter of the **whole specified Lomax model**. It is not automatically a valid tail estimator for another distribution that merely has the same asymptotic power law. A right-censored duration contributes its survival probability to the likelihood; treating it as a completed event changes the likelihood and biases inference. Comparing plausible alternative duration models and checking a range of observation times is part of interpreting data.
+
+## Exercises and extensions
+
+1. **Front bookkeeping.** Use `front_masses.csv` to verify normalization with `propagators.csv`. Compare the measured no-renewal mass with $(1+t)^{-\gamma}$, including binomial sampling uncertainty. Explain why the total front mass is larger.
+
+2. **An exponential control.** Replace the Lomax sampler by `randexp(rng)/lambda`. Derive the MSD above by integrating the covariance, then compare at short and long times. Change the velocity rule to compulsory alternation and derive the corresponding covariance before running the code.
+
+3. **An uncertainty experiment.** Repeat the MSD experiment with several independent seeds and successively doubled sample sizes. Check whether the spread of estimates decreases approximately as $M^{-1/2}$. Keep the observation time fixed, so that a change in finite-time behavior cannot be confused with sampling improvement.
+
+4. **A convergence experiment.** For $\gamma=1/2$, repeat the scaled-position comparison at $t=10^2,10^3,10^4$. Plot bin-integrated probabilities and the endpoint mass separately. State which discrepancy shrinks with time and which shrinks with ensemble size.
+
+5. **Rare-event moments.** At $\gamma=1.5$, estimate $\langle|X|^q\rangle$ for several $q$. Compare local slopes with the two-branch strong-anomalous-diffusion prediction discussed earlier in the book. Report the contribution from the largest one percent of $|X|$ values; it helps reveal when an apparent high-order exponent is supported by only a handful of trajectories.
+
+6. **Observation and inference.** Generate a known Lomax ensemble, retain only actual turns, and fit the resulting visible run durations as if they were microscopic flights. Diagnose the discrepancy by writing the geometric-sum distribution. Then censor the last run of each finite record and compare a likelihood that includes survival factors with one that incorrectly treats those runs as complete.
+
+These experiments are small enough to inspect every assumption. Their purpose is to connect renewal theory, finite-speed trajectories, mixed probability laws, and finite-data inference in one calculation that can be independently reproduced.

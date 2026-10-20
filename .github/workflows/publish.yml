@@ -22,10 +22,8 @@ jobs:
         with:
           version: '1.10.18'
           tinytex: true
-      - name: Build PDF, then website
-        run: |
-          quarto render --to pdf
-          quarto render --to html
+      - name: Build website and combined PDF
+        run: quarto render
       - name: Validate rendered book
         run: python3 scripts/check_book.py
       - uses: actions/upload-pages-artifact@v3

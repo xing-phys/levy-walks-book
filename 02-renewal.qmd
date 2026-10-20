@@ -12,7 +12,7 @@ The last term is the displacement in the unfinished flight. It is present even w
 
 The process $X(t)$ alone is usually non-Markovian: its future depends on the age of its current flight, which cannot be inferred from position. A larger state containing position, velocity, and age is Markovian. We will exploit that fact below. One should distinguish a renewal event from an observed turn. Half of independent sign redraws retain the old sign, so two successive flights can appear as a single straight segment in a trajectory.
 
-![Independent finite-speed trajectories generated from the same duration family. Changes in persistence reflect the tail exponent, while each trajectory remains inside its ballistic cone. Monte Carlo parameters and seeds are supplied with the numerical data.](figs/trajectories){#fig-core-trajectories}
+![Six independent finite-speed trajectories with Lomax exponent $\gamma=1.2$. Random flight durations produce different persistence patterns, while every trajectory remains inside its ballistic cone. Monte Carlo parameters and seeds are supplied with the numerical data.](figs/trajectories){#fig-core-trajectories}
 
 ## Renewal and occupation kernels
 
@@ -69,6 +69,8 @@ W_{\mathrm{front}}(t)=\langle 2^{-N(t)}\rangle,\qquad
 $$ {#eq-renew-full-front}
 
 To obtain the transform, use $\Pr\{N(t)=n\}=(\psi^{*n}*\Psi)(t)$ and sum the geometric series. The two atoms have equal weights $W_{\mathrm{front}}/2$. Their remaining probability $1-W_{\mathrm{front}}$ is in the interior. Under a power-law survival the geometric sum yields $W_{\mathrm{front}}\sim2\Psi(t)$ at long times; a strict reversal model instead has only the no-renewal atoms. These finite-time details matter when testing an implementation against a front formula.
+
+One way to understand the factor two is to wait until the first actual sign flip. The number $K$ of microscopic flights before that flip has $\Pr(K=n)=2^{-n}$ for $n\ge1$, hence $\langle K\rangle=2$. For a regularly varying duration tail, a sum of any fixed number $n$ of independent durations exceeds a large $t$ primarily because one summand is exceptionally long, giving survival asymptotic to $n\Psi(t)$. The corresponding geometric sum has survival $\langle K\rangle\Psi(t)=2\Psi(t)$. This is the survival of the first-turn time and therefore the complete front probability. The argument applies to the Lomax law for every $\gamma>0$; it does not apply to an exponential tail.
 
 ::: {.callout-note}
 ## Two different conditionings

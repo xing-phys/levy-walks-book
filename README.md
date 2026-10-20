@@ -14,7 +14,7 @@ python3 scripts/check_book.py
 quarto preview --no-browser
 ```
 
-The render produces multipage HTML in `_site/` and `_site/levy-walks-book.pdf`. Quarto prints the local preview URL; previews can choose a free port. `quarto render --to html` builds only the website, and `quarto render --to pdf` builds only the combined PDF. Render formats sequentially to avoid shared-state conflicts.
+The render produces multipage HTML in `_site/` and `_site/levy-walks-book.pdf`. Quarto prints the local preview URL; previews can choose a free port. `quarto render --to html` builds only the website, and `quarto render --to pdf` builds only the combined PDF. A format-specific build cleans the output directory by default; add `--no-clean` to preserve an existing output in the other format. Use `quarto render` for a complete publication build, and avoid concurrent renders in the same project.
 
 ## Reproduce the numerical figures
 
@@ -37,7 +37,7 @@ Numerical sampling and plotting are separate so that Python is used only for sta
 - `assets/refs-*.bib`: verified bibliography; APS CSL controls citation style.
 - `assets/macros.sty` and `assets/mathjax-config.html`: equivalent PDF/HTML physics macros.
 - `scripts/`, `data/`, `figs/`: reproducible computations and original figures.
-- `.github/workflows/publish.yml`: sequential HTML/PDF build, link validation, GitHub Pages deployment.
+- `.github/workflows/publish.yml`: complete HTML/PDF build, link validation, GitHub Pages deployment.
 
 ## Publication
 

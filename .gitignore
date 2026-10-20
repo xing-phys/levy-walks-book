@@ -6,3 +6,11 @@
 __pycache__/
 *.pyc
 /.DS_Store
+/*.html
+/site_libs/
+/index.aux
+/index.log
+/index.tex
+/index.toc
+/index.pdf
+/index.out

@@ -4,7 +4,7 @@
 
 Suppose a normalized distribution had the single scaling form $P(x,t)=t^{-a}F(x/t^a)$ and every needed moment of $F$ existed. Substituting $u=x/t^a$ would give $\langle|X|^q\rangle=t^{aq}\int|u|^qF(u)du$. Every moment would therefore measure the same $a$.
 
-In a Lévy walk with $1<\gamma<2$, the center spreads as $t^{1/\gamma}$ but the MSD grows as $t^{3-\gamma}$. These statements are compatible because the central stable limit has an infinite second moment. Its scaling limit cannot be inserted into a second-moment integral over all positions. The true finite-speed tails are essential. We derive both statements and locate the failed interchange of limits.
+In a Lévy walk with $1<\gamma<2$, the center spreads as $t^{1/\gamma}$ but the MSD grows as $t^{3-\gamma}$. These statements are compatible because the central stable limit has an infinite second moment. Its scaling limit cannot be inserted into a second-moment integral over all positions. The true finite-speed tails are essential. We derive both statements and locate the failed interchange of limits, following the renewal framework reviewed by @zaburdaev2015.
 
 ## Long-time information from small Laplace arguments
 
@@ -21,7 +21,7 @@ $$ {#eq-scale-expansion}
 
 where $b=\tau_0^\gamma\Gamma(1-\gamma)>0$ in the first case and $A=-\tau_0^\gamma\Gamma(1-\gamma)>0$ in the second. One obtains the first line from $1-\widetilde\psi(s)=s\widetilde\Psi(s)$: replace the long-time survival by $\tau_0^\gamma t^{-\gamma}$ and use the gamma integral. When the mean exists, subtract its contribution first before extracting the nonanalytic tail term. A naive Taylor expansion under an integral with a divergent moment is invalid.
 
-Complex powers in @eq-renew-propagator are defined by continuation from $\Re s>0$ with the principal branch. For real $k$, the terms at $s-ikv$ and $s+ikv$ are conjugate. This guarantees a real symmetric spatial distribution.
+Complex powers in @eq-renew-propagator are defined by continuation from $\Re s>0$ with the principal branch. For real positive $s$ and real $k$, the terms at $s-ikv$ and $s+ikv$ are conjugate. Together with symmetry under $k\mapsto-k$, this is consistent with a real symmetric spatial distribution.
 
 ## Ordinary diffusion: a central limit with finite propagation
 
@@ -123,7 +123,16 @@ For $\gamma>2$ the bracket is $\langle\tau^2\rangle s/(2\mu)+o(s)$, giving $M_2\
 
 ## The two marginal exponents
 
-At $\gamma=1$ the survival is asymptotically $\tau_0/t$, so $1-\widetilde\psi(s)\sim\tau_0s\log[1/(s\tau_0)]$. Write $L=\log[1/(s\tau_0)]$. Then $\widetilde\psi'\sim-\tau_0(L-1)$ and the bracket in @eq-scale-msd-transform is asymptotically $1/L$. Slowly varying inversion gives $M_2(t)\sim v^2t^2/\log(t/\tau_0)$.
+At $\gamma=1$ the survival is asymptotically $\tau_0/t$, so $1-\widetilde\psi(s)\sim\tau_0s\log[1/(s\tau_0)]$. The leading terms cancel in the MSD bracket, so this case needs a little more care than substituting the leading power. Using $1-\widetilde\psi=s\widetilde\Psi$ gives the exact identity
+
+$$
+1+\frac{s\widetilde\psi'(s)}{1-\widetilde\psi(s)}
+=-s\frac{\widetilde\Psi'(s)}{\widetilde\Psi(s)}
+=\frac{s\int_0^\infty t e^{-st}\Psi(t)dt}
+{\int_0^\infty e^{-st}\Psi(t)dt}.
+$$
+
+For the $\gamma=1$ Lomax survival, the denominator is asymptotic to $\tau_0 L$, with $L=\log[1/(s\tau_0)]$, while the numerator tends to $\tau_0$. The bracket is therefore asymptotic to $1/L$. Slowly varying inversion gives $M_2(t)\sim v^2t^2/\log(t/\tau_0)$.
 
 At $\gamma=2$, the truncated second duration moment grows logarithmically. More precisely, $\widetilde\psi(s)=1-\mu s+\tau_0^2s^2\log[1/(s\tau_0)]+O(s^2)$, with $\mu=\tau_0$. Substitution gives $M_2(t)\sim2v^2\tau_0t\log(t/\tau_0)$. Terms inside the logarithm only affect lower-order corrections. These marginal forms assume the specified pure Lomax tail; other slowly varying tail factors can modify the logarithms.
 
@@ -142,7 +151,7 @@ The entries describe asymptotic scalings with dimensional constants suppressed. 
 For $1<\gamma<2$, the central stable law has tail $P(x,t)\propto t/|x|^{1+\gamma}$ in the intermediate range $t^{1/\gamma}\ll|x|\ll vt$. To estimate high-order moments integrate this tail with its physical cutoff:
 
 $$
-\langle|X|^q\rangle_{\rm tail}\sim t\int_{t^{1/\gamma}}^{vt}x^{q-1-\gamma}dx.
+\langle|X|^q\rangle_{\mathrm{tail}}\sim t\int_{t^{1/\gamma}}^{vt}x^{q-1-\gamma}dx.
 $$
 
 For $q>\gamma$ the upper limit dominates and gives $t^{q+1-\gamma}$. For $q<\gamma$ the central law has a finite $q$th absolute moment and gives $t^{q/\gamma}$. At $q=\gamma$ the integral is logarithmic. Thus the spectrum $\zeta(q)$ defined by $\langle|X|^q\rangle\propto t^{\zeta(q)}$ is

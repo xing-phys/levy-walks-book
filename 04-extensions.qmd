@@ -1,0 +1,210 @@
+# Beyond a fixed speed {#sec-extensions}
+
+The elementary Lévy walk makes a strong modeling choice: a flight lasts a random time, but its speed is fixed. Real trajectories contain more information. A cell may choose a different speed after each turn; a perturbation in a fluid may broaden while it propagates; an atom may accelerate throughout an excursion. These mechanisms can produce similar mean squared displacements while producing different trajectories and probability densities.
+
+This chapter develops the three classes of generalization discussed in Sec. III of @zaburdaev2015. The calculations also explain which parts of the elementary model survive a change of microscopic rules. Throughout, a renewal means an independent new choice of flight variables. It need not reverse the direction: two consecutive independently drawn velocities may have the same sign.
+
+## A distribution of velocities
+
+At each renewal draw a duration $\tau$ from $\psi$ and a velocity $V$ independently from a normalized density $h(V)$. During that flight the displacement is $V\tau$. The standard symmetric model is recovered with
+
+$$
+h(V)=\frac12\delta(V-v)+\frac12\delta(V+v).
+$$ {#eq-ext-two-speed}
+
+Let $\nu(x,t)$ be the density of renewal events, including $\delta(x)\delta(t)$ at the initial preparation. Counting completed flights gives
+
+$$
+\nu(x,t)=\delta(x)\delta(t)+
+\int_0^t d\tau\int_{-\infty}^{\infty}dV\,
+\psi(\tau)h(V)\nu(x-V\tau,t-\tau).
+$$ {#eq-ext-renewal}
+
+To find a walker at time $t$, instead count its last renewal and require the subsequent flight to survive:
+
+$$
+P(x,t)=\int_0^t d\tau\int_{-\infty}^{\infty}dV\,
+\Psi(\tau)h(V)\nu(x-V\tau,t-\tau),
+\qquad \Psi(\tau)=\int_\tau^\infty\psi(u)\,du.
+$$ {#eq-ext-observation}
+
+With the Fourier convention $\widehat f(k)=\int e^{ikx}f(x)dx$, a translated flight contributes $e^{ikV\tau}$. Consequently, the Laplace argument is $s-ikV$, and solving the renewal equation yields
+
+$$
+\widetilde P(k,s)=
+\frac{\int h(V)\widetilde\Psi(s-ikV)\,dV}
+{1-\int h(V)\widetilde\psi(s-ikV)\,dV}.
+$$ {#eq-ext-general-transform}
+
+This formula is exact for a fresh start at the origin. The numerator is as important as the denominator: it describes an unfinished flight at observation. Replacing it with $\widetilde\Psi(s)$ would describe a different process. At $k=0$, the identity $\widetilde\Psi(s)=[1-\widetilde\psi(s)]/s$ gives $\widetilde P(0,s)=1/s$, verifying conservation of probability. The random-velocity construction was developed by @zaburdaev2008random.
+
+If $h$ is supported on $[-v_{\max},v_{\max}]$, every trajectory obeys $|X(t)|\leq v_{\max}t$. A Gaussian $h$ assigns a finite speed to each individual flight, but allows arbitrarily large speeds across the ensemble. There is then no common light cone. “Finite velocity during a flight” and “a uniform maximum propagation speed” are separate assumptions.
+
+### An exact Cauchy example
+
+A useful solvable case has
+
+$$
+h(V)=\frac{u}{\pi(V^2+u^2)},\qquad u>0.
+$$ {#eq-ext-cauchy-velocity}
+
+Condition on all flight lengths in time, including the unfinished last one: $a_1,\ldots,a_m\geq0$, with $\sum_j a_j=t$. Independence and the Cauchy characteristic function give
+
+$$
+\mathbb E\!\left[e^{ikX(t)}\mid a_1,\ldots,a_m\right]
+=\prod_{j=1}^{m}e^{-u|k|a_j}=e^{-u|k|t}.
+$$ {#eq-ext-cauchy-proof}
+
+The conditional result no longer contains the random partition. Averaging over that partition therefore changes nothing, and Fourier inversion gives
+
+$$
+P(x,t)=\frac{ut}{\pi[x^2+(ut)^2]}.
+$$ {#eq-ext-cauchy-position}
+
+This is exact for **every** duration distribution for which the renewal process is defined. Ballistic scaling here comes from stability of the velocity law, rather than from an infinite mean duration. Its variance and even $\mathbb E|X(t)|$ diverge, so an MSD exponent is not a meaningful characterization. The example is a warning against inferring microscopic dynamics from a single scaling collapse.
+
+### Which tail controls spreading?
+
+Suppose $\psi(\tau)\sim\gamma\tau_0^\gamma\tau^{-1-\gamma}$ and the symmetric velocity density has $h(V)\sim C|V|^{-1-\beta}$, with $\beta>0$. Integrating over one completed flight gives its displacement density
+
+$$
+g(\ell)=\int_0^\infty\frac{\psi(\tau)}{\tau}
+h(\ell/\tau)\,d\tau.
+$$ {#eq-ext-product-density}
+
+The product $V\tau$ is heavy tailed because either factor can be large. Away from the equal-tail case, its tail index is $\min(\beta,\gamma)$: for example, if $\beta<\gamma$, then $\mathbb E\tau^\beta$ is finite and the velocity tail survives the integral with a finite amplitude. If $\gamma<\beta$, exchange the roles of duration and velocity. At $\beta=\gamma$, logarithmic factors generally appear.
+
+This product argument must be combined with the renewal clock. When $\gamma>1$, the number of completed flights is approximately $t/\mu$, where $\mu=\mathbb E\tau$. Symmetric sums then suggest a typical width $t^H$ with
+
+$$
+H=\frac{1}{\min(2,\beta,\gamma)},\qquad \gamma>1.
+$$ {#eq-ext-finite-mean-exponent}
+
+Here $H$ refers to a typical spatial scale, not automatically to the exponent of every moment. When $0<\gamma<1$, the number of renewals is of order $t^\gamma$ and a few flights consume a finite fraction of the observation time. The resulting typical exponent, under these independent regularly varying assumptions, is
+
+$$
+H=\frac{\gamma}{\min(\beta,\gamma)}
+=\max(1,\gamma/\beta),\qquad 0<\gamma<1.
+$$ {#eq-ext-infinite-mean-exponent}
+
+The marginal boundaries require logarithmic corrections. In particular, sufficiently heavy velocity tails allow superballistic spreading, $H>1$. Such behavior requires an unbounded speed law with divergent mean absolute speed; it is incompatible with a fixed maximum speed. Heavy-tailed velocities also make sufficiently high displacement moments infinite already at finite times. These facts limit the usefulness of moment-based phase diagrams.
+
+For symmetric $h$ with a finite second moment and $\gamma>2$, a direct random-sum calculation gives ordinary diffusion. One flight has mean zero and variance $\mathbb E[V^2]\mathbb E[\tau^2]$. Dividing by the mean time per flight gives
+
+$$
+D_{\mathrm{eff}}=\frac{\mathbb E[V^2]\mathbb E[\tau^2]}{2\mu}.
+$$ {#eq-ext-random-speed-diffusion}
+
+For $1<\gamma<2$ and sufficiently light velocity tails, the central stable profile retains index $\gamma$, but its scale contains $\mathbb E|V|^\gamma$. Its far tails retain more detailed information about $h$. This separation between a universal central shape and model-dependent rare trajectories will reappear in the infinite-density analysis.
+
+## Fluctuations during a flight
+
+Drawing a new velocity only at renewals leaves perfectly straight flight segments. A different model adds small fluctuations during a segment. Write
+
+$$
+dX(t)=V(t)\,dt+\sqrt{2D_x}\,dW(t),
+$$ {#eq-ext-noisy-flight}
+
+where $V(t)=\pm v$ is the renewal velocity, $W$ is an independent standard Wiener process, and $D_x$ has units of length squared per time. The white-noise term is a coarse-grained model for accumulated displacement fluctuations; it should not be interpreted as a bounded microscopic instantaneous velocity. This convention gives variance $2D_x\tau$ in a flight of age $\tau$. Some papers instead define a noise strength $D_v=2D_x$.
+
+Integrating a single segment gives $\Delta X=V\tau+\eta$, where
+
+$$
+G(\eta,\tau)=\frac{\exp[-\eta^2/(4D_x\tau)]}{\sqrt{4\pi D_x\tau}}.
+$$ {#eq-ext-noise-kernel}
+
+Because independent Brownian increments add over the entire elapsed time, the complete process is exactly the elementary walk plus an independent Brownian displacement. Thus
+
+$$
+P_{D_x}(x,t)=\int_{-\infty}^{\infty}
+P_0(y,t)G(x-y,t)\,dy,
+\qquad
+\widetilde P_{D_x}(k,s)=\widetilde P_0(k,s+D_xk^2).
+$$ {#eq-ext-global-convolution}
+
+In the superdiffusive regime the width of the central Lévy part is $t^{1/\gamma}$, larger asymptotically than the added Gaussian width $t^{1/2}$. The leading central scaling therefore survives. Near a ballistic front, however, the original singular peak broadens into a Gaussian hump:
+
+$$
+P_{\mathrm{no\ renewal}}(x,t)=\frac{\Psi(t)}2
+\left[G(x-vt,t)+G(x+vt,t)\right].
+$$ {#eq-ext-ballistic-humps}
+
+For a fresh start, the total mass of these two humps is $\Psi(t)\sim\tau_0^\gamma t^{-\gamma}$. Their widths grow as $t^{1/2}$ and their heights decay as $t^{-\gamma-1/2}$. The equation identifies the contribution of trajectories without a renewal; other histories can contribute nearby, so the complete local profile need not consist solely of these humps at finite time.
+
+For independent sign redraws, the full endpoint atoms before broadening have weight $W_{\mathrm{front}}(t)=\mathbb E[2^{-N(t)}]$, including renewals that choose the previous sign again. Their full Gaussian contribution is obtained by replacing $\Psi(t)$ with $W_{\mathrm{front}}(t)$ in @eq-ext-ballistic-humps. Since $W_{\mathrm{front}}(t)\sim2\Psi(t)$ for the power tail, the mass and height exponents are unchanged.
+
+This gives an experimental discriminator. If a speed is drawn from a narrow distribution once and then held fixed, the displacement uncertainty of an unrenewed flight is $t\,\delta V$, growing linearly in time. Independent fluctuations accumulated during the flight instead give a square-root width. These two mechanisms and their front signatures are analyzed in @denisov2012fluctuations. Initial preparation changes the hump mass, a point developed in the next chapter.
+
+## Identical renewal endpoints, different paths
+
+A particularly instructive comparison keeps the same pairs $(\tau_i,\ell_i)$ with $\ell_i=\sigma_i v\tau_i$, $\sigma_i=\pm1$, but changes how each pair is traversed. Let $T_n=\sum_{i=1}^{n}\tau_i$ and $S_n=\sum_{i=1}^{n}\ell_i$.
+
+* A walk moves continuously from $(S_n,T_n)$ to $(S_{n+1},T_{n+1})$.
+* A wait-first process stays at $S_n$ until $T_{n+1}$ and then jumps to $S_{n+1}$.
+* A jump-first process jumps to $S_{n+1}$ at $T_n$ and waits there until $T_{n+1}$.
+
+If $N(t)=\max\{n:T_n\leq t\}$, their positions are respectively
+
+$$
+\begin{aligned}
+X_{\mathrm{walk}}(t)&=S_{N(t)}+\sigma_{N(t)+1}v[t-T_{N(t)}],\\
+X_{\mathrm{wait}}(t)&=S_{N(t)},\\
+X_{\mathrm{jump}}(t)&=S_{N(t)+1}.
+\end{aligned}
+$$ {#eq-ext-three-interpolations}
+
+All completed renewal endpoints coincide. Their current, unfinished segment differs, and for infinite-mean durations that segment is a macroscopic part of the history. Consequently, matching completed-step statistics does not determine the observed propagator. This distinction is central to the ballistic profiles studied by @froemberg2015ballistic.
+
+For wait-first motion, the joint completed-step transform is
+
+$$
+\phi(k,s)=\tfrac12[\widetilde\psi(s-ikv)+\widetilde\psi(s+ikv)],
+\qquad
+\widetilde P_{\mathrm{wait}}(k,s)=\frac{\widetilde\Psi(s)}{1-\phi(k,s)}.
+$$ {#eq-ext-wait-first}
+
+The survival numerator contains no spatial shift because the walker waits at the previous endpoint. Every completed jump has a time cost already paid, so $|X_{\mathrm{wait}}(t)|\leq vt$. Conversely, the first jump in a jump-first process is made before paying its time cost. Its length is unbounded at arbitrarily small positive observation times; for $\gamma<2$ the MSD can diverge even though the continuously interpolated walk has finite moments. In the ballistic regime these models have the same exponent $H=1$ under the linear coupling but different scaling functions and different moment existence.
+
+### Nonlinear couplings and a random diffusivity example
+
+One may replace $|\ell|=v\tau$ by $|\ell|=c\tau^\eta$, with $c$ of units length/time$^\eta$. For an instantaneous-jump model this specifies the endpoint law. For a continuous path it does **not** yet specify the path: one must say whether the speed is $c\tau^{\eta-1}$ throughout a preselected flight, or whether motion accelerates with flight age. The last unfinished excursion depends on this choice. A nonlinear coupling generally removes the elementary model's uniform finite-speed bound.
+
+Another useful coupling draws a Gaussian displacement conditional on the waiting time,
+
+$$
+\lambda(\ell\mid\tau)=\frac{e^{-\ell^2/(4D\tau)}}{\sqrt{4\pi D\tau}}.
+$$ {#eq-ext-gaussian-coupling}
+
+Then $\phi(k,s)=\widetilde\psi(s+Dk^2)$. For $0<\gamma<1$, the wait-first propagator has the scaling transform
+
+$$
+\widetilde P(k,s)\simeq\frac{s^{\gamma-1}}{(s+Dk^2)^\gamma}.
+$$ {#eq-ext-fractional-diffusion-power}
+
+This is a coupled space-time law: the denominator contains a fractional power of the entire diffusion operator. It is different from the uncoupled subdiffusive denominator $s^\gamma+D_\gamma k^2$. The general theory of such coupled limits is developed in @beckerkern2004coupled; a later correction clarifies technical assumptions in that theory [@meerschaert2012correction].
+
+Finally, suppose travel over a distance $L$ takes $L/v$ and an added rest takes $aL$, with $a$ a time per length. The complete cycle costs $L(a+1/v)$, so its coarse-grained speed is
+
+$$
+v_{\mathrm{eff}}=\frac{v}{1+av}.
+$$ {#eq-ext-effective-speed}
+
+This elementary calculation explains why adding finite-speed travel to a coupled jump model changes even its apparent speed. A useful model must specify both its endpoint law and what occurs between endpoints.
+
+## Exercises
+
+### A front-width measurement
+
+An experiment finds a hump centered at $vt$, of width proportional to $t^{1/2}$ and integrated weight proportional to $t^{-3/2}$. Under a fresh-start interpretation, infer the duration-tail index and the hump-height exponent.
+
+::: {.callout-note collapse="true" title="Worked solution"}
+The weight is the probability that the first flight has not ended. Hence $\Psi(t)\propto t^{-\gamma}$ gives $\gamma=3/2$. A normalized hump has height equal in scaling to its mass divided by its width, so the height is proportional to $t^{-3/2}/t^{1/2}=t^{-2}$. The width supports accumulated intraflight fluctuations. A distribution of fixed flight speeds would instead give width proportional to $t$ if its width is nonzero and time independent. The preparation must be checked before using the weight exponent.
+:::
+
+### Two diffusion constants
+
+Take exponentially distributed flight durations of mean $\mu$ and symmetric independent velocities of variance $\sigma_V^2$. Compare the diffusion coefficient with the result when every duration equals $\mu$.
+
+::: {.callout-note collapse="true" title="Worked solution"}
+For exponential durations, $\mathbb E\tau^2=2\mu^2$, so @eq-ext-random-speed-diffusion gives $D=\sigma_V^2\mu$. For deterministic durations, $\mathbb E\tau^2=\mu^2$ and $D=\sigma_V^2\mu/2$. The mean renewal rate is identical, but a variance-weighted average gives more importance to long flights. Therefore the mean duration alone does not determine the transport coefficient.
+:::

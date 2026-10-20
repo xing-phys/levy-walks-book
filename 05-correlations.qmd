@@ -1,0 +1,417 @@
+# Correlations, rare events, and memory {#sec-correlations}
+
+A propagator answers where a particle is at one time. It does not completely describe a trajectory. Two processes can have the same central density and different velocity correlations; two asymptotic descriptions of one process can control different moments; two preparations of the same renewal law can give different measured MSDs. This chapter develops these distinctions, following the topics of Sec. IV A–D of @zaburdaev2015.
+
+We use a fresh symmetric walk with independent velocity redraws $V=\pm v$ unless a different preparation is explicitly stated. Its duration density has tail $\psi(\tau)\sim\gamma\tau_0^\gamma\tau^{-1-\gamma}$. The symbol $\gamma$ always denotes the **duration-tail index**. Some primary papers call this index $\alpha$; it is not the MSD exponent, which equals $3-\gamma$ in the superdiffusive regime.
+
+## A velocity correlation resolved in space
+
+Define a correlation density by
+
+$$
+C(x,t)=\mathbb E[V(0)V(t)\delta(x-X(t))].
+$$ {#eq-corr-density-definition}
+
+Its integral is the ordinary temporal correlation $C_t(t)=\mathbb E[V(0)V(t)]$. Where $P(x,t)>0$, division gives the conditional correlation
+
+$$
+C_{\mathrm{cond}}(x,t)=\frac{C(x,t)}{P(x,t)}
+=\mathbb E[V(0)V(t)\mid X(t)=x].
+$$ {#eq-corr-conditional-definition}
+
+The distinction matters: $C$ has units velocity squared per length, whereas $C_{\mathrm{cond}}$ has units velocity squared. A negative value means that, among trajectories reaching that location, opposite initial and final velocities outweigh equal initial and final velocities. This spatial conditioning can reveal correlations hidden by a spatial integral [@zaburdaev2013correlation].
+
+For a fresh start, velocities remain correlated in an unconditional average only if no renewal has occurred. After the first renewal, the newly drawn velocity has zero mean independently of the initial velocity. Therefore
+
+$$
+C_t(t)=v^2\Psi(t).
+$$ {#eq-corr-fresh-temporal}
+
+The no-renewal contribution to the fronts is
+
+$$
+C_{\mathrm{no\ renewal}}(x,t)=\frac{v^2\Psi(t)}2
+[\delta(x-vt)+\delta(x+vt)].
+$$ {#eq-corr-front}
+
+With independent redraws, a renewal may select the same sign again. The full endpoint atoms therefore also include renewed histories whose signs all agree. If $W_{\mathrm{front}}(t)=\mathbb E[2^{-N(t)}]$ is their total probability mass, as in @eq-renew-full-front, the full front correlation is $v^2W_{\mathrm{front}}(t)[\delta(x-vt)+\delta(x+vt)]/2$. Its conditional value is $v^2$. For power-law durations, $W_{\mathrm{front}}(t)\sim2\Psi(t)$.
+
+After subtracting only the no-renewal contribution, the remaining correlation integrates to zero; it includes both interior trajectories and renewed endpoint trajectories. After subtracting the **full** endpoint atoms, the exact interior integral instead equals $v^2[\Psi(t)-W_{\mathrm{front}}(t)]$. A particle ending near the origin after initially moving right often had to move left later. This selection produces a negative spatial echo without any correlation between independently chosen renewal velocities.
+
+### An exact transform and its diffusive limit
+
+The mechanism can be made quantitative. For the more general symmetric velocity density $h(V)$, define
+
+$$
+\begin{aligned}
+Q(k,s)&=\int V^2h(V)\widetilde\Psi(s-ikV)\,dV,\\
+A_1(k,s)&=\int Vh(V)\widetilde\Psi(s-ikV)\,dV,\\
+B_1(k,s)&=\int Vh(V)\widetilde\psi(s-ikV)\,dV,\\
+B_0(k,s)&=\int h(V)\widetilde\psi(s-ikV)\,dV.
+\end{aligned}
+$$ {#eq-corr-transform-components}
+
+There are two possibilities: the initial flight survives to observation, giving $Q$; or it ends, any number of complete intermediate flights follows, and a final flight survives. Summing that geometric renewal series gives
+
+$$
+\widetilde C(k,s)=Q(k,s)+\frac{A_1(k,s)B_1(k,s)}{1-B_0(k,s)}.
+$$ {#eq-corr-exact-transform}
+
+At $k=0$, symmetry sets $A_1=B_1=0$ and recovers @eq-corr-fresh-temporal, with $v^2$ replaced by $\mathbb E V^2$ when it exists. No stationarity assumption has entered.
+
+For fixed speed and a finite second duration moment, write $\mu=\mathbb E\tau$ and $m_2=\mathbb E\tau^2$. The small-argument expansions are
+
+$$
+\widetilde\psi(z)=1-\mu z+\tfrac12m_2z^2+\cdots,
+\qquad \widetilde\Psi(z)=\mu-\tfrac12m_2z+\cdots.
+$$ {#eq-corr-finite-moment-expansion}
+
+Thus $A_1\simeq ikv^2m_2/2$, $B_1\simeq ikv^2\mu$, and
+$1-B_0\simeq\mu(s+Dk^2)$, with $D=v^2m_2/(2\mu)$. The product of the two imaginary factors is negative. Its slowly varying contribution is
+
+$$
+\widetilde C_{\mathrm{central}}(k,s)\simeq
+-\frac{v^2\mu Dk^2}{s+Dk^2}.
+$$ {#eq-corr-central-transform}
+
+The omitted analytic terms describe short-time or localized contributions outside this long-time central approximation. Inverting for $t>0$ gives
+
+$$
+C_{\mathrm{central}}(x,t)\simeq v^2\mu D\,\partial_x^2P(x,t)
+=v^2\mu\,\partial_tP(x,t).
+$$ {#eq-corr-time-derivative}
+
+For $P=(4\pi Dt)^{-1/2}e^{-x^2/(4Dt)}$,
+
+$$
+C_{\mathrm{central}}(x,t)\simeq
+v^2\mu P(x,t)\left(\frac{x^2}{4Dt^2}-\frac1{2t}\right).
+$$ {#eq-corr-gaussian-echo}
+
+The correlation is negative for $|x|<\sqrt{2Dt}$, positive outside that region within the central scaling range, and zero on its boundary. At the origin it decays as $-v^2\mu(4\sqrt{\pi D})^{-1}t^{-3/2}$. This coefficient follows directly from the normalized Gaussian convention used here.
+
+For an exponential duration law the ordinary correlation decays exponentially, yet this local correlation has an algebraic tail. There is no contradiction: the leading central approximation has canceling positive and negative integrals; its smaller omitted terms and outer contributions restore the exact global identity. For $1<\gamma<2$, the central stable density similarly gives an echo with position scale $t^{1/\gamma}$ and correlation-density scale $t^{-1-1/\gamma}$. Exact coefficients and shapes depend on the duration and velocity laws. For velocity distributions without a second moment, even the ordinary temporal correlation may not exist; one must check integrability before applying correlation identities.
+
+## Recovering an exact ballistic scaling function
+
+When $0<\gamma<1$, the duration mean diverges. The small-$z$ law is
+
+$$
+1-\widetilde\psi(z)\simeq A_\gamma z^\gamma,
+\qquad A_\gamma=\Gamma(1-\gamma)\tau_0^\gamma>0.
+$$ {#eq-corr-ballistic-laplace}
+
+Inserting this expansion into the exact walk transform cancels the amplitude and yields
+
+$$
+\widetilde P(k,s)\simeq
+\frac{(s-ikv)^{\gamma-1}+(s+ikv)^{\gamma-1}}
+{(s-ikv)^\gamma+(s+ikv)^\gamma}.
+$$ {#eq-corr-ballistic-transform}
+
+The simultaneous limit holds at fixed $k/s$. It describes a normalized scaling law
+
+$$
+P(x,t)\simeq\frac{1}{vt}F_\gamma\!\left(\frac{x}{vt}\right),
+\qquad -1<\frac{x}{vt}<1.
+$$ {#eq-corr-ballistic-scaling}
+
+The finite-time atoms at $x=\pm vt$ have total mass $W_{\mathrm{front}}(t)\sim2\Psi(t)$ for the independent redraw convention. Their no-renewal subset has mass $\Psi(t)$. Both masses tend to zero and do not appear in the limiting continuous scaling function.
+
+### Why a complex boundary value gives a density
+
+Introduce the Stieltjes transform
+
+$$
+g(z)=\int_{-1}^{1}\frac{F_\gamma(\xi)}{z-\xi}\,d\xi.
+$$ {#eq-corr-stieltjes}
+
+Integrating the scaling form over time shows that $\widetilde P(k,s)=(ikv)^{-1}g(s/(ikv))$. Comparison with @eq-corr-ballistic-transform therefore identifies
+
+$$
+g(z)=\frac{(z-1)^{\gamma-1}+(z+1)^{\gamma-1}}
+{(z-1)^\gamma+(z+1)^\gamma}.
+$$ {#eq-corr-stieltjes-ratio}
+
+For $z=\xi+i\epsilon$, the imaginary part of $1/(z-u)$ is
+$-\epsilon/[(\xi-u)^2+\epsilon^2]$. Dividing by $-\pi$ produces a normalized narrow kernel that approaches $\delta(\xi-u)$. Hence
+
+$$
+F_\gamma(\xi)=-\frac1\pi\lim_{\epsilon\downarrow0}
+\operatorname{Im}g(\xi+i\epsilon).
+$$ {#eq-corr-stieltjes-inversion}
+
+This avoids a direct double inverse transform. The method works for many other ballistically scaling coupled processes [@froemberg2015ballistic].
+
+Inside $(-1,1)$, set $a=1-\xi$, $b=1+\xi$. Taking the principal upper boundary value gives $(\xi-1+i0)^\gamma=a^\gamma e^{i\pi\gamma}$ and $(\xi+1+i0)^\gamma=b^\gamma$. Multiplying numerator and denominator by the complex conjugate denominator and taking the imaginary part gives
+
+$$
+F_\gamma(\xi)=\frac{2\sin(\pi\gamma)}{\pi}
+\frac{(1-\xi^2)^{\gamma-1}}
+{(1-\xi)^{2\gamma}+(1+\xi)^{2\gamma}
++2(1-\xi^2)^\gamma\cos(\pi\gamma)},
+\qquad |\xi|<1.
+$$ {#eq-corr-lamperti}
+
+It vanishes outside this interval. This is the symmetric Lamperti law, related to the occupation-time theorem of @lamperti1958occupation. At $\gamma=1/2$, the denominator reduces to $2$ and
+
+$$
+F_{1/2}(\xi)=\frac{1}{\pi\sqrt{1-\xi^2}}.
+$$ {#eq-corr-arcsine}
+
+The divergence at a front is integrable. It represents a high probability density near a limiting velocity, not a finite delta mass in the scaling limit.
+
+### Occupation times explain ballistic randomness
+
+Let $T_+(t)$ be the total time spent with velocity $+v$ and $p_t=T_+(t)/t$. Then
+
+$$
+\frac{X(t)}{vt}=2p_t-1.
+$$ {#eq-corr-occupation-position}
+
+The Lamperti density for $p$ is obtained by a change of variables: $f(p)=2F_\gamma(2p-1)$, $0<p<1$. For infinite-mean flights, $p_t$ remains random as $t\to\infty$. A single exceptionally long flight can occupy an order-one fraction of the record. The ensemble symmetry $\mathbb E p_t=1/2$ does not force the occupation fraction on one trajectory to approach $1/2$.
+
+For a general velocity distribution, the ballistic transform becomes
+
+$$
+\widetilde P(k,s)\simeq
+\frac{\int h(V)(s-ikV)^{\gamma-1}dV}
+{\int h(V)(s-ikV)^\gamma dV},
+$$ {#eq-corr-general-ballistic}
+
+provided the integrals and limiting expansion are valid. The same Stieltjes argument recovers its scaling density. Bounded, Gaussian, and Cauchy velocity laws consequently lead to very different profiles, although all can exhibit a width proportional to $t$. A ballistic exponent alone does not imply a Lamperti density.
+
+## Infinite densities and the moments of rare trajectories
+
+For $1<\gamma<2$, the central propagator approaches a symmetric stable density,
+
+$$
+P_{\mathrm{central}}(x,t)\simeq\frac1{(K_\gamma t)^{1/\gamma}}
+L_\gamma\!\left(\frac{x}{(K_\gamma t)^{1/\gamma}}\right),
+\qquad \widehat L_\gamma(k)=e^{-|k|^\gamma}.
+$$ {#eq-corr-central-stable}
+
+This is an approximation on the scale $x\sim t^{1/\gamma}$. It cannot be extended uniformly to $x\sim t$: the true density vanishes outside $|x|\leq vt$ and has finite moments of every order, whereas the stable approximation has divergent moments for $q\geq\gamma$. Applying the central limit theorem first and then integrating an unbounded observable interchanges two limits that do not commute.
+
+To resolve the rare ballistic region, define, for fixed nonzero $\xi$,
+
+$$
+I_\gamma(\xi)=\lim_{t\to\infty}t^\gamma P(t\xi,t).
+$$ {#eq-corr-infinite-density-definition}
+
+The argument is $t\xi$: $\xi$ is a velocity. The prefactor is $t^\gamma$, not the Jacobian $t$ of a normalized density for $X/t$. Thus $I_\gamma$ is not a probability density. The usefulness of this complementary scaling was established by @rebenshtok2014non and @rebenshtok2014infinite.
+
+### Deriving the fixed-speed infinite density
+
+At large time, renewals occur at mean rate $1/\mu$. A displacement $x>0$ of order $t$ is produced, to leading order, by one unusually long positive flight. All typical remaining displacements have scale $t^{1/\gamma}=o(t)$ and can be neglected on this scale. There are two contributions.
+
+First, a long flight of duration $\ell=x/v$ can be completed before observation. Its start can occur over an interval of length $t-\ell$, so its contribution is approximately
+
+$$
+P_{\mathrm{completed}}(x,t)\simeq
+\frac{t-x/v}{2\mu v}\,\psi(x/v),\qquad 0<x<vt.
+$$ {#eq-corr-big-completed}
+
+Second, the long flight can still be in progress. Its current age is $a=x/v$; starting in an interval $da$ has probability $da/(2\mu)$ and survival probability $\Psi(a)$. Therefore
+
+$$
+P_{\mathrm{ongoing}}(x,t)\simeq\frac{\Psi(x/v)}{2\mu v}.
+$$ {#eq-corr-big-ongoing}
+
+Inserting the duration and survival tails, adding the two terms, and using symmetry gives
+
+$$
+I_\gamma(\xi)=\frac{\tau_0^\gamma}{2\mu}
+\left[\frac{\gamma v^\gamma}{|\xi|^{1+\gamma}}
+-\frac{(\gamma-1)v^{\gamma-1}}{|\xi|^\gamma}\right],
+\qquad 0<|\xi|<v.
+$$ {#eq-corr-fixed-speed-infinite}
+
+Outside the cone it is zero. The argument is a leading rare-event calculation; it is not a uniform finite-time approximation near the origin or the microscopic front structure. It also explains the subtraction term: completed flights have fewer possible starting times when their duration is comparable with $t$.
+
+Near zero, $I_\gamma(\xi)\propto |\xi|^{-1-\gamma}$. Its integral diverges. This is harmless because its scaling derivation expressly excluded the central region. Indeed, the true normalized density for $X/t$ is $tP(t\xi,t)$, which tends weakly to $\delta(\xi)$ when $1<\gamma<2$. The nonzero infinite density retains the small probability of ballistic displacements after magnifying it by $t^{\gamma-1}$.
+
+For a symmetric random velocity law with a finite $\gamma$ moment, define $F_a(y)=\int_y^\infty V^a h(V)dV$. Repeating the two-flight calculation gives
+
+$$
+I_\gamma(\xi)=\frac{\tau_0^\gamma}{\mu}
+\left[\frac{\gamma F_\gamma(|\xi|)}{|\xi|^{1+\gamma}}
+-\frac{(\gamma-1)F_{\gamma-1}(|\xi|)}{|\xi|^\gamma}\right].
+$$ {#eq-corr-random-speed-infinite}
+
+The central stable shape forgets much of $h$, while the outer density explicitly retains its cumulative moments.
+
+### Why different moments have different exponents
+
+For $0<q<\gamma$, the stable density has a finite absolute moment and controls the answer:
+
+$$
+\mathbb E|X(t)|^q\sim (K_\gamma t)^{q/\gamma}
+\frac{2^q\Gamma[(1+q)/2]\Gamma(1-q/\gamma)}
+{\sqrt\pi\,\Gamma(1-q/2)}.
+$$ {#eq-corr-low-moments}
+
+For $q>\gamma$, $|\xi|^qI_\gamma(\xi)$ is integrable at the origin. Changing variables $x=t\xi$ in the outer region gives
+
+$$
+\mathbb E|X(t)|^q\sim t^{q+1-\gamma}
+\int_{-v}^{v}|\xi|^qI_\gamma(\xi)d\xi
+=\frac{q\tau_0^\gamma v^q}{\mu(q-\gamma)(q+1-\gamma)}
+t^{q+1-\gamma}.
+$$ {#eq-corr-high-moments}
+
+For $q=2$ this recovers the fresh-start MSD coefficient. The high moments are dominated by trajectories that are rare in probability but large in displacement. Their exponent spectrum is
+
+$$
+\zeta(q)=
+\begin{cases}
+q/\gamma,&0<q<\gamma,\\
+q+1-\gamma,&q>\gamma,
+\end{cases}
+\qquad \mathbb E|X(t)|^q\asymp t^{\zeta(q)}.
+$$ {#eq-corr-strong-anomalous-spectrum}
+
+The ratio $\zeta(q)/q$ is not constant, which defines strong anomalous diffusion. At $q=\gamma$, both branches meet at power $t$, but the overlap integral is logarithmic. In the present fixed-speed convention,
+
+$$
+\mathbb E|X(t)|^\gamma\sim
+\frac{(\gamma-1)\tau_0^\gamma v^\gamma}{\mu}
+t\log(t/t_*),
+$$ {#eq-corr-borderline-moment}
+
+where the reference time $t_*$ affects the subleading term proportional to $t$. The coefficient follows by integrating the overlap tail $P(x,t)\sim\gamma\tau_0^\gamma v^\gamma t/(2\mu|x|^{1+\gamma})$ from a central cutoff of order $t^{1/\gamma}$ to an outer cutoff of order $t$.
+
+## Preparation, aging, and the inspection paradox
+
+Position and velocity do not completely specify a renewal walk. One also needs the age $a$ of the present flight. Conditional on survival to age $a$, the remaining duration $R$ has density and survival
+
+$$
+f_R(r\mid a)=\frac{\psi(a+r)}{\Psi(a)},
+\qquad
+\Pr(R>r\mid a)=\frac{\Psi(a+r)}{\Psi(a)}.
+$$ {#eq-corr-conditional-residual}
+
+Only an exponential law makes this independent of $a$. For a power-law survival, an old flight is likely to remain long: at large $a$, keeping $r/a$ fixed gives $\Pr(R>r\mid a)\simeq(1+r/a)^{-\gamma}$. This is memory caused by survival conditioning, even though successive flight durations are independent.
+
+### The stationary renewal preparation
+
+If $\mu<\infty$, sampling a walk at an arbitrary late time biases the current duration. A flight of length $\tau$ is encountered in proportion to its length, so its sampled density is $\tau\psi(\tau)/\mu$. Conditional on that length, the observation point is uniform along the flight. Integrating over lengths gives
+
+$$
+f_{\mathrm{eq}}(r)=\frac{\Psi(r)}{\mu},
+\qquad
+S_{\mathrm{eq}}(r)=\frac1\mu\int_r^\infty\Psi(u)du.
+$$ {#eq-corr-equilibrium-residual}
+
+These are the density and survival of the first renewal **after** observation begins. Subsequent flight durations still follow $\psi$. Equivalently, the joint density of age and residual time is $\psi(a+r)/\mu$; integrating either variable recovers its marginal. This is the renewal inspection paradox: a random observer preferentially meets long intervals.
+
+For $1<\gamma<2$,
+
+$$
+S_{\mathrm{eq}}(t)\sim
+\frac{\tau_0^\gamma}{\mu(\gamma-1)}t^{1-\gamma}.
+$$ {#eq-corr-equilibrium-survival-tail}
+
+An equilibrium first flight persists parametrically longer than a fresh one. The no-renewal front mass changes from $t^{-\gamma}$ to $t^{1-\gamma}$. With intraflight Brownian broadening, the corresponding hump height changes from $t^{-\gamma-1/2}$ to $t^{1/2-\gamma}$. One must specify preparation before comparing front measurements or simulations.
+
+There is no normalized stationary renewal preparation if $0<\gamma\leq1$ under the assumed power tail, because $\mu$ diverges. Starting the process a finite age $t_a$ before measurement remains meaningful, but the residual-time law depends on $t_a$. Taking $t_a\to\infty$ does not produce @eq-corr-equilibrium-residual with an infinite denominator. This persistent dependence on time since preparation is aging.
+
+## Time averages and what ergodicity means here
+
+The time-averaged MSD of a trajectory of duration $T$ at lag $\Delta<T$ is
+
+$$
+\overline{\delta^2}(\Delta;T)=\frac1{T-\Delta}
+\int_0^{T-\Delta}[X(t+\Delta)-X(t)]^2dt.
+$$ {#eq-corr-tamsd}
+
+It averages many overlapping increments of one trajectory. The ensemble MSD $M(t)=\mathbb E[(X(t)-X(0))^2]$ averages distinct trajectories with a specified preparation. They are different experimental protocols. The central question is whether the long-record time average converges to a deterministic quantity and, if so, which ensemble quantity it matches.
+
+For stationary velocities with zero mean,
+
+$$
+\mathbb E[(X(t+\Delta)-X(t))^2]
+=2\int_0^\Delta(\Delta-u)C_{\mathrm{stat}}(u)du.
+$$ {#eq-corr-green-kubo-increment}
+
+This follows by expressing the increment as $\int_t^{t+\Delta}V(s)ds$, expanding its square, and integrating the two-time correlation over a square. Stationarity converts it to the triangular integral. It must not be used with the fresh correlation $v^2\Psi(u)$ as though that correlation were stationary.
+
+For independent redraws, $C_{\mathrm{stat}}(u)=v^2S_{\mathrm{eq}}(u)$. Substituting the tail in @eq-corr-green-kubo-increment gives, for large lag and $1<\gamma<2$,
+
+$$
+M_{\mathrm{eq}}(\Delta)\sim
+\frac{2v^2\tau_0^\gamma}
+{\mu(\gamma-1)(2-\gamma)(3-\gamma)}\Delta^{3-\gamma}.
+$$ {#eq-corr-stationary-msd}
+
+The fresh MSD can be obtained independently by twice differentiating the exact propagator with respect to $k$. Its exact Laplace transform is
+
+$$
+\widetilde M_{\mathrm{fresh}}(s)=\frac{2v^2}{s^3}
+\left[1+\frac{s\widetilde\psi'(s)}{1-\widetilde\psi(s)}\right].
+$$ {#eq-corr-exact-msd-transform}
+
+For $1<\gamma<2$, write $\widetilde\psi(s)=1-\mu s+a_\gamma s^\gamma+o(s^\gamma)$, where $a_\gamma=-\Gamma(1-\gamma)\tau_0^\gamma>0$. The leading constant inside brackets cancels; the remaining term is $a_\gamma(\gamma-1)s^{\gamma-1}/\mu$. Laplace inversion gives
+
+$$
+M_{\mathrm{fresh}}(\Delta)\sim
+\frac{2v^2\tau_0^\gamma}{\mu(2-\gamma)(3-\gamma)}\Delta^{3-\gamma}.
+$$ {#eq-corr-fresh-msd}
+
+Thus a long trajectory dominated by its late, stationary portions gives
+
+$$
+\frac{\mathbb E\overline{\delta^2}(\Delta;T)}
+{M_{\mathrm{fresh}}(\Delta)}\longrightarrow\frac1{\gamma-1},
+$$ {#eq-corr-preparation-ratio}
+
+when the long-record limit is taken appropriately before the large-lag asymptote. This ratio is often discussed as an ergodicity discrepancy [@froemberg2013einstein]. It compares a stationary increment ensemble with a fresh ensemble. It is not by itself evidence that time averages remain random at fixed lag as $T\to\infty$. With finite mean regeneration times, bounded velocities, and fixed $\Delta$, the corresponding stationary increment observable is integrable and obeys a renewal ergodic law. Convergence can nevertheless be very slow; taking $\Delta$ to grow with $T$ probes a different limit.
+
+For $0<\gamma<1$, @eq-corr-exact-msd-transform instead gives
+
+$$
+M_{\mathrm{fresh}}(t)\sim(1-\gamma)v^2t^2.
+$$ {#eq-corr-ballistic-msd}
+
+At fixed lag and $\Delta/T\to0$, nearly all short lag windows on a long trajectory lie inside a long straight flight. Their squared displacement is $v^2\Delta^2$. Hence the leading time-averaged MSD approaches $v^2\Delta^2$, while corrections depend on how many windows straddle renewals. The leading ratio to a fresh ensemble is $1/(1-\gamma)$. The time-averaged velocity $X(T)/T$, by contrast, remains distributed according to the nondegenerate Lamperti law. This is a direct example of weak ergodicity breaking: accessible velocity states continue to be visited, but their occupation fractions fail to self-average. Fluctuations in the smaller correction to the ballistic time-averaged MSD can also retain a broad distribution.
+
+A useful quantitative diagnostic of randomness is
+
+$$
+\mathrm{EB}_{\mathrm{var}}(\Delta,T)=
+\frac{\operatorname{Var}[\overline{\delta^2}(\Delta;T)]}
+{[\mathbb E\overline{\delta^2}(\Delta;T)]^2}.
+$$ {#eq-corr-eb-variance}
+
+This variance ratio is conceptually different from the preparation ratio in @eq-corr-preparation-ratio. An MSD mismatch, a broad finite-record distribution, and persistent non-self-averaging should be reported separately. Linear response and Einstein relations likewise depend on preparation, averaging protocol, and the physical rule by which a force changes the flights; an MSD exponent alone cannot fix a response coefficient.
+
+## Exercises
+
+### Recover the superdiffusive MSD from rare events
+
+Use @eq-corr-fixed-speed-infinite to calculate the asymptotic second moment. Explain why integrating the central stable density instead fails.
+
+::: {.callout-note collapse="true" title="Worked solution"}
+Multiply the infinite density by $\xi^2$ and integrate symmetrically. The two integrals are $\int_0^v\xi^{1-\gamma}d\xi=v^{2-\gamma}/(2-\gamma)$ and $\int_0^v\xi^{2-\gamma}d\xi=v^{3-\gamma}/(3-\gamma)$. Their combination is
+$\tau_0^\gamma v^2[\gamma/(2-\gamma)-(\gamma-1)/(3-\gamma)]/\mu=2\tau_0^\gamma v^2/[\mu(2-\gamma)(3-\gamma)]$.
+The Jacobian and $x^2$ supply $t^{3-\gamma}$, giving @eq-corr-fresh-msd. The central stable density has infinite variance and is valid only before the ballistic tails matter. A second moment deliberately weights those tails strongly.
+:::
+
+### Build a stationary initial condition
+
+For $\psi(\tau)=\gamma\tau_0^\gamma/(\tau+\tau_0)^{1+\gamma}$ with $\gamma>1$, find the residual-time density and survival for a stationary observation.
+
+::: {.callout-note collapse="true" title="Worked solution"}
+The fresh survival is $\Psi(t)=[\tau_0/(t+\tau_0)]^\gamma$, and $\mu=\tau_0/(\gamma-1)$. Therefore
+$f_{\mathrm{eq}}(r)=(\gamma-1)\tau_0^{\gamma-1}(r+\tau_0)^{-\gamma}$ and
+$S_{\mathrm{eq}}(r)=[\tau_0/(r+\tau_0)]^{\gamma-1}$.
+To simulate the observed displacement relative to time zero, draw the first residual duration from this density and all subsequent durations from $\psi$. Draw the initial velocity symmetrically and independently. Drawing a fresh duration for the first segment would produce the wrong stationary correlation and front weight.
+:::
+
+### An arcsine occupation fraction
+
+For $\gamma=1/2$, determine $\Pr[p<1/4\ \text{or}\ p>3/4]$ in the long-time limit.
+
+::: {.callout-note collapse="true" title="Worked solution"}
+The occupation density is $f(p)=1/[\pi\sqrt{p(1-p)}]$. Its cumulative distribution is $2\arcsin\sqrt p/\pi$. Symmetry gives twice the probability below $1/4$: $2[2\arcsin(1/2)/\pi]=2/3$. Thus two thirds of sufficiently long records spend at least three quarters of their time in one velocity state, despite an ensemble mean occupation fraction of one half.
+:::

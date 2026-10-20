@@ -90,7 +90,7 @@ $$
 \langle X^2(t)\rangle=2\int_0^t(t-u)C(u)du.
 $$ {#eq-toolbox-green-kubo}
 
-If $\int_0^\infty C(u)du$ is finite, the diffusion coefficient is that integral. If $C(u)\propto u^{-\eta}$ with $0<\eta<1$, the integral grows as $t^{2-\eta}$. A fresh nonexponential renewal process is not stationary. Its correlation is $C(u,w)$, and substituting only the correlation from time zero into @eq-toolbox-green-kubo can give an incorrect prefactor or exponent. Chapter 5 develops the proper preparation-dependent correlations.
+If $\int_0^\infty C(u)du$ is finite, the diffusion coefficient is that integral. If $C(u)\sim c u^{-\eta}$ with $0<\eta<1$, the weighted integral in @eq-toolbox-green-kubo instead gives $\langle X^2(t)\rangle\sim2c\,t^{2-\eta}/[(1-\eta)(2-\eta)]$. A fresh nonexponential renewal process is not stationary. Its correlation is $C(u,w)$, and substituting only the correlation from time zero into @eq-toolbox-green-kubo can give an incorrect prefactor or exponent. Chapter 5 develops the proper preparation-dependent correlations.
 
 ## Inferring a power law from a record
 

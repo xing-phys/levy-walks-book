@@ -1,0 +1,275 @@
+# Langevin and kinetic descriptions {#sec-kinetic}
+
+Renewal walks, stochastic differential equations, and kinetic equations answer related questions with different variables. A renewal model specifies what happens at a turn and how long the next flight lasts. A Langevin model specifies local stochastic evolution. A kinetic equation evolves a density in position and velocity. Connecting them requires keeping the physical motion that occurs during a long waiting interval.
+
+The central issue is simple: a particle waiting for its next **velocity change** continues to move in real space. A particle waiting for its next **position jump** does not. A random clock applied to the wrong variable interchanges these processes. This chapter develops the connection behind Sec. IV E of @zaburdaev2015, with enough intermediate steps to interpret fractional kinetic operators.
+
+## The ordinary Langevin benchmark
+
+In one dimension an underdamped Langevin equation with a linear drag is
+
+$$
+dX=V\,dt,\qquad
+dV=-\lambda V\,dt+\sqrt{2\lambda\sigma_v^2}\,dW_t,
+\qquad \lambda>0.
+$$ {#eq-kin-ordinary-langevin}
+
+Here $\sigma_v^2$ is the stationary velocity variance. The explicit velocity solution is
+
+$$
+V(t)=e^{-\lambda t}V(0)
++\sqrt{2\lambda\sigma_v^2}\int_0^t e^{-\lambda(t-u)}dW_u.
+$$ {#eq-kin-ou-solution}
+
+For a stationary initial velocity, the noise integral is independent of $V(0)$ and has zero mean, so $\mathbb E[V(t)V(0)]=\sigma_v^2e^{-\lambda t}$. Integrating the velocity correlation twice gives
+
+$$
+\mathbb E[(X(t)-X(0))^2]=
+\frac{2\sigma_v^2}{\lambda}
+\left[t-\frac{1-e^{-\lambda t}}{\lambda}\right].
+$$ {#eq-kin-ou-msd}
+
+At short times this is $\sigma_v^2t^2$, because the initial velocity persists. At long times it is $2Dt$, with $D=\sigma_v^2/\lambda$. Thus even ordinary Brownian diffusion has a ballistic microscopic regime. A long ballistic transient alone does not establish a heavy-tailed renewal law.
+
+The corresponding phase-space density satisfies
+
+$$
+\partial_t f+V\partial_x f
+=\lambda\partial_V(Vf)+\lambda\sigma_v^2\partial_V^2f.
+$$ {#eq-kin-ordinary-kramers}
+
+The streaming term moves probability in position; the right side relaxes velocity. Integrating over $V$ conserves probability but does not close an equation for position alone without approximations. This is the ordinary Kramers equation, the starting point for the fractional generalization.
+
+## An exact local description with an age coordinate
+
+Nonexponential flights do not require mysterious dynamics. They require an additional variable. Let $n(x,V,a,t)$ be the density of walkers at position $x$, velocity $V$, and flight age $a$. Define the hazard rate
+
+$$
+\lambda_{\mathrm{age}}(a)=\frac{\psi(a)}{\Psi(a)}.
+$$ {#eq-kin-hazard}
+
+It is the conditional probability per unit time for a surviving flight to end at age $a$. Between renewals both physical time and age increase at unit rate, while position advances at velocity $V$. Therefore
+
+$$
+(\partial_t+V\partial_x+\partial_a)n
+=-\lambda_{\mathrm{age}}(a)n,
+\qquad a>0.
+$$ {#eq-kin-age-equation}
+
+For an independent velocity redraw, the boundary at zero age is
+
+$$
+n(x,V,0,t)=h(V)\int dV'\int_0^\infty da\,
+\lambda_{\mathrm{age}}(a)n(x,V',a,t).
+$$ {#eq-kin-age-boundary}
+
+The initial condition for a fresh start is $n(x,V,a,0)=\delta(x)h(V)\delta(a)$, understood distributionally. Following a characteristic from age zero to age $a$ multiplies its density by
+$\exp[-\int_0^a\lambda_{\mathrm{age}}(u)du]=\Psi(a)$. This immediately reproduces the renewal survival kernel.
+
+The enlarged process $(X,V,a)$ is Markovian even when $(X,V)$ alone is not. Forgetting age produces a memory equation; adding age restores local evolution. This observation is particularly useful for simulation, inference of duration laws, and implementing boundaries where a particle may hit a wall before its scheduled renewal.
+
+### Eliminating age produces a material memory
+
+Let $p(x,V,t)=\int_0^\infty n(x,V,a,t)da$ and let $i(x,V,t)$ be the rate density of flights that end. Integrating @eq-kin-age-equation gives
+
+$$
+(\partial_t+V\partial_x)p(x,V,t)
+=-i(x,V,t)+h(V)\int i(x,V',t)dV'.
+$$ {#eq-kin-velocity-balance}
+
+In transform space, the survival and completion kernels have ratio
+
+$$
+\widetilde i(k,V,s)=\widetilde K(s-ikV)\widetilde p(k,V,s),
+\qquad
+\widetilde K(z)=\frac{\widetilde\psi(z)}{\widetilde\Psi(z)}
+=\frac{z\widetilde\psi(z)}{1-\widetilde\psi(z)}.
+$$ {#eq-kin-memory-kernel}
+
+The inverse transform is a convolution **along a ballistic characteristic**:
+
+$$
+i(x,V,t)=\int_0^t K(t-u)
+p(x-V(t-u),V,u)du.
+$$ {#eq-kin-characteristic-memory}
+
+The kernel can be a generalized function; for exponential flights of rate $r$, $\widetilde K=r$ and the integral reduces to $i=rp$. The spatial shift is essential. Probability present at an earlier time has moved during the intervening memory interval. A convolution at fixed $x$ would fail to represent that motion.
+
+## Fractional substantial derivatives
+
+For $0<\gamma<1$, use $1-\widetilde\psi(z)\simeq A_\gamma z^\gamma$, with $A_\gamma=\Gamma(1-\gamma)\tau_0^\gamma$. Then
+
+$$
+\widetilde K(z)\simeq A_\gamma^{-1}z^{1-\gamma}.
+$$ {#eq-kin-fractional-kernel}
+
+Define the material fractional integral by
+
+$$
+(I_V^\gamma f)(x,t)=\frac1{\Gamma(\gamma)}
+\int_0^t(t-u)^{\gamma-1}f(x-V(t-u),u)du,
+$$ {#eq-kin-material-integral}
+
+and the Riemann–Liouville substantial derivative by
+
+$$
+\mathcal D_V^{1-\gamma}f
+=(\partial_t+V\partial_x)I_V^\gamma f.
+$$ {#eq-kin-material-derivative}
+
+Its Fourier–Laplace symbol, with the corresponding causal convention, is $(s-ikV)^{1-\gamma}$. The word “substantial” means that the memory is evaluated following the moving particle. In the coordinate $y=x-Vt$, this becomes an ordinary fractional derivative in time. Returning to the laboratory frame produces the coupled symbol $s-ikV$.
+
+The asymptotic velocity equation therefore takes the form
+
+$$
+(\partial_t+V\partial_x)p
+\simeq\frac1{A_\gamma}
+\left[-\mathcal D_V^{1-\gamma}p
++h(V)\int \mathcal D_{V'}^{1-\gamma}p(x,V',t)dV'\right].
+$$ {#eq-kin-fractional-reset-equation}
+
+This equation is a long-time description of the specified fresh renewal model. Its source and initial terms must be changed for an aged preparation. Caputo and Riemann–Liouville versions distribute initial terms differently; replacing one by the other without adjusting those terms changes the problem.
+
+For $1<\gamma<2$, the memory kernel instead starts with $1/\mu$ and has a nonanalytic correction proportional to $z^{\gamma-1}$. Keeping only the constant gives a local velocity-relaxation model and discards the mechanism responsible for the superdiffusive long flights. A fractional index between zero and one in a collision operator should not automatically be identified with the index $\gamma$ of a finite-mean duration law.
+
+## A fractional Kramers equation
+
+An independent redraw is one particular collision rule. More generally a collision maps velocity $V'$ to $V$ through a transition density $w(V\mid V')$. Its gain-minus-loss operator is
+
+$$
+(\mathcal C f)(V)=\int w(V\mid V')f(V')dV'-f(V),
+$$ {#eq-kin-collision-operator}
+
+where $\int w(V\mid V')dV=1$. The operator acts on the velocity-dependent completion rate, rather than directly on the occupied density. This ordering is what ties the collision statistics to the duration clock.
+
+If velocity changes at each collision are small, expand the gain-minus-loss integral in the velocity increment. To second order it gives a Fokker–Planck operator; for a linear restoring drift and constant velocity diffusion one obtains
+
+$$
+\mathcal L_{\mathrm{FP}}f=\widetilde\lambda\,\partial_V(Vf)
++\kappa\partial_V^2f.
+$$ {#eq-kin-fp-collision}
+
+For infinite-mean intercollision durations and deterministic force-free streaming, the resulting equation is
+
+$$
+(\partial_t+V\partial_x)f
+=\mathcal L_{\mathrm{FP}}\mathcal D_V^{1-\gamma}f,
+\qquad 0<\gamma<1.
+$$ {#eq-kin-fractional-kramers}
+
+The scale factor $A_\gamma^{-1}$ is absorbed into $\widetilde\lambda$ and $\kappa$. They have units time$^{-\gamma}$ and velocity squared/time$^\gamma$, respectively. Multiplication by a derivative of order $1-\gamma$ restores the required rate units. This substantial-memory construction originates in the phase-space CTRW approach of @friedrich2006inertial.
+
+With a deterministic acceleration $F(x)$, define a streaming generator $\mathcal L=V\partial_x+F(x)\partial_V$. The corresponding memory follows full deterministic phase-space characteristics:
+
+$$
+(I_{\mathcal L}^\gamma f)(t)=\frac1{\Gamma(\gamma)}
+\int_0^t a^{\gamma-1}e^{-a\mathcal L}f(t-a)da,
+\qquad
+\mathcal D_{\mathcal L}^{1-\gamma}
+=(\partial_t+\mathcal L)I_{\mathcal L}^\gamma.
+$$ {#eq-kin-forced-substantial}
+
+Here $e^{-a\mathcal L}$ means transport backward along a deterministic characteristic. Under the matching microscopic assumptions, the equation has $\mathcal L_{\mathrm{FP}}\mathcal D_{\mathcal L}^{1-\gamma}$ on its right side. Collision and streaming operators generally do not commute. Moving the velocity derivatives through the substantial derivative can therefore change the equation. Different fractional Kramers equations in the literature encode different stochastic mechanisms; they cannot be equated from a shared fractional exponent.
+
+## Subordination: randomize the velocity clock
+
+Operational time counts opportunities for velocity evolution. Physical time measures how long those states persist. An exact discrete construction starts with independent duration sums
+
+$$
+T_n=\tau_1+\cdots+\tau_n,\qquad
+N(t)=\max\{n:T_n\leq t\},
+$$ {#eq-kin-renewal-clock}
+
+and an operational sequence $U_0,U_1,\ldots$ of velocities. Set
+
+$$
+V(t)=U_{N(t)},\qquad X(t)=\int_0^t U_{N(r)}dr.
+$$ {#eq-kin-time-changed-velocity}
+
+Independent draws $U_n\sim h$ reproduce the random-velocity renewal walk exactly. A correlated Markov chain $U_n$ gives a velocity process with additional persistence at renewals. Since the integral is taken in **physical time**, the walker moves during every flat interval of $N(t)$.
+
+For $0<\gamma<1$, a useful continuous scaling construction uses a positive stable subordinator $D(u)$, an increasing random process specified by
+
+$$
+\mathbb E[e^{-sD(u)}]=e^{-u c s^\gamma},\qquad
+E(t)=\inf\{u:D(u)>t\}.
+$$ {#eq-kin-stable-clock}
+
+The inverse clock $E(t)$ has flat physical-time intervals. If $U(u)$ is an operational velocity process, $V(t)=U(E(t))$ is constant on those intervals. Integrating it over physical time generates long flights. Suitable operational jump or diffusion processes connect random-velocity walks and fractional kinetic equations [@eule2012langevin]. A stable clock specifies a scaling model; it does not reproduce every finite-time detail of an arbitrary $\psi$.
+
+The placement of the clock distinguishes familiar processes. If a Brownian **position** is time changed, $Y(t)=B(E(t))$, then position is frozen on the inverse clock's flat intervals. This is a subdiffusive trapping construction. If a **velocity** is time changed and then integrated as above, position continues to advance, giving flights. Setting $X(t)=\int_0^{E(t)}U(u)du$ would again stop position when the clock stops and would not represent the same walk.
+
+A positive stable subordinator has index only in $(0,1)$, with the deterministic drift clock as the index-one limit. Substituting a duration-tail index $1<\gamma<2$ into @eq-kin-stable-clock does not define an increasing stable clock. Finite-mean Lévy walks can always be represented by the exact renewal clock @eq-kin-renewal-clock; their fluctuation limits require a separate analysis. This avoids a common misuse of subordination.
+
+## Continuous momentum excursions are another route
+
+A continuous Langevin equation can generate long unidirectional excursions without imposing a renewal duration distribution in advance. A dimensionless example motivated by Sisyphus-cooled atoms is
+
+$$
+dp=-\frac{p}{1+p^2}\,dt+\sqrt{2D_p}\,dW_t,
+\qquad dX=p\,dt.
+$$ {#eq-kin-cold-atom-langevin}
+
+At small momentum the force is linear. At large momentum it decreases as $-1/p$, so fast particles experience weak restoring friction. The zero-current stationary momentum equation is
+$D_p\partial_p f_{\mathrm{st}}= -p f_{\mathrm{st}}/(1+p^2)$, giving
+
+$$
+f_{\mathrm{st}}(p)\propto(1+p^2)^{-1/(2D_p)}.
+$$ {#eq-kin-cold-atom-stationary}
+
+It is normalizable only for $D_p<1$. A formal stationary density must therefore be checked before using it as an initial condition or applying stationary correlation formulas.
+
+Divide a momentum trajectory into excursions of one sign. Their duration $\tau$ and signed area $\chi=\int_0^\tau p(u)du$ determine a coupled random walk. For a long excursion, the large-momentum stochastic equation is invariant in scale under $t\mapsto bt$, $p\mapsto b^{1/2}p$. Consequently,
+
+$$
+\chi\sim\tau^{3/2},
+$$ {#eq-kin-excursion-area-scaling}
+
+with an additional random dimensionless area. This is not the elementary linear coupling $\chi=\pm v\tau$: both speed and displacement fluctuate throughout a flight. The excursion construction and its consequences for cold-atom transport were developed in @kessler2012cold and @barkai2014excursion.
+
+White-noise momentum trajectories cross zero infinitely often at arbitrarily small scales. A rigorous renewal construction therefore uses excursion theory or a finite momentum threshold followed by a controlled small-threshold limit; counting every sampled sign change without a resolution prescription is not a well-defined continuum procedure. The large-excursion scaling is robust, but finite-time statistics and prefactors require the regularization and unfinished-excursion law.
+
+Multiplicative velocity noise offers a further class of Langevin mechanisms. If a noise amplitude grows with $|V|$, large-speed excursions can become common and produce heavy displacement tails. The Itô or Stratonovich convention then matters because it changes the drift. Such trajectories can resemble Lévy-flight statistics when sampled coarsely, but resemblance of marginal densities is weaker than equality of stochastic processes. One should compare velocity persistence, front behavior, and the statistics of unfinished excursions before asserting equivalence.
+
+## Distinguishing other forms of anomalous dynamics
+
+Fractional Brownian motion is Gaussian with correlated increments. Its covariance can produce a superdiffusive MSD, but all its one-time moments follow a single Gaussian scaling exponent, unlike the two-branch spectrum of a superdiffusive fixed-speed Lévy walk. It also has no independent renewal-flight interpretation in general.
+
+A generalized Langevin equation instead has a friction memory, for example
+
+$$
+\dot V(t)=-\int_0^t\Gamma(t-u)V(u)du+\eta(t).
+$$ {#eq-kin-generalized-langevin}
+
+The relation between noise and friction must be specified; an equilibrium fluctuation-dissipation relation is an additional physical assumption. Correlated Gaussian noise with a long memory can yield anomalous transport through a mechanism distinct from heavy-tailed renewal intervals. Matching an MSD exponent between these models does not match their higher moments, response, or aging.
+
+In choosing a description, start from what the particle actually does between observable events. Straight persistent flights suggest a renewal velocity model; trapped plateaus suggest a position CTRW; continuous momentum excursions suggest a Langevin model with a derived excursion law. A fractional equation is useful once its streaming, collision, and initial terms have been tied to that mechanism.
+
+## Exercises
+
+### Check a substantial derivative
+
+Let $f(x,t)=q(x-Vt)g(t)$. Show that $\mathcal D_V^{1-\gamma}f$ is an ordinary fractional derivative of $g$ transported with velocity $V$.
+
+::: {.callout-note collapse="true" title="Worked solution"}
+Inside @eq-kin-material-integral,
+$f(x-V(t-u),u)=q(x-Vt)g(u)$. The factor $q$ is constant along the characteristic, so $I_V^\gamma f=q(x-Vt)I^\gamma g(t)$. Applying $\partial_t+V\partial_x$ cancels derivatives of $q$ and yields
+$\mathcal D_V^{1-\gamma}f=q(x-Vt)(d/dt)I^\gamma g(t)$.
+This calculation explains the shifted transform symbol $s-ikV$ without formal operator algebra.
+:::
+
+### Which clock gives a flight?
+
+Suppose an inverse random clock is flat for $t_1<t<t_2$, with value $u_*$, and $U(u_*)=V_*$. Compare $X_1(t)=\int_0^tU(E(r))dr$ with $X_2(t)=\int_0^{E(t)}U(u)du$ over this interval.
+
+::: {.callout-note collapse="true" title="Worked solution"}
+For the first construction, $X_1(t_2)-X_1(t_1)=V_*(t_2-t_1)$: the flat clock freezes velocity and gives a ballistic flight. The second construction has identical integration limits at $t_1$ and $t_2$, so its displacement is zero: the flat clock freezes position. The same operational process and random clock therefore produce different transport depending on where the time change is applied.
+:::
+
+### Recover the stationary velocity variance
+
+For the ordinary Kramers equation @eq-kin-ordinary-kramers in a spatially homogeneous system, derive the equation for $\mathbb E V^2$ and check the stationary value.
+
+::: {.callout-note collapse="true" title="Worked solution"}
+Multiply by $V^2$ and integrate over velocity, assuming boundary terms vanish. Twice integrating the diffusion term by parts gives $2\lambda\sigma_v^2$, while integrating the drag term once gives $-2\lambda\mathbb E V^2$. Hence $d\mathbb E V^2/dt=-2\lambda(\mathbb E V^2-\sigma_v^2)$. The stationary variance is $\sigma_v^2$, consistent with the Langevin amplitude and the correlation used to derive the MSD.
+:::

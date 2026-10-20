@@ -1,0 +1,37 @@
+duration_survival = "(1+t/tau0)^(-gamma)"
+error_bars = "Standard errors across independent paths; observation times on each path are correlated."
+generator = "scripts/simulate.jl"
+initialization = "fresh flight at time zero, x=0, initial velocity symmetric"
+julia_version = "1.12.6"
+speed = 1.0
+tau0 = 1.0
+velocity_rule = "iid symmetric redraw at every renewal; repeat signs allowed"
+
+[lamperti]
+bins = 60
+front_mass = 0.0202
+gamma = 0.5
+n = 140000
+no_renewal_mass = 0.01025
+seed = 20261023
+time = 10000.0
+
+[msd]
+base_seed = 20261021
+gammas = [0.5, 1.5, 2.5]
+max_time = 1000.0
+n_per_gamma = 30000
+seed_rule = "base_seed + round(Int,10gamma)"
+
+[propagators]
+base_seed = 20261022
+bins = 100
+n_per_gamma = 160000
+seed_rule = "base_seed + round(Int,10gamma)"
+time = 100.0
+
+[trajectories]
+gamma = 1.2
+n = 6
+seed = 20261020
+time = 80.0
