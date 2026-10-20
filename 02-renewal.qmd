@@ -1,0 +1,185 @@
+# Constructing the finite-speed walk {#sec-renewal}
+
+## A microscopic definition
+
+Choose iid positive durations $\tau_j$ and iid velocities $V_j=\pm v$, each sign equally probable and independent of all durations. Define renewal times $T_n=\sum_{j=1}^n\tau_j$, $T_0=0$, and $N(t)=\max\{n:T_n\le t\}$. A fresh walk is
+
+$$
+X(t)=\sum_{j=1}^{N(t)}V_j\tau_j+V_{N(t)+1}[t-T_{N(t)}].
+$$ {#eq-renew-path}
+
+The last term is the displacement in the unfinished flight. It is present even when $N(t)=0$. Since $|V_j|=v$, the triangle inequality immediately gives $|X(t)|\le vt$ for every realization. All positive displacement moments are therefore finite at every finite time. This is true even if every duration moment diverges.
+
+The process $X(t)$ alone is usually non-Markovian: its future depends on the age of its current flight, which cannot be inferred from position. A larger state containing position, velocity, and age is Markovian. We will exploit that fact below. One should distinguish a renewal event from an observed turn. Half of independent sign redraws retain the old sign, so two successive flights can appear as a single straight segment in a trajectory.
+
+![Independent finite-speed trajectories generated from the same duration family. Changes in persistence reflect the tail exponent, while each trajectory remains inside its ballistic cone. Monte Carlo parameters and seeds are supplied with the numerical data.](figs/trajectories){#fig-core-trajectories}
+
+## Renewal and occupation kernels
+
+Define the density of a *completed* flight of displacement $y$ and duration $\tau$ by
+
+$$
+\phi(y,\tau)=\frac{\psi(\tau)}2[\delta(y-v\tau)+\delta(y+v\tau)].
+$$
+
+The occupation kernel for an *ongoing* flight is
+
+$$
+\Phi(y,\tau)=\frac{\Psi(\tau)}2[\delta(y-v\tau)+\delta(y+v\tau)].
+$$
+
+The two expressions look similar but carry different units and meanings: $\psi$ counts completion per unit time, whereas $\Psi$ weights survival to an age. Let $\nu(x,t)$ count starts of flights per unit length and unit time, including the initial $\delta(x)\delta(t)$. Then
+
+$$
+\nu=\delta(x)\delta(t)+\phi*\nu,\qquad P=\Phi*\nu,
+$$ {#eq-renew-kernels}
+
+where the star integrates over displacement and past time. Explicitly, the first equation is
+
+$$
+\nu(x,t)=\delta(x)\delta(t)+\frac12\int_0^t\psi(\tau)
+[\nu(x-v\tau,t-\tau)+\nu(x+v\tau,t-\tau)]d\tau.
+$$
+
+Every trajectory reaching a renewal at $(x,t)$ has a uniquely defined preceding renewal. Every occupied trajectory has a uniquely defined current flight. This partitions path space without double counting and explains both equations.
+
+With @eq-found-identities the exact propagator is
+
+$$
+P(k,s)=\frac{\widetilde\Psi(s-ikv)+\widetilde\Psi(s+ikv)}
+{2-\widetilde\psi(s-ikv)-\widetilde\psi(s+ikv)}.
+$$ {#eq-renew-propagator}
+
+At $k=0$ this is $\widetilde\Psi(s)/[1-\widetilde\psi(s)]=1/s$. The initial condition and normalization are thus built into the numerator. This finite-speed counterpart of the Montroll–Weiss formula is the principal tool for the rest of the course [@zaburdaev2015]. A general initial spatial density multiplies its right-hand side by $\widehat P_0(k)$ when every walker starts a fresh flight.
+
+## Ballistic atoms and invisible renewals
+
+Trajectories with no renewal contribute exactly
+
+$$
+P_{\mathrm{no\ renewal}}(x,t)=\frac{\Psi(t)}2[\delta(x-vt)+\delta(x+vt)].
+$$ {#eq-renew-no-renewal}
+
+For independent sign redraws this is a contribution to the front atoms, not their entire weight. A walker can renew one or many times while always choosing the same sign, and still lie exactly at a front. Conditional on $N(t)=n$, the probability of being at a specified front is $2^{-(n+1)}$. The probability at either front is therefore
+
+$$
+W_{\mathrm{front}}(t)=\langle 2^{-N(t)}\rangle,\qquad
+\widetilde W_{\mathrm{front}}(s)=
+\frac{\widetilde\Psi(s)}{1-\widetilde\psi(s)/2}.
+$$ {#eq-renew-full-front}
+
+To obtain the transform, use $\Pr\{N(t)=n\}=(\psi^{*n}*\Psi)(t)$ and sum the geometric series. The two atoms have equal weights $W_{\mathrm{front}}/2$. Their remaining probability $1-W_{\mathrm{front}}$ is in the interior. Under a power-law survival the geometric sum yields $W_{\mathrm{front}}\sim2\Psi(t)$ at long times; a strict reversal model instead has only the no-renewal atoms. These finite-time details matter when testing an implementation against a front formula.
+
+::: {.callout-note}
+## Two different conditionings
+A histogram that omits all trajectories with no renewal is not necessarily free of front atoms. A histogram that excludes every position with $|X|=vt$ removes all front trajectories, including those with invisible renewals. Its density integrates to the retained probability if normalized by the original ensemble size, or to one if normalized by the retained size. A caption must say which convention was used.
+:::
+
+## The telegraph limit, derived two ways
+
+Let durations be exponential with renewal rate $r$. At each event the sign is independently redrawn. An actual sign flip thus occurs with rate $r/2$. If $p_+(x,t)$ and $p_-(x,t)$ are the densities moving right and left,
+
+$$
+\partial_tp_++v\partial_xp_+=-\tfrac r2p_++\tfrac r2p_-,\qquad
+\partial_tp_--v\partial_xp_-=\tfrac r2p_+-\tfrac r2p_-.
+$$
+
+Set $P=p_++p_-$ and $J=v(p_+-p_-)$. Adding and subtracting gives
+
+$$
+\partial_tP=-\partial_xJ,\qquad
+\partial_tJ=-v^2\partial_xP-rJ.
+$$
+
+Differentiate the first equation in time and eliminate $J$:
+
+$$
+\partial_t^2P+r\partial_tP=v^2\partial_x^2P.
+$$ {#eq-renew-telegraph}
+
+For a symmetric fresh start, $P(x,0)=\delta(x)$ and $\partial_tP(x,0)=0$. The same result follows from @eq-renew-propagator using $\widetilde\psi(z)=r/(r+z)$ and $\widetilde\Psi(z)=1/(r+z)$:
+
+$$
+P(k,s)=\frac{s+r}{s^2+rs+v^2k^2}.
+$$
+
+For $t\gg r^{-1}$, slow variations make the $\partial_t^2P$ term subleading. Diffusion follows with $D=v^2/r$. At short times, motion is almost ballistic. The exact second moment is
+
+$$
+\langle X^2(t)\rangle=\frac{2v^2}{r}\left[t-\frac{1-e^{-rt}}r\right].
+$$ {#eq-renew-telegraph-msd}
+
+Expanding the exponential gives $v^2t^2+O(t^3)$ at small time and $2Dt+O(1)$ at large time. If each event were a mandatory reversal at rate $r$, the telegraph damping would be $2r$ and the diffusion coefficient $v^2/(2r)$. This factor of two tests whether the microscopic convention and the continuum equation agree.
+
+## Age as an extra coordinate
+
+Let $n_\pm(x,a,t)$ be a density in position and current-flight age $a$. Along a flight, time increases, age increases, and position advects. Conservation with hazard loss gives
+
+$$
+(\partial_t+\partial_a\pm v\partial_x)n_\pm(x,a,t)
+=-\lambda(a)n_\pm(x,a,t).
+$$ {#eq-renew-age-pde}
+
+At age zero the incoming renewal flux is shared equally:
+
+$$
+n_\pm(x,0,t)=\frac12\int_0^\infty\lambda(a)[n_+(x,a,t)+n_-(x,a,t)]da.
+$$
+
+A fresh initial condition is $n_\pm(x,a,0)=\tfrac12\delta(x)\delta(a)$. Solving @eq-renew-age-pde along characteristics gives a factor $\exp[-\int_0^a\lambda(u)du]=\Psi(a)$. Integrating over age recovers @eq-renew-kernels. Thus the renewal equation and the age-structured equation are equivalent descriptions of the same process.
+
+This formulation makes boundaries easier to state. At an absorbing boundary one removes a path when it crosses the boundary, including during an unfinished flight. Testing only whether a renewal endpoint lies beyond the boundary gives the wrong first-passage time. Reflecting boundaries require a rule for velocity, age, and the unused flight duration; specular reflection and a fresh renewal at impact describe different physics.
+
+## Adding immobile rests
+
+Now let each rest have density $\psi_r$ and survival $\Psi_r$, independently of a subsequent moving flight. Start at the origin in a fresh rest. A full cycle consists of a rest followed by a flight. With $\phi(k,s)$ and $\Phi(k,s)$ denoting the transformed kernels above, the density of starts of rests is
+
+$$
+R(k,s)=\frac1{1-\widetilde\psi_r(s)\phi(k,s)}.
+$$
+
+The particle can be observed in a surviving rest or in a surviving flight after a completed rest. Therefore
+
+$$
+P(k,s)=\frac{\widetilde\Psi_r(s)+\widetilde\psi_r(s)\Phi(k,s)}
+{1-\widetilde\psi_r(s)\phi(k,s)}.
+$$ {#eq-renew-rests}
+
+At $k=0$, substituting $\Phi(0,s)=(1-\widetilde\psi)/s$ proves normalization. The separate numerator terms give resting and moving densities. Starting in a flight changes the numerator, even with the same repeated cycles.
+
+If both mean durations are finite, long trajectories spend fractions
+
+$$
+f_r=\frac{\langle\tau_r\rangle}{\langle\tau_r\rangle+\mu},\qquad
+f_f=\frac{\mu}{\langle\tau_r\rangle+\mu}
+$$
+
+in the two phases. These are ensemble long-time fractions and time fractions under the renewal law of large numbers. They are not an exact statement that the two spatial densities are proportional at every position and time. Their leading bulk behavior can be proportional when the long-scale equilibration of the phases applies.
+
+For moving flights with $1<\gamma<2$ and finite-mean rests, the bulk stable exponent and MSD exponent survive, but their prefactors are reduced by the time spent resting. When moving-flight means diverge while rest means remain finite, the fraction of time in rests tends to zero: motion dominates. If rest means also diverge, the balance requires analysis of both exponents; sufficiently long rests can qualitatively change spreading. One cannot decide the transport class from the moving durations alone.
+
+For a concrete ordinary-diffusion example, finite second moving-duration moment gives
+
+$$
+D_{\mathrm{rest}}=\frac{v^2\langle\tau^2\rangle}{2(\mu+\langle\tau_r\rangle)}.
+$$
+
+A completed cycle has displacement $\pm v\tau$ of zero mean and variance $v^2\langle\tau^2\rangle$; the number of cycles grows as $t/(\mu+\langle\tau_r\rangle)$. This renewal reward argument derives the formula and explains its assumptions.
+
+## Exercises
+
+1. Prove finite support directly from @eq-renew-kernels by following the sums of individual flight displacements.
+2. Derive @eq-renew-telegraph-msd by multiplying @eq-renew-telegraph by $x^2$ and integrating over $x$.
+3. For exponential renewals, compute the full front weight and compare it with the no-renewal probability.
+4. Explain what initial condition in the age formulation corresponds to observing a stationary walker at an arbitrary time, rather than at a renewal.
+
+::: {.callout-tip collapse="true"}
+## Worked solutions
+1. Each displacement has magnitude at most its elapsed duration times $v$. Convolution adds elapsed durations and displacements; therefore a path of total duration $t$ obeys $|x|\le v\sum_j\tau_j=vt$, including the last partial duration. No positive convolution term lies outside that region.
+
+2. Integration by parts twice gives $\int x^2\partial_x^2Pdx=2$. Thus $M''+rM'=2v^2$, with $M(0)=M'(0)=0$. Solve $M'=(2v^2/r)(1-e^{-rt})$, then integrate once more.
+
+3. $N(t)$ is Poisson with mean $rt$, so $\langle2^{-N}\rangle=e^{rt(1/2-1)}=e^{-rt/2}$. The no-renewal weight is $e^{-rt}$. Invisible renewals explain the difference. Each specified front receives half of the full weight.
+
+4. For $\mu<\infty$, the stationary age density is $\Psi(a)/\mu$, with symmetric velocities and a specified position at the observation origin. Normalization uses $\int\Psi(a)da=\mu$. When $\mu=\infty$ this construction cannot be normalized. The residual lifetime is discussed in Chapter 5.
+:::

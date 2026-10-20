@@ -1,0 +1,50 @@
+# A map of the review and this book {#sec-coverage}
+
+This map is an audit of **topic coverage**, not a claim to reproduce the review's sentences, figures, or every historical citation. All substantive sections of the published review and its publicly accessible author manuscript are represented. The review's contents and section names provide the navigation below [@zaburdaev2015]. The book groups related arguments to support a first reading; detailed derivations, computational checks, exercises, and the mathematical toolbox are added teaching material.
+
+| Review section | Topics treated here | Book destination |
+|:--|:--|:--|
+| I. Introduction | Microscopic transport, diffusion, finite propagation, flight versus walk, historical model context | @sec-foundations; @sec-renewal |
+| I.A. Lévy stable laws | Generalized central limit argument, characteristic functions, Cauchy example, moment existence | @sec-foundations |
+| I.B. Continuous time random walks | Renewal/occupation equations, Montroll–Weiss transform, normal and fractional diffusion, subdiffusion and flights | @sec-foundations; @sec-toolbox |
+| II. Lévy walks | Continuous finite-speed trajectories and coupled space–time kernels | @sec-renewal |
+| II.A. Lévy walk model | Fresh initialization, propagator, support, ballistic atoms | @sec-renewal |
+| II.A.1. Telegraph equation | Velocity-resolved balance, telegraph PDE, exact MSD, redraw versus reversal | @sec-renewal |
+| II.A.2. Superdiffusion | Stable central law and ballistic cutoff | @sec-scaling |
+| II.A.3. Ballistic diffusion | Divergent mean duration, joint transform scaling, arcsine and general ballistic law | @sec-scaling; Chapter 5 |
+| II.A.4. MSD and other moments | Exact MSD transform, prefactors, threshold logarithms, nonlinear moment spectrum | @sec-scaling; Chapter 5 |
+| II.B. Lévy walks with rests | Two occupation populations, renewal cycles, competing tails, phase fractions | @sec-renewal |
+| III.A. Random walks with random velocities | General velocity kernels, velocity tails, Cauchy exact solution, scaling regimes | Chapter 4 |
+| III.B. Velocity fluctuations | Redraw fluctuations versus continuous intraflight noise, ballistic-front broadening | Chapter 4 |
+| III.C. Other coupled models | Duration–distance coupling, jump timing, generalized walks and support | Chapter 4 |
+| IV.A. Space–time velocity autocorrelation | Two-time and space-resolved correlations, initialization, negative local correlations | Chapter 5 |
+| IV.B. Exact solutions for ballistic walks | Transform inversion, Lamperti density, special cases, observables | Chapter 5 |
+| IV.C. Infinite densities | Ballistic-scale limit, nonnormalizability, bulk matching, high moments | Chapter 5 |
+| IV.D. Memory and ergodicity breaking | Aging, residual time, equilibrium preparation, trajectory time averages, fluctuations | Chapter 5 |
+| IV.E. Langevin and fractional Kramers | Subordination, stochastic velocity dynamics, material derivatives, distinct kinetic models | Chapter 6; @sec-toolbox |
+| V.A. Single-particle Hamiltonian systems | Sticking, mixed phase space, maps, chaotic advection, ratchets | Chapter 7 |
+| V.B. Many-particle Hamiltonian systems | Energy transport, hard-point gases, perturbations, conductivity, hydrodynamic modes | Chapter 7 |
+| V.C. Light and photons | Lévy glass, quenched versus annealed disorder, vapor scattering, optical constraints | Chapter 7 |
+| V.D. Blinking quantum dots | On/off renewal occupations, nonstationarity, integrated intensity | Chapter 7 |
+| V.E. Cold atoms | Sisyphus cooling, momentum excursions, duration–area coupling, transport regimes | Chapter 7 |
+| VI.A. Motility across scales | What moves, tracking protocols, observation bias, competing mechanisms | Chapter 8 |
+| VI.B. Soil amoeba | Motility states, persistence and experimental interpretation | Chapter 8 |
+| VI.C. Bacterial run and tumble | Persistent swimming, heavy runs, turning angles, correlated motor behavior | Chapter 8 |
+| VI.D. Chemotaxis | Response to gradients, biased run statistics, drift mechanisms | Chapter 8 |
+| VI.E. T-cells | Generalized walks, pauses, observed search behavior | Chapter 8 |
+| VI.F. Humans | Displacement versus travel time, visitation and individual variability | Chapter 8 |
+| VI.G. Bees, seabirds, monkeys, and others | Behavioral heterogeneity, biological examples and contested evidence | Chapter 8 |
+| VII.A. Optimal search | Target geometry, revisitation, destructive versus nondestructive search, conditional optima | Chapter 9 |
+| VII.B. Intermittent search | Detection and relocation phases, optimization and constraints | Chapter 9 |
+| VII.C. Intelligent robotics | Implementing and comparing search rules under physical sensing constraints | Chapter 9 |
+| VIII. Outlook | Higher dimensions, collective behavior, mechanisms, inference, transport and search questions | Chapter 9 |
+
+## What has been added
+
+The probability and transform primer, explicit dimensional checks, age-structured construction, distinction between no-renewal and total front masses, fresh-start MSD constants, marginal logarithms, worked exercises, executable Julia experiments, original vector figures, and publication validation make the book independently usable. Chapter 10 is a laboratory guide, not a replacement for the analytical derivations.
+
+Some formulas depend on choices that a broad review may suppress for readability. This book explicitly distinguishes iid direction redraws from mandatory flips, stationary from fresh preparation, the central limit from the ballistic-scale limit, and finite-time measures from limiting densities. Where an application uses a more general model, the changed assumptions are stated before importing a scaling law.
+
+## Scope of completeness
+
+Covering the review means treating its scientific subjects and explaining the main mechanisms and mathematical results, with enough background to follow their use here. It does not mean reproducing its approximately 300-item bibliography or transcribing every reported parameter, historical attribution, and plot. Numerical or experimental claims are attached to primary sources where they are used. A reader seeking the precise original data or apparatus should consult those sources, just as they would for any course textbook.

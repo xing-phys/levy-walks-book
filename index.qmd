@@ -1,0 +1,46 @@
+---
+title: 'Before you begin'
+---
+
+## A course built around a physical question
+
+How can a cloud spread faster than diffusion while every particle moves at a finite speed? This book develops the answer from probability and mechanics, then follows the idea into Hamiltonian transport, optics, cold atoms, living cells, animal movement, and search.
+
+The organizing reference is the review **Lévy walks**, by V. Zaburdaev, S. Denisov, and J. Klafter, *Reviews of Modern Physics* **87**, 483–530 (2015), [doi:10.1103/RevModPhys.87.483](https://doi.org/10.1103/RevModPhys.87.483) [@zaburdaev2015]. This is an independent educational companion, written in original language with additional calculations and original figures. It is neither an edition of the review nor an endorsement by its authors or publisher. Appendix @sec-coverage maps every substantive review subsection to its treatment here.
+
+The intended reader has studied calculus, elementary differential equations, and basic probability, and has seen Newtonian mechanics. Prior knowledge of fractional calculus, renewal theory, stable distributions, or statistical inference is unnecessary. Those tools are introduced when needed. The applications explain their physical setting before using it.
+
+## What you should learn
+
+By working through the book, you should be able to:
+
+1. Specify a stochastic trajectory precisely, including how it is initialized and observed.
+2. Derive a renewal equation and its Fourier–Laplace solution without losing the unfinished flight.
+3. Explain why the width of the central cloud and its mean squared displacement can obey different scaling laws.
+4. Recognize the role of rare flights, aging, and observation time in simulations and experiments.
+5. Decide what evidence would distinguish a Lévy walk from another persistent stochastic process.
+6. Reproduce numerical examples with Julia and adapt the model to a concrete physical question.
+
+## Reading routes
+
+For a first course, read Chapters 1–3, then the computational chapter, and return to the extensions. Work the exercises as calculations; their solutions supply intermediate steps rather than only final answers. For a theory seminar, continue through Chapters 4–6 before discussing the applications. For a data-driven project, combine Chapters 2, 5, 8, and 10: a plausible displacement histogram alone does not identify a microscopic mechanism.
+
+Sections marked as model results state assumptions explicitly. Experimental reports are presented as observations made under particular conditions. Interpretations, competing explanations, and open questions are identified as such. The review's 2015 landscape is the scope of the application survey; this is not a claim to be an exhaustive survey of literature published afterward.
+
+## The convention that matters most
+
+Throughout the core theory the **flight-duration density** has tail
+
+$$
+\psi(\tau)\sim\gamma\tau_0^\gamma\tau^{-1-\gamma},\qquad \gamma>0.
+$$
+
+Consequently the **survival probability** has tail $\Psi(t)\sim(\tau_0/t)^\gamma$. The density exponent is $1+\gamma$; the survival exponent is $\gamma$. Mixing those two conventions produces a one-unit error in almost every regime diagram.
+
+At the end of each flight the basic one-dimensional model redraws velocity independently from $+v$ and $-v$ with equal probabilities. A renewal can therefore leave the velocity unchanged. A model that strictly reverses at every event is a different renewal process. Unless explicitly stated otherwise, time zero is the start of a new flight at the origin.
+
+## Reproducibility and attribution
+
+The [source repository](https://github.com/xing-phys/levy-walks-book) contains the Quarto chapters, bibliography, Julia simulations, numerical checks, plotting code, and generated data. The PDF download in the sidebar collects the same chapters. All figures are generated for this book; none are reproduced from the review. Their captions specify whether they show an exact formula, a schematic, or Monte Carlo data.
+
+The book was developed with AI assistance and computational checks. It should be treated as a course manuscript open to correction, rather than as independently peer-reviewed literature. The cited primary papers provide provenance, while the derivations here are intended to let you follow the argument without leaving the book. Corrections can be reported through the repository's issue link.

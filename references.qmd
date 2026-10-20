@@ -1,0 +1,6 @@
+# References {.unnumbered}
+
+The review provides the organizing perspective; primary papers support the specific results and observations discussed in the chapters. DOI links identify published versions. An arXiv link, when included, points to an accessible author manuscript that can differ from the version of record.
+
+::: {#refs}
+:::

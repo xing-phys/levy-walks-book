@@ -1,0 +1,180 @@
+# Scaling, moments, and the limits that do not commute {#sec-scaling}
+
+## Why one spreading exponent is insufficient
+
+Suppose a normalized distribution had the single scaling form $P(x,t)=t^{-a}F(x/t^a)$ and every needed moment of $F$ existed. Substituting $u=x/t^a$ would give $\langle|X|^q\rangle=t^{aq}\int|u|^qF(u)du$. Every moment would therefore measure the same $a$.
+
+In a Lévy walk with $1<\gamma<2$, the center spreads as $t^{1/\gamma}$ but the MSD grows as $t^{3-\gamma}$. These statements are compatible because the central stable limit has an infinite second moment. Its scaling limit cannot be inserted into a second-moment integral over all positions. The true finite-speed tails are essential. We derive both statements and locate the failed interchange of limits.
+
+## Long-time information from small Laplace arguments
+
+For the Lomax law @eq-found-lomax, the small-$s$ expansion is, away from the integer thresholds,
+
+$$
+\widetilde\psi(s)=
+\begin{cases}
+1-b s^\gamma+o(s^\gamma),&0<\gamma<1,\\
+1-\mu s+A s^\gamma+o(s^\gamma),&1<\gamma<2,\\
+1-\mu s+\tfrac12\langle\tau^2\rangle s^2+o(s^2),&\gamma>2,
+\end{cases}
+$$ {#eq-scale-expansion}
+
+where $b=\tau_0^\gamma\Gamma(1-\gamma)>0$ in the first case and $A=-\tau_0^\gamma\Gamma(1-\gamma)>0$ in the second. One obtains the first line from $1-\widetilde\psi(s)=s\widetilde\Psi(s)$: replace the long-time survival by $\tau_0^\gamma t^{-\gamma}$ and use the gamma integral. When the mean exists, subtract its contribution first before extracting the nonanalytic tail term. A naive Taylor expansion under an integral with a divergent moment is invalid.
+
+Complex powers in @eq-renew-propagator are defined by continuation from $\Re s>0$ with the principal branch. For real $k$, the terms at $s-ikv$ and $s+ikv$ are conjugate. This guarantees a real symmetric spatial distribution.
+
+## Ordinary diffusion: a central limit with finite propagation
+
+For $\gamma>2$, substitute the last line of @eq-scale-expansion into the denominator of @eq-renew-propagator. The average of $(s\pm ikv)^2$ is $s^2-v^2k^2$, so
+
+$$
+1-\tfrac12[\widetilde\psi(s-ikv)+\widetilde\psi(s+ikv)]
+\simeq\mu s+\tfrac12v^2\langle\tau^2\rangle k^2.
+$$
+
+At scales $s\sim k^2$, the $s^2$ term is smaller. The numerator divided by two approaches $\mu$. Hence
+
+$$
+P(k,s)\simeq\frac1{s+Dk^2},\qquad
+D=\frac{v^2\langle\tau^2\rangle}{2\mu}.
+$$ {#eq-scale-diffusion-coeff}
+
+For the Lomax law, $D=v^2\tau_0/(\gamma-2)$. This diverges on approaching $\gamma=2$ from above. The divergence signals a singular limit and increasingly long transients, not infinite dispersion at a finite observation time. The diffusion approximation describes $|x|\sim\sqrt t$, whereas the exact boundary is at $|x|=vt$.
+
+## The stable central cloud for $1<\gamma<2$
+
+Keep the mean and the nonanalytic term. On bulk scales $s\sim|k|^\gamma$, one has $s/|k|\to0$. Consequently
+
+$$
+\tfrac12[(s-ikv)^\gamma+(s+ikv)^\gamma]
+\simeq v^\gamma|k|^\gamma\cos(\pi\gamma/2).
+$$
+
+Since $\cos(\pi\gamma/2)<0$, the denominator is positive in the needed real part. The result is
+
+$$
+P(k,s)\simeq\frac1{s+K_\gamma|k|^\gamma},\qquad
+K_\gamma=-\frac{A v^\gamma\cos(\pi\gamma/2)}\mu>0.
+$$ {#eq-scale-stable}
+
+This fixes both the sign and the dimensions: $K_\gamma$ has units length$^\gamma$/time. Inverting time gives $P(k,t)\simeq e^{-K_\gamma t|k|^\gamma}$. Inverting space gives
+
+$$
+P(x,t)\simeq(K_\gamma t)^{-1/\gamma}
+L_\gamma\!\left(\frac{x}{(K_\gamma t)^{1/\gamma}};1\right).
+$$
+
+This is a central scaling limit. The exact walk has finite support and finite variance; the limiting stable shape has neither. For $\gamma=3/2$, $\mu=2\tau_0$, $A=2\sqrt\pi\,\tau_0^{3/2}$, and $K_{3/2}=\sqrt{\pi/2}\,v^{3/2}\tau_0^{1/2}$. Checking this explicit case is a useful safeguard against a sign error in the cosine factor.
+
+## Ballistic scaling when the mean flight time diverges
+
+For $0<\gamma<1$, the leading term in the denominator is fractional and the numerator has order $s^{\gamma-1}$. Now the relevant joint limit is $k\sim s$, giving
+
+$$
+P(k,s)\simeq
+\frac{(s-ikv)^{\gamma-1}+(s+ikv)^{\gamma-1}}
+{(s-ikv)^\gamma+(s+ikv)^\gamma}.
+$$ {#eq-scale-ballistic-transform}
+
+The amplitude $b$ cancels. The density scales as $(vt)^{-1}F_\gamma(x/(vt))$ inside $|x|<vt$. Very long flights occupy an order-one fraction of the observation time, so many renewals need not wash out the directionality. Ballistic *scaling* does not mean a deterministic straight trajectory. The limiting rescaled position remains random.
+
+At $\gamma=1/2$ the limiting density is the arcsine law,
+
+$$
+P(x,t)\simeq\frac1{\pi\sqrt{v^2t^2-x^2}},\qquad |x|<vt.
+$$ {#eq-scale-arcsine}
+
+The apparent divergences near the edges are integrable: set $x=vt\sin\theta$ to check normalization. Finite-time delta masses at the exact fronts must still be treated separately. The continuum limit and the front atoms refer to different pieces of the finite-time measure. Chapter 5 derives the general ballistic law.
+
+## An exact transform for the MSD
+
+At fixed $s>0$, finite support permits differentiating the exact transform with respect to $k$. Write $B(s)=1-\widetilde\psi(s)$ and use $\widetilde\Psi=B/s$. Expansion of @eq-renew-propagator gives
+
+$$
+P(k,s)=\frac{\widetilde\Psi(s)-\frac12v^2k^2\widetilde\Psi''(s)+O(k^4)}
+{B(s)+\frac12v^2k^2\widetilde\psi''(s)+O(k^4)}.
+$$
+
+Thus the transformed MSD is $v^2[\widetilde\Psi''/B+\widetilde\psi''/(sB)]$. Differentiate $\widetilde\Psi=B/s$ twice; the $\widetilde\psi''$ terms cancel. The exact result is
+
+$$
+\widetilde M_2(s)=\frac{2v^2}{s^3}
+\left[1+\frac{s\widetilde\psi'(s)}{1-\widetilde\psi(s)}\right].
+$$ {#eq-scale-msd-transform}
+
+The first term would be the MSD of a perfectly straight path. The bracket subtracts the part decorrelated by renewals. This formula is for a fresh start with independent symmetric velocity redraws. A stationary preparation has a different first-flight law and generally a different prefactor.
+
+For $0<\gamma<1$, substitution gives a bracket tending to $1-\gamma$. Since $\mathcal L[t^2]=2s^{-3}$,
+
+$$
+M_2(t)\sim(1-\gamma)v^2t^2.
+$$ {#eq-scale-ballistic-msd}
+
+For $1<\gamma<2$, the bracket is $(\gamma-1)A s^{\gamma-1}/\mu$ to leading order, hence
+
+$$
+M_2(t)\sim\frac{2v^2(\gamma-1)A}{\mu\Gamma(4-\gamma)}t^{3-\gamma}
+=\frac{2v^2\tau_0^\gamma}{\mu(2-\gamma)(3-\gamma)}t^{3-\gamma}.
+$$ {#eq-scale-super-msd}
+
+The identity $\Gamma(4-\gamma)=(3-\gamma)(2-\gamma)\Gamma(2-\gamma)$ proves the second form. For Lomax durations it becomes $2v^2(\gamma-1)\tau_0^{\gamma-1}/[(2-\gamma)(3-\gamma)]$ times $t^{3-\gamma}$. At $\gamma=3/2$ the coefficient is $4v^2\sqrt{\tau_0}/3$. By contrast the central width squared grows as $t^{4/3}$. The larger MSD exponent $3/2$ reflects the stronger influence of rare distant trajectories.
+
+For $\gamma>2$ the bracket is $\langle\tau^2\rangle s/(2\mu)+o(s)$, giving $M_2\sim v^2\langle\tau^2\rangle t/\mu=2Dt$ as required.
+
+## The two marginal exponents
+
+At $\gamma=1$ the survival is asymptotically $\tau_0/t$, so $1-\widetilde\psi(s)\sim\tau_0s\log[1/(s\tau_0)]$. Write $L=\log[1/(s\tau_0)]$. Then $\widetilde\psi'\sim-\tau_0(L-1)$ and the bracket in @eq-scale-msd-transform is asymptotically $1/L$. Slowly varying inversion gives $M_2(t)\sim v^2t^2/\log(t/\tau_0)$.
+
+At $\gamma=2$, the truncated second duration moment grows logarithmically. More precisely, $\widetilde\psi(s)=1-\mu s+\tau_0^2s^2\log[1/(s\tau_0)]+O(s^2)$, with $\mu=\tau_0$. Substitution gives $M_2(t)\sim2v^2\tau_0t\log(t/\tau_0)$. Terms inside the logarithm only affect lower-order corrections. These marginal forms assume the specified pure Lomax tail; other slowly varying tail factors can modify the logarithms.
+
+| Duration-tail regime | Central length scale | Fresh-start MSD at long time |
+|:--|:--|:--|
+| $0<\gamma<1$ | $t$ | $t^2$ |
+| $\gamma=1$ | marginal ballistic regime | $t^2/\log t$ |
+| $1<\gamma<2$ | $t^{1/\gamma}$ | $t^{3-\gamma}$ |
+| $\gamma=2$ | $\sqrt{t\log t}$ | $t\log t$ |
+| $\gamma>2$ | $t^{1/2}$ | $t$ |
+
+The entries describe asymptotic scalings with dimensional constants suppressed. A measured slope near one threshold over a modest time window can be misleading because logarithms and crossover corrections decay slowly.
+
+## Strong anomalous diffusion
+
+For $1<\gamma<2$, the central stable law has tail $P(x,t)\propto t/|x|^{1+\gamma}$ in the intermediate range $t^{1/\gamma}\ll|x|\ll vt$. To estimate high-order moments integrate this tail with its physical cutoff:
+
+$$
+\langle|X|^q\rangle_{\rm tail}\sim t\int_{t^{1/\gamma}}^{vt}x^{q-1-\gamma}dx.
+$$
+
+For $q>\gamma$ the upper limit dominates and gives $t^{q+1-\gamma}$. For $q<\gamma$ the central law has a finite $q$th absolute moment and gives $t^{q/\gamma}$. At $q=\gamma$ the integral is logarithmic. Thus the spectrum $\zeta(q)$ defined by $\langle|X|^q\rangle\propto t^{\zeta(q)}$ is
+
+$$
+\zeta(q)=\begin{cases}q/\gamma,&0<q<\gamma,\\q+1-\gamma,&q>\gamma.\end{cases}
+$$ {#eq-scale-moment-spectrum}
+
+The two lines meet at $q=\gamma$, where a $t\log t$ factor appears rather than a pure power. This nonlinear spectrum is called strong anomalous diffusion. It is not a statement that any finite-time moment is infinite. It is a statement that different moments probe different spatial scales. Chapter 5 supplies a more systematic treatment with infinite densities.
+
+The no-renewal atoms alone have MSD contribution $v^2t^2\Psi(t)\propto t^{2-\gamma}$. That is one power smaller than the full $t^{3-\gamma}$ term for $1<\gamma<2$. The long-flight population responsible for the MSD includes long flights launched at many possible renewal times, not just walkers still in their very first flight. This is why attributing the whole anomalous MSD to the initial ballistic peaks gives the wrong result.
+
+## Which limit answers which question?
+
+To find a moment, differentiate in $k$ at fixed $s$, then take $s\to0$. To find the central cloud in the superdiffusive regime, take $s\sim|k|^\gamma$. To examine positions proportional to time, take $k\sim s$. These are three different asymptotic questions about the same exact propagator. There is no reason their approximate formulas should agree outside their respective domains.
+
+A useful analogy is a sequence of probability distributions that puts probability $1-1/n$ at zero and $1/n$ at $n$. It converges weakly to a point mass at zero, but its mean stays one and its second moment diverges as $n$. Weak convergence tests bounded continuous functions. A moment weights distant events with an unbounded function and needs additional uniform-integrability control. The Lévy-walk center and its rare ballistic-scale trajectories provide a continuous physical realization of this distinction.
+
+## Exercises
+
+1. Verify the numerical coefficient at $\gamma=3/2$ in @eq-scale-super-msd and compare its exponent with twice the central-width exponent.
+2. For $\gamma=3/2$, predict the exponents of $\langle|X|\rangle$, $\langle X^2\rangle$, and $\langle X^4\rangle$.
+3. Derive the MSD of the arcsine law and compare with @eq-scale-ballistic-msd.
+4. Explain why a finite-sample Lévy flight also has a finite empirical variance, and why that does not make it equivalent to a finite-speed Lévy walk.
+
+::: {.callout-tip collapse="true"}
+## Worked solutions
+1. $\mu=2\tau_0$ and $(2-\gamma)(3-\gamma)=3/4$, giving coefficient $2v^2\tau_0^{3/2}/[(2\tau_0)(3/4)]=4v^2\sqrt{\tau_0}/3$. The MSD exponent is $3/2$, whereas twice the central exponent is $4/3$.
+
+2. The orders one, two, and four give exponents $2/3$, $3/2$, and $7/2$. The order $3/2$ lies at the crossover and has a logarithmic factor. None of these statements asserts accurate scaling at very short times.
+
+3. Set $x=vt\sin\theta$. The second moment is $(v^2t^2/\pi)\int_{-\pi/2}^{\pi/2}\sin^2\theta d\theta=v^2t^2/2$, agreeing with $1-\gamma=1/2$.
+
+4. Any finite collection of finite draws has a finite sample variance. For a flight, increasing the sample can reveal unbounded jumps at a fixed time; the ensemble second moment does not exist. For a bounded-speed walk, every sample and the ensemble obey the deterministic bound $X^2\le v^2t^2$. Statistical undersampling and mathematical finiteness are different issues.
+:::
